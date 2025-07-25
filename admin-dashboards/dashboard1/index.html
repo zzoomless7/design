@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics Pro Dashboard - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'cyan': {
+                            400: '#22D3EE',
+                            500: '#06B6D4',
+                            600: '#0891B2',
+                        },
+                        'purple': {
+                            400: '#A855F7',
+                            500: '#9333EA',
+                            600: '#7C3AED',
+                        },
+                        'slate': {
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1E293B',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            min-height: 100vh;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            border-radius: 12px;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .sidebar-glass {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link-glass {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 500;
+            position: relative;
+            padding: 12px 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            margin: 4px 0;
+        }
+
+        .nav-link-glass:hover,
+        .nav-link-glass.active {
+            background: rgba(34, 211, 238, 0.15);
+            color: #22D3EE !important;
+            transform: translateX(5px);
+        }
+
+        .header-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.1), rgba(168, 85, 247, 0.1));
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(34, 211, 238, 0.2);
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+        }
+
+        .progress-glass {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #22D3EE, #A855F7);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 2s ease;
+        }
+
+        .floating-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .pulse-glow {
+            animation: pulseGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from { box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); }
+            to { box-shadow: 0 0 40px rgba(34, 211, 238, 0.6); }
+        }
+
+        .table-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .table-glass th {
+            background: rgba(34, 211, 238, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            color: #22D3EE;
+            font-weight: 600;
+        }
+
+        .table-glass td {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .btn-primary-glass {
+            background: linear-gradient(135deg, #22D3EE, #A855F7);
+            border: none;
+            color: white;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary-glass:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(34, 211, 238, 0.4);
+            color: white;
+        }
+
+        .notification-badge {
+            background: linear-gradient(135deg, #EF4444, #F97316);
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+            40%, 43% { transform: translate3d(0, -30px, 0); }
+            70% { transform: translate3d(0, -15px, 0); }
+            90% { transform: translate3d(0, -4px, 0); }
+        }
+
+        .activity-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-left: 3px solid #22D3EE;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateX(5px);
+        }
+
+        .stat-number {
+            background: linear-gradient(135deg, #22D3EE, #A855F7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar-glass position-fixed top-0 start-0 h-100" style="width: 280px; z-index: 1000;">
+        <div class="p-4">
+            <!-- Logo -->
+            <div class="d-flex align-items-center mb-4">
+                <div class="pulse-glow rounded-circle d-flex align-items-center justify-content-center me-3" 
+                     style="width: 45px; height: 45px; background: linear-gradient(135deg, #22D3EE, #A855F7);">
+                    <i class="fas fa-chart-line text-white"></i>
+                </div>
+                <h4 class="text-white mb-0 fw-bold">Analytics Pro</h4>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="mt-4">
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none active">
+                    <i class="fas fa-tachometer-alt me-3"></i>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-chart-bar me-3"></i>
+                    Analytics
+                </a>
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-users me-3"></i>
+                    Users
+                </a>
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-shopping-cart me-3"></i>
+                    Sales
+                </a>
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-file-alt me-3"></i>
+                    Reports
+                </a>
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-cog me-3"></i>
+                    Settings
+                </a>
+            </nav>
+
+            <!-- User Profile -->
+            <div class="glass-card p-3 mt-4">
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle me-3" style="width: 40px; height: 40px; background: linear-gradient(135deg, #22D3EE, #A855F7);"></div>
+                    <div>
+                        <div class="text-white fw-semibold">John Doe</div>
+                        <small class="text-white-50">Administrator</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div style="margin-left: 280px;">
+        <!-- Header -->
+        <div class="header-glass p-4 d-flex justify-content-between align-items-center">
+            <div>
+                <h2 class="text-white mb-1">Analytics Dashboard</h2>
+                <p class="text-white-50 mb-0">Welcome back! Here's what's happening with your business.</p>
+            </div>
+            <div class="d-flex align-items-center">
+                <div class="position-relative me-3">
+                    <i class="fas fa-bell text-white fs-5"></i>
+                    <span class="notification-badge position-absolute top-0 start-100 translate-middle badge rounded-pill">
+                        3
+                    </span>
+                </div>
+                <div class="glass-card p-2 px-3">
+                    <span class="text-white" id="currentTime"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Content -->
+        <div class="p-4">
+            <!-- Metrics Row -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="metric-card p-4 floating-animation">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h3 class="stat-number mb-1">12.8K</h3>
+                                <p class="text-white-50 mb-0">Total Users</p>
+                            </div>
+                            <div class="glass-card p-2 rounded-circle">
+                                <i class="fas fa-users text-cyan-400"></i>
+                            </div>
+                        </div>
+                        <div class="progress-glass mt-3" style="height: 6px;">
+                            <div class="progress-fill" style="width: 75%;"></div>
+                        </div>
+                        <small class="text-white-50">+12% from last month</small>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="metric-card p-4 floating-animation" style="animation-delay: 0.2s;">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h3 class="stat-number mb-1">$89.2K</h3>
+                                <p class="text-white-50 mb-0">Revenue</p>
+                            </div>
+                            <div class="glass-card p-2 rounded-circle">
+                                <i class="fas fa-dollar-sign text-purple-400"></i>
+                            </div>
+                        </div>
+                        <div class="progress-glass mt-3" style="height: 6px;">
+                            <div class="progress-fill" style="width: 85%;"></div>
+                        </div>
+                        <small class="text-white-50">+18% from last month</small>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="metric-card p-4 floating-animation" style="animation-delay: 0.4s;">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h3 class="stat-number mb-1">2.4K</h3>
+                                <p class="text-white-50 mb-0">Orders</p>
+                            </div>
+                            <div class="glass-card p-2 rounded-circle">
+                                <i class="fas fa-shopping-bag text-cyan-400"></i>
+                            </div>
+                        </div>
+                        <div class="progress-glass mt-3" style="height: 6px;">
+                            <div class="progress-fill" style="width: 60%;"></div>
+                        </div>
+                        <small class="text-white-50">+8% from last month</small>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="metric-card p-4 floating-animation" style="animation-delay: 0.6s;">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h3 class="stat-number mb-1">94.2%</h3>
+                                <p class="text-white-50 mb-0">Satisfaction</p>
+                            </div>
+                            <div class="glass-card p-2 rounded-circle">
+                                <i class="fas fa-heart text-purple-400"></i>
+                            </div>
+                        </div>
+                        <div class="progress-glass mt-3" style="height: 6px;">
+                            <div class="progress-fill" style="width: 94%;"></div>
+                        </div>
+                        <small class="text-white-50">+3% from last month</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts Row -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-8">
+                    <div class="chart-container p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="text-white mb-0">Revenue Analytics</h5>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-primary-glass">Week</button>
+                                <button class="btn btn-sm btn-outline-light">Month</button>
+                                <button class="btn btn-sm btn-outline-light">Year</button>
+                            </div>
+                        </div>
+                        <canvas id="revenueChart" height="300"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="chart-container p-4">
+                        <h5 class="text-white mb-4">User Distribution</h5>
+                        <canvas id="pieChart" height="300"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Data Table and Activity -->
+            <div class="row g-4">
+                <div class="col-md-8">
+                    <div class="glass-card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="text-white mb-0">Recent Transactions</h5>
+                            <button class="btn btn-sm btn-primary-glass">View All</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-glass">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Customer</th>
+                                        <th>Product</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>#001</td>
+                                        <td>John Smith</td>
+                                        <td>Premium Plan</td>
+                                        <td>$299</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#002</td>
+                                        <td>Sarah Johnson</td>
+                                        <td>Basic Plan</td>
+                                        <td>$99</td>
+                                        <td><span class="badge bg-warning">Pending</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#003</td>
+                                        <td>Mike Wilson</td>
+                                        <td>Enterprise</td>
+                                        <td>$599</td>
+                                        <td><span class="badge bg-success">Completed</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>#004</td>
+                                        <td>Emma Davis</td>
+                                        <td>Premium Plan</td>
+                                        <td>$299</td>
+                                        <td><span class="badge bg-danger">Failed</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="glass-card p-4">
+                        <h5 class="text-white mb-4">Recent Activity</h5>
+                        <div class="activity-item p-3 mb-3 rounded">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-success rounded-circle p-2 me-3">
+                                    <i class="fas fa-check text-white"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white fw-semibold">New order completed</div>
+                                    <small class="text-white-50">2 minutes ago</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-item p-3 mb-3 rounded">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-info rounded-circle p-2 me-3">
+                                    <i class="fas fa-user text-white"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white fw-semibold">New user registered</div>
+                                    <small class="text-white-50">15 minutes ago</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-item p-3 mb-3 rounded">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-warning rounded-circle p-2 me-3">
+                                    <i class="fas fa-exclamation-triangle text-white"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white fw-semibold">Server maintenance</div>
+                                    <small class="text-white-50">1 hour ago</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="activity-item p-3 rounded">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-danger rounded-circle p-2 me-3">
+                                    <i class="fas fa-times text-white"></i>
+                                </div>
+                                <div>
+                                    <div class="text-white fw-semibold">Payment failed</div>
+                                    <small class="text-white-50">3 hours ago</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Update time
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString();
+        }
+        updateTime();
+        setInterval(updateTime, 1000);
+
+        // Revenue Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        new Chart(revenueCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Revenue',
+                    data: [30000, 45000, 38000, 52000, 61000, 89200],
+                    borderColor: '#22D3EE',
+                    backgroundColor: 'rgba(34, 211, 238, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: 'white' }
+                    }
+                },
+                scales: {
+                    x: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                    y: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+            }
+        });
+
+        // Pie Chart
+        const pieCtx = document.getElementById('pieChart').getContext('2d');
+        new Chart(pieCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Desktop', 'Mobile', 'Tablet'],
+                datasets: [{
+                    data: [45, 35, 20],
+                    backgroundColor: ['#22D3EE', '#A855F7', '#F59E0B'],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: 'white' }
+                    }
+                }
+            }
+        });
+
+        // Smooth scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.metric-card, .chart-container, .glass-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
