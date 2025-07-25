@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Monitoring Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .system-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .system-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+        }
+
+        .system-card.healthy::before {
+            background: linear-gradient(90deg, #22c55e, #16a34a);
+        }
+
+        .system-card.warning::before {
+            background: linear-gradient(90deg, #f59e0b, #d97706);
+        }
+
+        .system-card.critical::before {
+            background: linear-gradient(90deg, #ef4444, #dc2626);
+        }
+
+        .system-card:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-glass {
+            background: rgba(251, 191, 36, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 12px;
+        }
+
+        .btn-glass:hover {
+            background: rgba(251, 191, 36, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(251, 191, 36, 0.4);
+        }
+
+        .server-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .server-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+            position: relative;
+        }
+
+        .status-online {
+            background: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+        }
+
+        .status-offline {
+            background: #ef4444;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .status-warning {
+            background: #f59e0b;
+            box-shadow: 0 0 10px rgba(245, 158, 11, 0.5);
+        }
+
+        .status-online::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.7);
+            }
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(34, 197, 94, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(34, 197, 94, 0);
+            }
+        }
+
+        .progress-circle {
+            position: relative;
+            width: 80px;
+            height: 80px;
+        }
+
+        .progress-circle svg {
+            transform: rotate(-90deg);
+        }
+
+        .progress-circle .progress-ring {
+            transition: stroke-dasharray 0.35s;
+            transform-origin: 50% 50%;
+        }
+
+        .alert-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .alert-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .alert-critical {
+            border-left: 4px solid #ef4444;
+        }
+
+        .alert-warning {
+            border-left: 4px solid #f59e0b;
+        }
+
+        .alert-info {
+            border-left: 4px solid #3b82f6;
+        }
+
+        .network-node {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(251, 191, 36, 0.5);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .network-node:hover {
+            background: rgba(251, 191, 36, 0.3);
+            transform: scale(1.1);
+        }
+
+        .network-connection {
+            position: absolute;
+            height: 2px;
+            background: linear-gradient(90deg, rgba(251, 191, 36, 0.5), rgba(251, 191, 36, 0.8));
+            border-radius: 1px;
+        }
+
+        .metric-gauge {
+            position: relative;
+            width: 120px;
+            height: 120px;
+        }
+
+        .realtime-data {
+            background: rgba(0, 255, 0, 0.1);
+            border: 1px solid rgba(0, 255, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            font-family: 'Courier New', monospace;
+            color: #22c55e;
+            font-size: 12px;
+            line-height: 1.4;
+            overflow-y: auto;
+            max-height: 300px;
+        }
+
+        .terminal-line {
+            margin-bottom: 5px;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav fixed w-full top-0 z-50 py-4">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 flex items-center justify-center">
+                        <i class="fas fa-server text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">SystemFlow</span>
+                </div>
+
+                <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-2">
+                        <div class="status-indicator status-online"></div>
+                        <span class="text-white text-sm">Sistem Operational</span>
+                    </div>
+                    <div class="text-white text-sm">
+                        <i class="fas fa-clock mr-1"></i>
+                        <span id="current-time"></span>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" 
+                             alt="User" class="w-10 h-10 rounded-full border-2 border-white border-opacity-50">
+                        <span class="text-white font-medium">Admin - Sistemul Central</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-24 p-6">
+        <!-- Header Section -->
+        <div class="glass-morphism rounded-2xl p-6 mb-8">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-white">Monitorizare Sistem</h1>
+                    <p class="text-white opacity-70">Supraveghează performanțele serverelor și infrastructura IT</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button class="btn-glass">
+                        <i class="fas fa-download mr-2"></i>Export Logs
+                    </button>
+                    <button class="btn-glass">
+                        <i class="fas fa-tools mr-2"></i>Configurare
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- System Overview Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="system-card healthy p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-microchip text-white"></i>
+                    </div>
+                    <div class="progress-circle">
+                        <svg viewBox="0 0 36 36" class="w-20 h-20">
+                            <path class="progress-ring" stroke="rgba(255,255,255,0.2)" stroke-width="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            <path class="progress-ring" stroke="#22c55e" stroke-width="3" fill="none" stroke-dasharray="67, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center text-white text-sm font-bold">67%</div>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-white opacity-70 text-sm">Utilizare CPU</p>
+                    <p class="text-2xl font-bold text-white">67.3%</p>
+                    <p class="text-green-400 text-sm mt-1">
+                        <i class="fas fa-check-circle"></i> Stabil
+                    </p>
+                </div>
+            </div>
+
+            <div class="system-card warning p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-memory text-white"></i>
+                    </div>
+                    <div class="progress-circle">
+                        <svg viewBox="0 0 36 36" class="w-20 h-20">
+                            <path class="progress-ring" stroke="rgba(255,255,255,0.2)" stroke-width="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            <path class="progress-ring" stroke="#f59e0b" stroke-width="3" fill="none" stroke-dasharray="84, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center text-white text-sm font-bold">84%</div>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-white opacity-70 text-sm">Utilizare RAM</p>
+                    <p class="text-2xl font-bold text-white">84.2%</p>
+                    <p class="text-yellow-400 text-sm mt-1">
+                        <i class="fas fa-exclamation-triangle"></i> Atenție
+                    </p>
+                </div>
+            </div>
+
+            <div class="system-card healthy p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-hdd text-white"></i>
+                    </div>
+                    <div class="progress-circle">
+                        <svg viewBox="0 0 36 36" class="w-20 h-20">
+                            <path class="progress-ring" stroke="rgba(255,255,255,0.2)" stroke-width="3" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                            <path class="progress-ring" stroke="#3b82f6" stroke-width="3" fill="none" stroke-dasharray="45, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center text-white text-sm font-bold">45%</div>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-white opacity-70 text-sm">Stocare Disk</p>
+                    <p class="text-2xl font-bold text-white">45.8%</p>
+                    <p class="text-green-400 text-sm mt-1">
+                        <i class="fas fa-check-circle"></i> Optim
+                    </p>
+                </div>
+            </div>
+
+            <div class="system-card healthy p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-network-wired text-white"></i>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-white">1.2 GB/s</div>
+                        <div class="text-xs text-white opacity-70">Bandwidth</div>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-white opacity-70 text-sm">Trafic Rețea</p>
+                    <p class="text-2xl font-bold text-white">Normal</p>
+                    <p class="text-green-400 text-sm mt-1">
+                        <i class="fas fa-wifi"></i> Conexiune Stabilă
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts and Monitoring -->
+        <div class="grid lg:grid-cols-3 gap-8 mb-8">
+            <!-- Performance Chart -->
+            <div class="lg:col-span-2">
+                <div class="chart-container">
+                    <h3 class="text-xl font-bold text-white mb-6">Performanță Sistem - Ultimele 24h</h3>
+                    <canvas id="performanceChart" height="300"></canvas>
+                </div>
+            </div>
+
+            <!-- Real-time Logs -->
+            <div class="glass-morphism rounded-2xl p-6">
+                <h3 class="text-lg font-bold text-white mb-4">Log-uri în Timp Real</h3>
+                <div class="realtime-data" id="realtimeLogs">
+                    <div class="terminal-line">[INFO] 2024-12-23 15:30:45 - System startup complete</div>
+                    <div class="terminal-line">[INFO] 2024-12-23 15:31:02 - Database connection established</div>
+                    <div class="terminal-line">[WARN] 2024-12-23 15:31:15 - High memory usage detected</div>
+                    <div class="terminal-line">[INFO] 2024-12-23 15:31:23 - Backup process started</div>
+                    <div class="terminal-line">[INFO] 2024-12-23 15:31:45 - User authentication successful</div>
+                    <div class="terminal-line">[ERROR] 2024-12-23 15:32:01 - Failed to connect to external API</div>
+                    <div class="terminal-line">[INFO] 2024-12-23 15:32:15 - Cache cleared successfully</div>
+                    <div class="terminal-line">[INFO] 2024-12-23 15:32:30 - Scheduled maintenance completed</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Server Status and Network -->
+        <div class="grid lg:grid-cols-2 gap-8 mb-8">
+            <!-- Server Status -->
+            <div class="glass-morphism rounded-2xl p-6">
+                <h3 class="text-xl font-bold text-white mb-6">Status Servere</h3>
+                <div class="space-y-4">
+                    <div class="server-item p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="status-indicator status-online"></div>
+                                <div>
+                                    <h4 class="text-white font-medium">Web Server 01</h4>
+                                    <p class="text-white opacity-60 text-sm">192.168.1.100 | Ubuntu 20.04</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-green-400 font-bold">99.9%</p>
+                                <p class="text-white opacity-60 text-xs">Uptime</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="server-item p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="status-indicator status-warning"></div>
+                                <div>
+                                    <h4 class="text-white font-medium">Database Server</h4>
+                                    <p class="text-white opacity-60 text-sm">192.168.1.101 | CentOS 8</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-yellow-400 font-bold">97.2%</p>
+                                <p class="text-white opacity-60 text-xs">Uptime</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="server-item p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="status-indicator status-online"></div>
+                                <div>
+                                    <h4 class="text-white font-medium">API Gateway</h4>
+                                    <p class="text-white opacity-60 text-sm">192.168.1.102 | Docker</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-green-400 font-bold">100%</p>
+                                <p class="text-white opacity-60 text-xs">Uptime</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="server-item p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="status-indicator status-offline"></div>
+                                <div>
+                                    <h4 class="text-white font-medium">Backup Server</h4>
+                                    <p class="text-white opacity-60 text-sm">192.168.1.103 | Maintenance</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-red-400 font-bold">0%</p>
+                                <p class="text-white opacity-60 text-xs">Offline</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Network Topology -->
+            <div class="glass-morphism rounded-2xl p-6">
+                <h3 class="text-xl font-bold text-white mb-6">Topologie Rețea</h3>
+                <div class="relative h-80 flex items-center justify-center">
+                    <!-- Central Router -->
+                    <div class="network-node absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                        <i class="fas fa-router text-amber-400"></i>
+                    </div>
+
+                    <!-- Connected Devices -->
+                    <div class="network-node absolute" style="top: 20%; left: 30%;">
+                        <i class="fas fa-server text-green-400"></i>
+                    </div>
+                    <div class="network-node absolute" style="top: 20%; right: 30%;">
+                        <i class="fas fa-database text-yellow-400"></i>
+                    </div>
+                    <div class="network-node absolute" style="bottom: 20%; left: 30%;">
+                        <i class="fas fa-cloud text-blue-400"></i>
+                    </div>
+                    <div class="network-node absolute" style="bottom: 20%; right: 30%;">
+                        <i class="fas fa-shield-alt text-purple-400"></i>
+                    </div>
+
+                    <!-- Connections -->
+                    <div class="network-connection" style="top: 35%; left: 38%; width: 80px; transform: rotate(-30deg);"></div>
+                    <div class="network-connection" style="top: 35%; right: 38%; width: 80px; transform: rotate(30deg);"></div>
+                    <div class="network-connection" style="bottom: 35%; left: 38%; width: 80px; transform: rotate(30deg);"></div>
+                    <div class="network-connection" style="bottom: 35%; right: 38%; width: 80px; transform: rotate(-30deg);"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts and Notifications -->
+        <div class="grid lg:grid-cols-2 gap-8">
+            <!-- System Alerts -->
+            <div class="glass-morphism rounded-2xl p-6">
+                <h3 class="text-xl font-bold text-white mb-6">Alerte Sistem</h3>
+                <div class="space-y-4">
+                    <div class="alert-item alert-critical p-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center mt-1">
+                                <i class="fas fa-exclamation-triangle text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-white font-medium">Utilizare Memorie Critică</h4>
+                                <p class="text-white opacity-70 text-sm">RAM utilizată 84% - Risc de instabilitate sistem</p>
+                                <p class="text-red-400 text-xs mt-1">acum 5 minute</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert-item alert-warning p-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center mt-1">
+                                <i class="fas fa-exclamation text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-white font-medium">Backup Server Offline</h4>
+                                <p class="text-white opacity-70 text-sm">Server de backup este în mentenanță programată</p>
+                                <p class="text-yellow-400 text-xs mt-1">acum 15 minute</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert-item alert-info p-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center mt-1">
+                                <i class="fas fa-info text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-white font-medium">Update Disponibil</h4>
+                                <p class="text-white opacity-70 text-sm">Nouă versiune de securitate disponibilă pentru OS</p>
+                                <p class="text-blue-400 text-xs mt-1">acum 1 oră</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert-item alert-info p-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center mt-1">
+                                <i class="fas fa-check text-white text-sm"></i>
+                            </div>
+                            <div class="flex-1">
+                                <h4 class="text-white font-medium">Backup Completat</h4>
+                                <p class="text-white opacity-70 text-sm">Backup-ul zilnic a fost finalizat cu succes</p>
+                                <p class="text-green-400 text-xs mt-1">acum 2 ore</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Resource Monitor -->
+            <div class="glass-morphism rounded-2xl p-6">
+                <h3 class="text-xl font-bold text-white mb-6">Monitor Resurse</h3>
+                <div class="chart-container">
+                    <canvas id="resourceChart" height="250"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update current time
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('current-time').textContent = now.toLocaleTimeString('ro-RO');
+        }
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Performance Chart
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: Array.from({length: 24}, (_, i) => `${i}:00`),
+                datasets: [
+                    {
+                        label: 'CPU %',
+                        data: [45, 52, 48, 61, 55, 67, 73, 69, 76, 82, 88, 75, 68, 72, 65, 70, 74, 69, 67, 71, 68, 65, 62, 58],
+                        borderColor: 'rgba(251, 191, 36, 1)',
+                        backgroundColor: 'rgba(251, 191, 36, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'RAM %',
+                        data: [60, 65, 62, 68, 70, 75, 78, 74, 80, 85, 84, 82, 79, 76, 73, 77, 81, 84, 86, 83, 80, 78, 75, 72],
+                        borderColor: 'rgba(34, 197, 94, 1)',
+                        backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Disk I/O',
+                        data: [20, 25, 22, 28, 30, 35, 38, 34, 40, 45, 42, 38, 35, 32, 29, 33, 37, 35, 32, 30, 28, 25, 22, 20],
+                        borderColor: 'rgba(59, 130, 246, 1)',
+                        backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100,
+                        ticks: {
+                            color: 'white',
+                            callback: function(value) {
+                                return value + '%';
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: 'white'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Resource Chart (Doughnut)
+        const resourceCtx = document.getElementById('resourceChart').getContext('2d');
+        new Chart(resourceCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['CPU', 'RAM', 'Disk', 'Network', 'Cache'],
+                datasets: [{
+                    data: [67, 84, 45, 23, 12],
+                    backgroundColor: [
+                        'rgba(251, 191, 36, 0.8)',
+                        'rgba(34, 197, 94, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(147, 51, 234, 0.8)',
+                        'rgba(239, 68, 68, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(251, 191, 36, 1)',
+                        'rgba(34, 197, 94, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(147, 51, 234, 1)',
+                        'rgba(239, 68, 68, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: 'white',
+                            padding: 15,
+                            usePointStyle: true
+                        }
+                    }
+                }
+            }
+        });
+
+        // Simulate real-time logs
+        function addLogEntry() {
+            const logs = document.getElementById('realtimeLogs');
+            const logTypes = ['INFO', 'WARN', 'ERROR', 'DEBUG'];
+            const messages = [
+                'Database query executed successfully',
+                'User session expired',
+                'Cache miss for key: user_data_123',
+                'API response time: 245ms',
+                'Memory garbage collection completed',
+                'New connection established from 192.168.1.50',
+                'SSL certificate renewal required',
+                'Backup process started'
+            ];
+            
+            const type = logTypes[Math.floor(Math.random() * logTypes.length)];
+            const message = messages[Math.floor(Math.random() * messages.length)];
+            const time = new Date().toLocaleString('ro-RO');
+            
+            const newLine = document.createElement('div');
+            newLine.className = 'terminal-line';
+            newLine.textContent = `[${type}] ${time} - ${message}`;
+            
+            logs.appendChild(newLine);
+            
+            // Keep only last 10 entries
+            while (logs.children.length > 10) {
+                logs.removeChild(logs.firstChild);
+            }
+            
+            logs.scrollTop = logs.scrollHeight;
+        }
+
+        // Add new log entry every 3 seconds
+        setInterval(addLogEntry, 3000);
+    </script>
+</body>
+</html>
