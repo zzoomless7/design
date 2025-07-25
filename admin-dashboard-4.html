@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Analytics Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .financial-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .financial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #FBBF24, #F59E0B);
+        }
+
+        .financial-card:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-glass {
+            background: rgba(251, 191, 36, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 12px;
+        }
+
+        .btn-glass:hover {
+            background: rgba(251, 191, 36, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(251, 191, 36, 0.4);
+        }
+
+        .transaction-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .transaction-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .currency-badge {
+            background: rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-positive {
+            color: #22c55e;
+        }
+
+        .status-negative {
+            color: #ef4444;
+        }
+
+        .amount-large {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #FBBF24, #F59E0B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .mini-chart {
+            height: 60px;
+            width: 120px;
+        }
+
+        .portfolio-item {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .portfolio-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.02);
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 12px;
+            height: 12px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .tab-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .tab-glass.active {
+            background: rgba(251, 191, 36, 0.5);
+            color: white;
+        }
+
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle {
+            transition: stroke-dasharray 0.35s;
+            transform-origin: 50% 50%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav fixed w-full top-0 z-50 py-4">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 flex items-center justify-center">
+                        <i class="fas fa-chart-pie text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">FinanceFlow</span>
+                </div>
+
+                <div class="flex items-center space-x-6">
+                    <div class="relative">
+                        <i class="fas fa-bell text-white text-xl cursor-pointer"></i>
+                        <div class="notification-dot"></div>
+                    </div>
+                    <div class="currency-badge">RON</div>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" 
+                             alt="User" class="w-10 h-10 rounded-full border-2 border-white border-opacity-50">
+                        <span class="text-white font-medium">CFO - Adrian Niculescu</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-24 p-6">
+        <!-- Header Section -->
+        <div class="glass-morphism rounded-2xl p-6 mb-8">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-white">Dashboard Financiar</h1>
+                    <p class="text-white opacity-70">Monitorizează performanțele financiare și analizează tendințele</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button class="btn-glass">
+                        <i class="fas fa-download mr-2"></i>Export Raport
+                    </button>
+                    <button class="btn-glass">
+                        <i class="fas fa-calculator mr-2"></i>Calculator
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Financial Overview Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="financial-card p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-wallet text-white"></i>
+                    </div>
+                    <canvas class="mini-chart" id="revenueChart"></canvas>
+                </div>
+                <div>
+                    <p class="text-white opacity-70 text-sm">Venituri Totale</p>
+                    <p class="amount-large">2.4M</p>
+                    <p class="status-positive text-sm mt-1">
+                        <i class="fas fa-arrow-up"></i> +15.3% față de luna trecută
+                    </p>
+                </div>
+            </div>
+
+            <div class="financial-card p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-credit-card text-white"></i>
+                    </div>
+                    <canvas class="mini-chart" id="expensesChart"></canvas>
+                </div>
+                <div>
+                    <p class="text-white opacity-70 text-sm">Cheltuieli</p>
+                    <p class="amount-large">856K</p>
+                    <p class="status-negative text-sm mt-1">
+                        <i class="fas fa-arrow-down"></i> -8.2% față de luna trecută
+                    </p>
+                </div>
+            </div>
+
+            <div class="financial-card p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-chart-line text-white"></i>
+                    </div>
+                    <svg class="mini-chart" viewBox="0 0 100 50">
+                        <path d="M0,40 Q20,25 40,30 T80,20 L100,15" stroke="#FBBF24" stroke-width="2" fill="none"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-white opacity-70 text-sm">Profit Net</p>
+                    <p class="amount-large">1.54M</p>
+                    <p class="status-positive text-sm mt-1">
+                        <i class="fas fa-arrow-up"></i> +23.7% față de luna trecută
+                    </p>
+                </div>
+            </div>
+
+            <div class="financial-card p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="w-12 h-12 bg-gradient-to-r from-red-400 to-red-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-piggy-bank text-white"></i>
+                    </div>
+                    <div class="relative">
+                        <svg class="progress-ring w-16 h-16" viewBox="0 0 50 50">
+                            <circle class="progress-ring-circle" stroke="rgba(255,255,255,0.2)" stroke-width="4" fill="transparent" r="20" cx="25" cy="25"/>
+                            <circle class="progress-ring-circle" stroke="#FBBF24" stroke-width="4" fill="transparent" r="20" cx="25" cy="25" 
+                                    stroke-dasharray="94.24" stroke-dashoffset="18.85"/>
+                        </svg>
+                        <div class="absolute inset-0 flex items-center justify-center text-white text-xs font-bold">80%</div>
+                    </div>
+                </div>
+                <div>
+                    <p class="text-white opacity-70 text-sm">Economii</p>
+                    <p class="amount-large">425K</p>
+                    <p class="text-amber-400 text-sm mt-1">Obiectiv: 500K RON</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts and Analytics -->
+        <div class="grid lg:grid-cols-3 gap-8 mb-8">
+            <!-- Main Chart -->
+            <div class="lg:col-span-2">
+                <div class="chart-container">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold text-white">Analiză Financiară</h3>
+                        <div class="flex space-x-2">
+                            <button class="tab-glass active">Anual</button>
+                            <button class="tab-glass">Lunar</button>
+                            <button class="tab-glass">Săptămânal</button>
+                        </div>
+                    </div>
+                    <canvas id="mainFinancialChart" height="300"></canvas>
+                </div>
+            </div>
+
+            <!-- Portfolio Overview -->
+            <div class="space-y-6">
+                <div class="glass-morphism rounded-2xl p-6">
+                    <h3 class="text-lg font-bold text-white mb-4">Portofoliu Investiții</h3>
+                    <div class="space-y-4">
+                        <div class="portfolio-item">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-white font-medium">Acțiuni Tech</span>
+                                <span class="status-positive font-bold">+12.5%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-white opacity-70">245,000 RON</span>
+                                <span class="text-white opacity-70">35%</span>
+                            </div>
+                        </div>
+
+                        <div class="portfolio-item">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-white font-medium">Obligațiuni</span>
+                                <span class="status-positive font-bold">+4.2%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-white opacity-70">180,000 RON</span>
+                                <span class="text-white opacity-70">25%</span>
+                            </div>
+                        </div>
+
+                        <div class="portfolio-item">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-white font-medium">Crypto</span>
+                                <span class="status-negative font-bold">-8.3%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-white opacity-70">95,000 RON</span>
+                                <span class="text-white opacity-70">15%</span>
+                            </div>
+                        </div>
+
+                        <div class="portfolio-item">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-white font-medium">Imobiliare</span>
+                                <span class="status-positive font-bold">+6.8%</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-white opacity-70">170,000 RON</span>
+                                <span class="text-white opacity-70">25%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3 class="text-lg font-bold text-white mb-4">Distribuție Cheltuieli</h3>
+                    <canvas id="expensesPieChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Transactions and Goals -->
+        <div class="grid lg:grid-cols-2 gap-8">
+            <!-- Recent Transactions -->
+            <div class="glass-morphism rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold text-white">Tranzacții Recente</h3>
+                    <button class="btn-glass">Vezi Toate</button>
+                </div>
+                
+                <div class="space-y-4">
+                    <div class="transaction-item p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-arrow-down text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Plată client - Proiect Web</p>
+                                    <p class="text-white opacity-60 text-sm">23 Dec 2024, 14:30</p>
+                                </div>
+                            </div>
+                            <span class="text-green-400 font-bold">+15,500 RON</span>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-red-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-arrow-up text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Salarii echipă dezvoltare</p>
+                                    <p class="text-white opacity-60 text-sm">22 Dec 2024, 10:00</p>
+                                </div>
+                            </div>
+                            <span class="text-red-400 font-bold">-48,200 RON</span>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-credit-card text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Abonament software</p>
+                                    <p class="text-white opacity-60 text-sm">21 Dec 2024, 16:45</p>
+                                </div>
+                            </div>
+                            <span class="text-red-400 font-bold">-2,400 RON</span>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-arrow-down text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Dividend investiții</p>
+                                    <p class="text-white opacity-60 text-sm">20 Dec 2024, 09:15</p>
+                                </div>
+                            </div>
+                            <span class="text-green-400 font-bold">+8,750 RON</span>
+                        </div>
+                    </div>
+
+                    <div class="transaction-item p-4">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-10 h-10 bg-yellow-500 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-exchange-alt text-white"></i>
+                                </div>
+                                <div>
+                                    <p class="text-white font-medium">Transfer la economii</p>
+                                    <p class="text-white opacity-60 text-sm">19 Dec 2024, 12:20</p>
+                                </div>
+                            </div>
+                            <span class="text-amber-400 font-bold">25,000 RON</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Goals -->
+            <div class="glass-morphism rounded-2xl p-6">
+                <h3 class="text-xl font-bold text-white mb-6">Obiective Financiare 2024</h3>
+                
+                <div class="space-y-6">
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-white font-medium">Economii Anuale</span>
+                            <span class="text-white opacity-80">425K / 500K RON</span>
+                        </div>
+                        <div class="w-full bg-white bg-opacity-20 rounded-full h-3">
+                            <div class="bg-gradient-to-r from-amber-400 to-amber-600 h-3 rounded-full" style="width: 85%"></div>
+                        </div>
+                        <p class="text-amber-400 text-sm mt-1">85% completat</p>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-white font-medium">Investiții Portofoliu</span>
+                            <span class="text-white opacity-80">690K / 800K RON</span>
+                        </div>
+                        <div class="w-full bg-white bg-opacity-20 rounded-full h-3">
+                            <div class="bg-gradient-to-r from-green-400 to-green-600 h-3 rounded-full" style="width: 86%"></div>
+                        </div>
+                        <p class="text-green-400 text-sm mt-1">86% completat</p>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-white font-medium">Reducere Cheltuieli</span>
+                            <span class="text-white opacity-80">15% / 20%</span>
+                        </div>
+                        <div class="w-full bg-white bg-opacity-20 rounded-full h-3">
+                            <div class="bg-gradient-to-r from-blue-400 to-blue-600 h-3 rounded-full" style="width: 75%"></div>
+                        </div>
+                        <p class="text-blue-400 text-sm mt-1">75% completat</p>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <span class="text-white font-medium">Venituri Pasive</span>
+                            <span class="text-white opacity-80">35K / 50K RON</span>
+                        </div>
+                        <div class="w-full bg-white bg-opacity-20 rounded-full h-3">
+                            <div class="bg-gradient-to-r from-purple-400 to-purple-600 h-3 rounded-full" style="width: 70%"></div>
+                        </div>
+                        <p class="text-purple-400 text-sm mt-1">70% completat</p>
+                    </div>
+                </div>
+
+                <div class="mt-8 p-4 bg-gradient-to-r from-amber-400 to-amber-600 bg-opacity-20 rounded-xl border border-amber-400 border-opacity-50">
+                    <h4 class="text-white font-bold mb-2">💡 Recomandare Smart</h4>
+                    <p class="text-white opacity-90 text-sm">
+                        Pe baza analizei cheltuielilor, poți economisi încă 12,000 RON/lună prin 
+                        optimizarea costurilor operaționale.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Main Financial Chart
+        const mainCtx = document.getElementById('mainFinancialChart').getContext('2d');
+        new Chart(mainCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [
+                    {
+                        label: 'Venituri',
+                        data: [180000, 195000, 210000, 185000, 220000, 235000, 250000, 240000, 260000, 275000, 290000, 305000],
+                        borderColor: 'rgba(34, 197, 94, 1)',
+                        backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Cheltuieli',
+                        data: [120000, 125000, 130000, 115000, 140000, 145000, 150000, 145000, 155000, 160000, 165000, 170000],
+                        borderColor: 'rgba(239, 68, 68, 1)',
+                        backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Profit',
+                        data: [60000, 70000, 80000, 70000, 80000, 90000, 100000, 95000, 105000, 115000, 125000, 135000],
+                        borderColor: 'rgba(251, 191, 36, 1)',
+                        backgroundColor: 'rgba(251, 191, 36, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            color: 'white',
+                            callback: function(value) {
+                                return value.toLocaleString('ro-RO') + ' RON';
+                            }
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: 'white'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Expenses Pie Chart
+        const expensesCtx = document.getElementById('expensesPieChart').getContext('2d');
+        new Chart(expensesCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Salarii', 'Marketing', 'Chirie', 'Utilități', 'Software', 'Diverse'],
+                datasets: [{
+                    data: [45, 20, 15, 8, 7, 5],
+                    backgroundColor: [
+                        'rgba(251, 191, 36, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(34, 197, 94, 0.8)',
+                        'rgba(239, 68, 68, 0.8)',
+                        'rgba(147, 51, 234, 0.8)',
+                        'rgba(156, 163, 175, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(251, 191, 36, 1)',
+                        'rgba(59, 130, 246, 1)',
+                        'rgba(34, 197, 94, 1)',
+                        'rgba(239, 68, 68, 1)',
+                        'rgba(147, 51, 234, 1)',
+                        'rgba(156, 163, 175, 1)'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: 'white',
+                            padding: 15,
+                            usePointStyle: true
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
