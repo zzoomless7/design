@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management Dashboard - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'violet': {
+                            400: '#A78BFA',
+                            500: '#8B5CF6',
+                            600: '#7C3AED',
+                        },
+                        'rose': {
+                            400: '#FB7185',
+                            500: '#F43F5E',
+                            600: '#E11D48',
+                        },
+                        'slate': {
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1E293B',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #2D1B69 0%, #11001C 50%, #6B46C1 100%);
+            min-height: 100vh;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.09);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            transition: all 0.4s ease;
+            border-radius: 18px;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 30px 60px rgba(139, 92, 246, 0.4);
+        }
+
+        .header-glass {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 0 0 20px 20px;
+        }
+
+        .sidebar-glass {
+            background: rgba(17, 0, 28, 0.7);
+            backdrop-filter: blur(25px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link-glass {
+            color: rgba(255, 255, 255, 0.8) !important;
+            font-weight: 500;
+            position: relative;
+            padding: 14px 20px;
+            border-radius: 12px;
+            transition: all 0.4s ease;
+            margin: 6px 0;
+            overflow: hidden;
+        }
+
+        .nav-link-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(167, 139, 250, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .nav-link-glass:hover::before {
+            left: 100%;
+        }
+
+        .nav-link-glass:hover,
+        .nav-link-glass.active {
+            background: rgba(167, 139, 250, 0.2);
+            color: #A78BFA !important;
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(167, 139, 250, 0.3);
+        }
+
+        .project-card {
+            background: linear-gradient(135deg, rgba(167, 139, 250, 0.15), rgba(251, 113, 133, 0.15));
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            transition: all 0.5s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(167, 139, 250, 0.3), transparent);
+            border-radius: 50%;
+            transform: translate(50px, -50px);
+        }
+
+        .project-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            box-shadow: 0 40px 80px rgba(167, 139, 250, 0.4);
+        }
+
+        .task-item {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .task-item:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateX(8px);
+        }
+
+        .task-priority-high {
+            border-left: 4px solid #F43F5E;
+        }
+
+        .task-priority-medium {
+            border-left: 4px solid #F59E0B;
+        }
+
+        .task-priority-low {
+            border-left: 4px solid #10B981;
+        }
+
+        .team-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #A78BFA, #FB7185);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .team-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(167, 139, 250, 0.5);
+        }
+
+        .progress-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            height: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-glass {
+            height: 100%;
+            border-radius: 20px;
+            transition: width 2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .progress-bar-glass::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: shimmer 2s infinite;
+        }
+
+        @keyframes shimmer {
+            100% { left: 100%; }
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.3);
+            color: #10B981;
+        }
+
+        .status-pending {
+            background: rgba(245, 158, 11, 0.3);
+            color: #F59E0B;
+        }
+
+        .status-completed {
+            background: rgba(167, 139, 250, 0.3);
+            color: #A78BFA;
+        }
+
+        .kanban-column {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            min-height: 400px;
+        }
+
+        .kanban-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            cursor: grab;
+        }
+
+        .kanban-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: scale(1.02);
+        }
+
+        .chart-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .floating-action {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #A78BFA, #FB7185);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 15px 35px rgba(167, 139, 250, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            animation: pulse 3s infinite;
+        }
+
+        .floating-action:hover {
+            transform: scale(1.1);
+            box-shadow: 0 20px 50px rgba(167, 139, 250, 0.7);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 15px 35px rgba(167, 139, 250, 0.5); }
+            50% { box-shadow: 0 15px 35px rgba(167, 139, 250, 0.8); }
+            100% { box-shadow: 0 15px 35px rgba(167, 139, 250, 0.5); }
+        }
+
+        .deadline-urgent {
+            background: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+        }
+
+        .deadline-soon {
+            background: rgba(245, 158, 11, 0.2);
+            color: #F59E0B;
+        }
+
+        .deadline-normal {
+            background: rgba(167, 139, 250, 0.2);
+            color: #A78BFA;
+        }
+
+        .metric-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .metric-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(167, 139, 250, 0.1), transparent);
+            animation: rotate 6s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .metric-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 1rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: linear-gradient(135deg, #A78BFA, #FB7185);
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 1.375rem;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% + 1rem);
+            background: linear-gradient(180deg, #A78BFA, #FB7185);
+            opacity: 0.6;
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar-glass position-fixed top-0 start-0 h-100" style="width: 280px; z-index: 1000;">
+        <div class="p-4">
+            <!-- Logo -->
+            <div class="d-flex align-items-center mb-4">
+                <div class="rounded-circle d-flex align-items-center justify-content-center me-3" 
+                     style="width: 50px; height: 50px; background: linear-gradient(135deg, #A78BFA, #FB7185); animation: pulse 3s infinite;">
+                    <i class="fas fa-tasks text-white fs-4"></i>
+                </div>
+                <div>
+                    <h4 class="text-white mb-0 fw-bold">ProjectHub</h4>
+                    <small class="text-white-50">Management Suite</small>
+                </div>
+            </div>
+
+            <!-- Navigation -->
+            <nav class="mt-4">
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none active">
+                    <i class="fas fa-tachometer-alt me-3"></i>
+                    Dashboard
+                </a>
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-project-diagram me-3"></i>
+                    Projects
+                </a>
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-tasks me-3"></i>
+                    Tasks
+                </a>
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-users me-3"></i>
+                    Team
+                </a>
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-calendar-alt me-3"></i>
+                    Calendar
+                </a>
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-chart-line me-3"></i>
+                    Reports
+                </a>
+                <a href="#" class="nav-link-glass d-flex align-items-center text-decoration-none">
+                    <i class="fas fa-cog me-3"></i>
+                    Settings
+                </a>
+            </nav>
+
+            <!-- Team Quick Access -->
+            <div class="glass-card p-3 mt-4">
+                <h6 class="text-white mb-3">Active Team</h6>
+                <div class="d-flex align-items-center mb-3">
+                    <div class="team-avatar me-3" style="width: 35px; height: 35px;">JD</div>
+                    <div>
+                        <div class="text-white fw-semibold">John Doe</div>
+                        <small class="text-white-50">Project Manager</small>
+                    </div>
+                </div>
+                <div class="d-flex -space-x-2">
+                    <div class="team-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">AM</div>
+                    <div class="team-avatar" style="width: 30px; height: 30px; font-size: 0.8rem; margin-left: -8px;">SD</div>
+                    <div class="team-avatar" style="width: 30px; height: 30px; font-size: 0.8rem; margin-left: -8px;">MJ</div>
+                    <div class="team-avatar" style="width: 30px; height: 30px; font-size: 0.8rem; margin-left: -8px;">+5</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div style="margin-left: 280px;">
+        <!-- Header -->
+        <div class="header-glass p-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 class="text-white mb-1">Project Management</h2>
+                    <p class="text-white-50 mb-0">Track progress, manage tasks, and collaborate with your team</p>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div class="glass-card p-2 px-3 me-3">
+                        <i class="fas fa-bell text-violet-400 me-2"></i>
+                        <span class="text-white">5 notifications</span>
+                    </div>
+                    <div class="team-avatar">PM</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Content -->
+        <div class="p-4">
+            <!-- Metrics Row -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-3">
+                    <div class="metric-card p-4">
+                        <div class="metric-content">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h3 class="text-white mb-1">12</h3>
+                                    <p class="text-white-50 mb-0">Active Projects</p>
+                                </div>
+                                <div class="glass-card p-2 rounded-circle">
+                                    <i class="fas fa-project-diagram text-violet-400"></i>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar-glass" style="width: 75%; background: linear-gradient(90deg, #A78BFA, #FB7185);"></div>
+                            </div>
+                            <small class="text-white-50 mt-2 d-block">3 completed this month</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="metric-card p-4">
+                        <div class="metric-content">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h3 class="text-white mb-1">847</h3>
+                                    <p class="text-white-50 mb-0">Total Tasks</p>
+                                </div>
+                                <div class="glass-card p-2 rounded-circle">
+                                    <i class="fas fa-tasks text-rose-400"></i>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar-glass" style="width: 82%; background: linear-gradient(90deg, #FB7185, #A78BFA);"></div>
+                            </div>
+                            <small class="text-white-50 mt-2 d-block">156 completed today</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="metric-card p-4">
+                        <div class="metric-content">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h3 class="text-white mb-1">24</h3>
+                                    <p class="text-white-50 mb-0">Team Members</p>
+                                </div>
+                                <div class="glass-card p-2 rounded-circle">
+                                    <i class="fas fa-users text-violet-400"></i>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar-glass" style="width: 90%; background: linear-gradient(90deg, #A78BFA, #10B981);"></div>
+                            </div>
+                            <small class="text-white-50 mt-2 d-block">8 online now</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="metric-card p-4">
+                        <div class="metric-content">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h3 class="text-white mb-1">95%</h3>
+                                    <p class="text-white-50 mb-0">Success Rate</p>
+                                </div>
+                                <div class="glass-card p-2 rounded-circle">
+                                    <i class="fas fa-chart-line text-rose-400"></i>
+                                </div>
+                            </div>
+                            <div class="progress-container">
+                                <div class="progress-bar-glass" style="width: 95%; background: linear-gradient(90deg, #10B981, #34D399);"></div>
+                            </div>
+                            <small class="text-white-50 mt-2 d-block">+5% from last month</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects and Tasks Row -->
+            <div class="row g-4 mb-4">
+                <div class="col-md-8">
+                    <div class="chart-glass p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h5 class="text-white mb-0">Project Timeline</h5>
+                            <div class="btn-group">
+                                <button class="btn btn-sm text-white" style="background: rgba(167, 139, 250, 0.3); border: 1px solid rgba(255,255,255,0.2);">Week</button>
+                                <button class="btn btn-sm text-white-50" style="border: 1px solid rgba(255,255,255,0.2);">Month</button>
+                                <button class="btn btn-sm text-white-50" style="border: 1px solid rgba(255,255,255,0.2);">Year</button>
+                            </div>
+                        </div>
+                        <canvas id="timelineChart" height="300"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="glass-card p-4">
+                        <h5 class="text-white mb-4">Recent Activity</h5>
+                        
+                        <div class="timeline-item">
+                            <div class="text-white fw-semibold">Task completed</div>
+                            <small class="text-white-50">John finished "UI Design Review"</small>
+                            <div class="text-white-50" style="font-size: 0.7rem;">2 minutes ago</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="text-white fw-semibold">New project created</div>
+                            <small class="text-white-50">Sarah created "Mobile App v2.0"</small>
+                            <div class="text-white-50" style="font-size: 0.7rem;">15 minutes ago</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="text-white fw-semibold">Team member added</div>
+                            <small class="text-white-50">Mike joined the development team</small>
+                            <div class="text-white-50" style="font-size: 0.7rem;">1 hour ago</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="text-white fw-semibold">Deadline updated</div>
+                            <small class="text-white-50">Website redesign moved to next week</small>
+                            <div class="text-white-50" style="font-size: 0.7rem;">3 hours ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Kanban Board -->
+            <div class="row g-4 mb-4">
+                <div class="col-12">
+                    <div class="glass-card p-4">
+                        <h5 class="text-white mb-4">Task Board</h5>
+                        
+                        <div class="row g-4">
+                            <div class="col-md-4">
+                                <div class="kanban-column p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h6 class="text-white">To Do</h6>
+                                        <span class="badge" style="background: rgba(167, 139, 250, 0.3); color: #A78BFA;">8</span>
+                                    </div>
+                                    
+                                    <div class="kanban-card p-3 mb-3">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="text-white mb-1">Design System Update</h6>
+                                            <span class="deadline-urgent px-2 py-1 rounded">High</span>
+                                        </div>
+                                        <p class="text-white-50 small mb-3">Update color palette and typography</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex">
+                                                <div class="team-avatar me-1" style="width: 25px; height: 25px; font-size: 0.7rem;">JD</div>
+                                                <div class="team-avatar" style="width: 25px; height: 25px; font-size: 0.7rem;">AM</div>
+                                            </div>
+                                            <small class="text-white-50">Dec 20</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="kanban-card p-3 mb-3">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="text-white mb-1">API Documentation</h6>
+                                            <span class="deadline-normal px-2 py-1 rounded">Medium</span>
+                                        </div>
+                                        <p class="text-white-50 small mb-3">Write comprehensive API docs</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="team-avatar" style="width: 25px; height: 25px; font-size: 0.7rem;">SD</div>
+                                            <small class="text-white-50">Dec 25</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="kanban-column p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h6 class="text-white">In Progress</h6>
+                                        <span class="badge" style="background: rgba(245, 158, 11, 0.3); color: #F59E0B;">5</span>
+                                    </div>
+                                    
+                                    <div class="kanban-card p-3 mb-3">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="text-white mb-1">User Authentication</h6>
+                                            <span class="deadline-soon px-2 py-1 rounded">High</span>
+                                        </div>
+                                        <p class="text-white-50 small mb-3">Implement OAuth and 2FA</p>
+                                        <div class="progress-container mb-2">
+                                            <div class="progress-bar-glass" style="width: 65%; background: linear-gradient(90deg, #F59E0B, #10B981);"></div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="team-avatar" style="width: 25px; height: 25px; font-size: 0.7rem;">MJ</div>
+                                            <small class="text-white-50">65%</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="kanban-card p-3">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="text-white mb-1">Database Migration</h6>
+                                            <span class="deadline-normal px-2 py-1 rounded">Medium</span>
+                                        </div>
+                                        <p class="text-white-50 small mb-3">Migrate to PostgreSQL</p>
+                                        <div class="progress-container mb-2">
+                                            <div class="progress-bar-glass" style="width: 40%; background: linear-gradient(90deg, #A78BFA, #FB7185);"></div>
+                                        </div>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="team-avatar" style="width: 25px; height: 25px; font-size: 0.7rem;">RW</div>
+                                            <small class="text-white-50">40%</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="kanban-column p-3">
+                                    <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <h6 class="text-white">Completed</h6>
+                                        <span class="badge" style="background: rgba(16, 185, 129, 0.3); color: #10B981;">12</span>
+                                    </div>
+                                    
+                                    <div class="kanban-card p-3 mb-3">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="text-white mb-1">Landing Page</h6>
+                                            <span class="status-completed px-2 py-1 rounded">Done</span>
+                                        </div>
+                                        <p class="text-white-50 small mb-3">Responsive landing page design</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="d-flex">
+                                                <div class="team-avatar me-1" style="width: 25px; height: 25px; font-size: 0.7rem;">EM</div>
+                                                <div class="team-avatar" style="width: 25px; height: 25px; font-size: 0.7rem;">JL</div>
+                                            </div>
+                                            <small class="text-white-50">✓ Dec 18</small>
+                                        </div>
+                                    </div>
+
+                                    <div class="kanban-card p-3">
+                                        <div class="d-flex justify-content-between align-items-start mb-2">
+                                            <h6 class="text-white mb-1">Logo Design</h6>
+                                            <span class="status-completed px-2 py-1 rounded">Done</span>
+                                        </div>
+                                        <p class="text-white-50 small mb-3">Brand identity and logo variations</p>
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div class="team-avatar" style="width: 25px; height: 25px; font-size: 0.7rem;">TK</div>
+                                            <small class="text-white-50">✓ Dec 15</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Projects Overview -->
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="project-card p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="text-white mb-1">E-Commerce Platform</h5>
+                                <p class="text-white-50 mb-0">Full-stack web application</p>
+                            </div>
+                            <span class="status-active">Active</span>
+                        </div>
+                        <div class="progress-container mb-3">
+                            <div class="progress-bar-glass" style="width: 73%; background: linear-gradient(90deg, #A78BFA, #FB7185);"></div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex">
+                                <div class="team-avatar me-2" style="width: 30px; height: 30px; font-size: 0.8rem;">JS</div>
+                                <div class="team-avatar me-2" style="width: 30px; height: 30px; font-size: 0.8rem;">ML</div>
+                                <div class="team-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">+3</div>
+                            </div>
+                            <small class="text-white">73% complete</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="project-card p-4">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <div>
+                                <h5 class="text-white mb-1">Mobile App Redesign</h5>
+                                <p class="text-white-50 mb-0">iOS and Android native apps</p>
+                            </div>
+                            <span class="status-pending">Pending</span>
+                        </div>
+                        <div class="progress-container mb-3">
+                            <div class="progress-bar-glass" style="width: 45%; background: linear-gradient(90deg, #FB7185, #F59E0B);"></div>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex">
+                                <div class="team-avatar me-2" style="width: 30px; height: 30px; font-size: 0.8rem;">AR</div>
+                                <div class="team-avatar me-2" style="width: 30px; height: 30px; font-size: 0.8rem;">KP</div>
+                                <div class="team-avatar" style="width: 30px; height: 30px; font-size: 0.8rem;">DM</div>
+                            </div>
+                            <small class="text-white">45% complete</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Action Button -->
+    <div class="floating-action">
+        <i class="fas fa-plus text-white fs-4"></i>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Timeline Chart
+        const timelineCtx = document.getElementById('timelineChart').getContext('2d');
+        new Chart(timelineCtx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4', 'Week 5', 'Week 6'],
+                datasets: [{
+                    label: 'Tasks Completed',
+                    data: [45, 52, 38, 67, 73, 89],
+                    borderColor: '#A78BFA',
+                    backgroundColor: 'rgba(167, 139, 250, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Tasks Created',
+                    data: [38, 42, 51, 48, 58, 67],
+                    borderColor: '#FB7185',
+                    backgroundColor: 'rgba(251, 113, 133, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        labels: { color: 'white' }
+                    }
+                },
+                scales: {
+                    x: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } },
+                    y: { ticks: { color: 'white' }, grid: { color: 'rgba(255,255,255,0.1)' } }
+                }
+            }
+        });
+
+        // Drag and drop functionality for kanban cards
+        document.querySelectorAll('.kanban-card').forEach(card => {
+            card.addEventListener('dragstart', function(e) {
+                e.dataTransfer.setData('text/plain', '');
+                this.style.opacity = '0.5';
+            });
+            
+            card.addEventListener('dragend', function() {
+                this.style.opacity = '1';
+            });
+        });
+
+        document.querySelectorAll('.kanban-column').forEach(column => {
+            column.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                this.style.background = 'rgba(167, 139, 250, 0.2)';
+            });
+            
+            column.addEventListener('dragleave', function() {
+                this.style.background = 'rgba(255, 255, 255, 0.06)';
+            });
+            
+            column.addEventListener('drop', function(e) {
+                e.preventDefault();
+                this.style.background = 'rgba(255, 255, 255, 0.06)';
+                // Handle drop logic here
+            });
+        });
+
+        // Floating action button
+        document.querySelector('.floating-action').addEventListener('click', function() {
+            console.log('Create new task/project');
+        });
+
+        // Smooth animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.metric-card, .project-card, .glass-card, .kanban-column').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

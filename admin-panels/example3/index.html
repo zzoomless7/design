@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Example 3 (Glass)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'amber': {
+                            400: '#FBBF24',
+                            500: '#F59E0B',
+                            600: '#D97706',
+                        },
+                        'slate': {
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1E293B',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-link-glass {
+            color: white !important;
+            font-weight: 500;
+            position: relative;
+            padding: 10px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link-glass:hover,
+        .nav-link-glass.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: #FBBF24 !important;
+        }
+
+        .logo-glow {
+            background: linear-gradient(45deg, #FBBF24, #F59E0B);
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(251, 191, 36, 0.5); }
+            to { box-shadow: 0 0 30px rgba(251, 191, 36, 0.8); }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .fade-scale {
+            animation: fadeScale 0.6s ease-out;
+        }
+
+        @keyframes fadeScale {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .gradient-text {
+            background: linear-gradient(45deg, #FBBF24, #F59E0B);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .btn-glass {
+            background: rgba(251, 191, 36, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-glass:hover {
+            background: rgba(251, 191, 36, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(251, 191, 36, 0.4);
+            color: white;
+        }
+
+        .feature-icon-glass {
+            background: rgba(251, 191, 36, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(251, 191, 36, 0.3);
+        }
+
+        .article-card-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .article-card-glass:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+
+        .gallery-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-glass:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05) rotate(2deg);
+        }
+
+        .form-glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .form-glass::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .form-glass:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(251, 191, 36, 0.8);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.3);
+        }
+
+        .social-glass {
+            background: rgba(251, 191, 36, 0.3);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(251, 191, 36, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .social-glass:hover {
+            background: rgba(251, 191, 36, 0.8);
+            transform: translateY(-5px) scale(1.1);
+        }
+
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .text-shadow {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .shimmer {
+            background: linear-gradient(45deg, transparent 30%, rgba(255, 255, 255, 0.3) 50%, transparent 70%);
+            background-size: 200% 200%;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% -200%; }
+            100% { background-position: 200% 200%; }
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(251, 191, 36, 0.1);
+            animation: blob 20s infinite;
+        }
+
+        @keyframes blob {
+            0%, 100% { transform: translate(0px, 0px) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+    </style>
+</head>
+<body class="relative overflow-x-hidden">
+    <!-- Background Blobs -->
+    <div class="blob w-72 h-72 top-10 left-10 z-0"></div>
+    <div class="blob w-96 h-96 top-1/2 right-10 z-0" style="animation-delay: -10s;"></div>
+    <div class="blob w-64 h-64 bottom-20 left-1/3 z-0" style="animation-delay: -5s;"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar-glass fixed w-full top-0 z-50 py-4">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 rounded-full logo-glow flex items-center justify-center">
+                        <i class="fas fa-gem text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-white">GlassAdmin</span>
+                </div>
+
+                <!-- Menu -->
+                <div class="hidden md:flex space-x-2">
+                    <a href="#home" class="nav-link-glass active">Home</a>
+                    <a href="#despre" class="nav-link-glass">Despre</a>
+                    <a href="#articole" class="nav-link-glass">Articole</a>
+                    <a href="#galerie" class="nav-link-glass">Galerie</a>
+                    <a href="#contact" class="nav-link-glass">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-white">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-20 relative">
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="slide-up">
+                <h1 class="text-6xl md:text-7xl font-bold text-white mb-6 text-shadow">
+                    Viitorul este
+                    <span class="gradient-text block">Transparent</span>
+                </h1>
+                <p class="text-xl text-white opacity-90 mb-8 max-w-3xl mx-auto text-shadow">
+                    Descoperă o nouă dimensiune a administrării digitale cu GlassAdmin - 
+                    unde designul modern întâlnește funcționalitatea avansată
+                </p>
+                <button class="btn-glass px-8 py-4 rounded-full text-lg border-0 shimmer">
+                    Explorează Acum
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-white mb-16 fade-scale">Caracteristici Unice</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card rounded-3xl p-8 text-center floating" style="animation-delay: 0s;">
+                    <div class="feature-icon-glass w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-eye text-3xl text-amber-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Transparență Totală</h3>
+                    <p class="text-white opacity-80">Interfață cristalină care oferă claritate și eleganță în fiecare detaliu</p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-8 text-center floating" style="animation-delay: 0.5s;">
+                    <div class="feature-icon-glass w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-magic text-3xl text-amber-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Experiență Magică</h3>
+                    <p class="text-white opacity-80">Animații fluide și efecte vizuale care transformă munca în plăcere</p>
+                </div>
+
+                <div class="glass-card rounded-3xl p-8 text-center floating" style="animation-delay: 1s;">
+                    <div class="feature-icon-glass w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-infinity text-3xl text-amber-400"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Posibilități Infinite</h3>
+                    <p class="text-white opacity-80">Personalizare avansată și adaptabilitate pentru orice tip de business</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="despre" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <div class="glass-morphism rounded-3xl p-12">
+                <div class="grid lg:grid-cols-2 gap-12 items-center">
+                    <div class="fade-scale">
+                        <h2 class="text-4xl font-bold text-white mb-6">Despre GlassAdmin</h2>
+                        <p class="text-lg text-white opacity-90 mb-6">
+                            GlassAdmin redefinește standardele industriei prin introducerea conceptului de "transparență funcțională" - 
+                            o abordare revoluționară care combină estetica modernă cu performanța de excepție.
+                        </p>
+                        <p class="text-white opacity-80 mb-8">
+                            Dezvoltat de o echipă de visionari în design și tehnologie, GlassAdmin reprezintă evoluția naturală 
+                            a interfețelor administrative, oferind o experiență care transcende limitele convenționale.
+                        </p>
+                        <div class="grid grid-cols-3 gap-6 text-center">
+                            <div>
+                                <div class="text-3xl font-bold gradient-text">2K+</div>
+                                <div class="text-white opacity-70 text-sm">Utilizatori Premium</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold gradient-text">100%</div>
+                                <div class="text-white opacity-70 text-sm">Satisfacție Client</div>
+                            </div>
+                            <div>
+                                <div class="text-3xl font-bold gradient-text">24/7</div>
+                                <div class="text-white opacity-70 text-sm">Suport Elite</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center floating">
+                        <div class="glass-card rounded-3xl p-8">
+                            <i class="fas fa-cube text-8xl text-amber-400 mb-4"></i>
+                            <h4 class="text-xl font-bold text-white mb-2">Design 3D Interactiv</h4>
+                            <p class="text-white opacity-80">Interfață tridimensională și responsive</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles Section -->
+    <section id="articole" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-white mb-16 fade-scale">Articole Premium</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="article-card-glass rounded-3xl overflow-hidden slide-up">
+                    <div class="h-48 bg-gradient-to-r from-amber-400 to-amber-600 relative overflow-hidden">
+                        <div class="absolute inset-0 shimmer"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-3">Designul Transparent: Viitorul UI/UX</h3>
+                        <p class="text-white opacity-80 mb-4">Explorează cum glassmorphism-ul revoluționează experiența utilizatorului modern...</p>
+                        <button class="btn-glass px-6 py-2 rounded-full border-0">Citește Mai Mult</button>
+                    </div>
+                </div>
+
+                <div class="article-card-glass rounded-3xl overflow-hidden slide-up" style="animation-delay: 0.2s;">
+                    <div class="h-48 bg-gradient-to-r from-slate-600 to-slate-800 relative overflow-hidden">
+                        <div class="absolute inset-0 shimmer"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-3">Psihologia Culorilor în Admin Panels</h3>
+                        <p class="text-white opacity-80 mb-4">Cum influențează paleta galben-gri productivitatea și starea de spirit...</p>
+                        <button class="btn-glass px-6 py-2 rounded-full border-0">Citește Mai Mult</button>
+                    </div>
+                </div>
+
+                <div class="article-card-glass rounded-3xl overflow-hidden slide-up" style="animation-delay: 0.4s;">
+                    <div class="h-48 bg-gradient-to-r from-amber-500 to-slate-700 relative overflow-hidden">
+                        <div class="absolute inset-0 shimmer"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-white mb-3">Micro-animații și Performanța Web</h3>
+                        <p class="text-white opacity-80 mb-4">Echilibrul perfect între eleganță vizuală și optimizarea resurselor...</p>
+                        <button class="btn-glass px-6 py-2 rounded-full border-0">Citește Mai Mult</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="galerie" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-white mb-16 fade-scale">Galerie Interactivă</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div class="gallery-glass rounded-2xl h-48 cursor-pointer slide-up" style="background: linear-gradient(45deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.5));"></div>
+                <div class="gallery-glass rounded-2xl h-48 cursor-pointer slide-up" style="background: linear-gradient(45deg, rgba(71, 85, 105, 0.3), rgba(51, 65, 85, 0.5)); animation-delay: 0.1s;"></div>
+                <div class="gallery-glass rounded-2xl h-48 cursor-pointer slide-up" style="background: linear-gradient(45deg, rgba(245, 158, 11, 0.3), rgba(217, 119, 6, 0.5)); animation-delay: 0.2s;"></div>
+                <div class="gallery-glass rounded-2xl h-48 cursor-pointer slide-up" style="background: linear-gradient(45deg, rgba(30, 41, 59, 0.3), rgba(71, 85, 105, 0.5)); animation-delay: 0.3s;"></div>
+                <div class="gallery-glass rounded-2xl h-48 cursor-pointer slide-up col-span-2" style="background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(71, 85, 105, 0.3)); animation-delay: 0.4s;"></div>
+                <div class="gallery-glass rounded-2xl h-48 cursor-pointer slide-up col-span-2" style="background: linear-gradient(135deg, rgba(51, 65, 85, 0.3), rgba(245, 158, 11, 0.3)); animation-delay: 0.5s;"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 relative">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center text-white mb-16 fade-scale">Contactează Echipa</h2>
+            <div class="max-w-4xl mx-auto">
+                <div class="glass-morphism rounded-3xl p-8">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <div class="slide-up">
+                            <h3 class="text-2xl font-bold text-white mb-6">Trimite un Mesaj</h3>
+                            <form class="space-y-4">
+                                <input type="text" placeholder="Numele tău complet" class="form-glass w-full px-4 py-3 rounded-xl border-0">
+                                <input type="email" placeholder="Adresa de email" class="form-glass w-full px-4 py-3 rounded-xl border-0">
+                                <input type="tel" placeholder="Numărul de telefon" class="form-glass w-full px-4 py-3 rounded-xl border-0">
+                                <textarea placeholder="Mesajul tău..." rows="5" class="form-glass w-full px-4 py-3 rounded-xl border-0 resize-none"></textarea>
+                                <button type="submit" class="btn-glass w-full py-3 rounded-xl border-0">Trimite Mesajul</button>
+                            </form>
+                        </div>
+                        <div class="slide-up" style="animation-delay: 0.2s;">
+                            <h3 class="text-2xl font-bold text-white mb-6">Informații de Contact</h3>
+                            <div class="space-y-6">
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 feature-icon-glass rounded-full flex items-center justify-center">
+                                        <i class="fas fa-map-marker-alt text-amber-400"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-white font-medium">Locație</div>
+                                        <div class="text-white opacity-80">Calea Victoriei nr. 50, București</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 feature-icon-glass rounded-full flex items-center justify-center">
+                                        <i class="fas fa-phone text-amber-400"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-white font-medium">Telefon</div>
+                                        <div class="text-white opacity-80">+40 31 123 4567</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 feature-icon-glass rounded-full flex items-center justify-center">
+                                        <i class="fas fa-envelope text-amber-400"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-white font-medium">Email</div>
+                                        <div class="text-white opacity-80">hello@glassadmin.ro</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <div class="w-12 h-12 feature-icon-glass rounded-full flex items-center justify-center">
+                                        <i class="fas fa-clock text-amber-400"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-white font-medium">Program</div>
+                                        <div class="text-white opacity-80">24/7 - Suport continuu</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-16 relative">
+        <div class="container mx-auto px-4">
+            <div class="glass-morphism rounded-3xl p-8">
+                <div class="grid md:grid-cols-3 gap-8 mb-8">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-4">
+                            <div class="w-10 h-10 rounded-full logo-glow flex items-center justify-center">
+                                <i class="fas fa-gem text-white"></i>
+                            </div>
+                            <span class="text-xl font-bold text-white">GlassAdmin</span>
+                        </div>
+                        <p class="text-white opacity-80">Redefinind viitorul administrării digitale prin inovație și transparență.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-4">Link-uri Rapide</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-white opacity-80 hover:opacity-100 transition-opacity">Documentație API</a></li>
+                            <li><a href="#" class="text-white opacity-80 hover:opacity-100 transition-opacity">Ghiduri Tutorial</a></li>
+                            <li><a href="#" class="text-white opacity-80 hover:opacity-100 transition-opacity">Comunitatea</a></li>
+                            <li><a href="#" class="text-white opacity-80 hover:opacity-100 transition-opacity">Blog Tehnic</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-bold text-white mb-4">Rețele Sociale</h4>
+                        <div class="flex space-x-4">
+                            <a href="#" class="social-glass w-12 h-12 rounded-full flex items-center justify-center text-white">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-glass w-12 h-12 rounded-full flex items-center justify-center text-white">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-glass w-12 h-12 rounded-full flex items-center justify-center text-white">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="social-glass w-12 h-12 rounded-full flex items-center justify-center text-white">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <hr class="border-white border-opacity-20 my-6">
+                <div class="text-center text-white opacity-80">
+                    <p>&copy; 2024 GlassAdmin. Toate drepturile rezervate cu eleganță.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link-glass');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (scrollY >= sectionTop) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Parallax effects
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const blobs = document.querySelectorAll('.blob');
+            
+            blobs.forEach((blob, index) => {
+                const speed = 0.1 + (index * 0.05);
+                blob.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Intersection Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.slide-up, .fade-scale').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Mouse movement parallax for glass cards
+        document.addEventListener('mousemove', function(e) {
+            const cards = document.querySelectorAll('.glass-card');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            cards.forEach(card => {
+                const rect = card.getBoundingClientRect();
+                const cardX = (rect.left + rect.width / 2) / window.innerWidth;
+                const cardY = (rect.top + rect.height / 2) / window.innerHeight;
+                
+                const deltaX = (x - cardX) * 10;
+                const deltaY = (y - cardY) * 10;
+                
+                card.style.transform = `translate(${deltaX}px, ${deltaY}px) rotateX(${deltaY * 0.5}deg) rotateY(${deltaX * 0.5}deg)`;
+            });
+        });
+    </script>
+</body>
+</html>
