@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Neumorphic</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #e0e5ec;
+            color: #4a5568;
+            padding: 50px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .header h1 {
+            font-size: 4rem;
+            color: #2d3748;
+            margin-bottom: 20px;
+            text-shadow: 
+                2px 2px 4px rgba(255, 255, 255, 0.8),
+                -2px -2px 4px rgba(163, 177, 198, 0.6);
+        }
+        .header p {
+            font-size: 1.3rem;
+            color: #718096;
+        }
+        .neu-card {
+            background: #e0e5ec;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 
+                20px 20px 60px #bec3c9,
+                -20px -20px 60px #ffffff;
+            margin-bottom: 40px;
+        }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        .contact-item {
+            background: #e0e5ec;
+            border-radius: 25px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 
+                inset 8px 8px 16px #bec3c9,
+                inset -8px -8px 16px #ffffff;
+            transition: all 0.3s ease;
+        }
+        .contact-item:hover {
+            box-shadow: 
+                8px 8px 16px #bec3c9,
+                -8px -8px 16px #ffffff;
+        }
+        .icon-neu {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: #e0e5ec;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                8px 8px 16px #bec3c9,
+                -8px -8px 16px #ffffff;
+        }
+        .icon-neu i {
+            font-size: 2rem;
+            color: #667eea;
+        }
+        .contact-item h3 {
+            font-size: 1.5rem;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+        .contact-item p {
+            color: #718096;
+            margin-bottom: 15px;
+        }
+        .contact-item a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .form-section {
+            background: #e0e5ec;
+            border-radius: 40px;
+            padding: 60px;
+            box-shadow: 
+                30px 30px 80px #bec3c9,
+                -30px -30px 80px #ffffff;
+        }
+        .form-title {
+            font-size: 2.5rem;
+            color: #2d3748;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .form-group {
+            margin-bottom: 30px;
+        }
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+        label {
+            display: block;
+            color: #4a5568;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 18px;
+            background: #e0e5ec;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            color: #2d3748;
+            font-family: inherit;
+            box-shadow: 
+                inset 6px 6px 12px #bec3c9,
+                inset -6px -6px 12px #ffffff;
+            transition: all 0.3s ease;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            box-shadow: 
+                inset 8px 8px 16px #bec3c9,
+                inset -8px -8px 16px #ffffff;
+        }
+        input::placeholder, textarea::placeholder {
+            color: #a0aec0;
+        }
+        .btn-neu {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(145deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 
+                8px 8px 16px #bec3c9,
+                -8px -8px 16px #ffffff;
+        }
+        .btn-neu:hover {
+            transform: translateY(-3px);
+            box-shadow: 
+                12px 12px 24px #bec3c9,
+                -12px -12px 24px #ffffff;
+        }
+        .btn-neu:active {
+            transform: translateY(0);
+            box-shadow: 
+                inset 8px 8px 16px #bec3c9,
+                inset -8px -8px 16px #ffffff;
+        }
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2.5rem;
+            }
+            .form-section {
+                padding: 40px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Contactează-ne</h1>
+            <p>Experiență soft și plăcută de contact</p>
+        </div>
+
+        <div class="contact-grid">
+            <div class="contact-item">
+                <div class="icon-neu">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3>Telefon</h3>
+                <p>Disponibili în program de lucru</p>
+                <a href="tel:+40123456789">+40 123 456 789</a>
+            </div>
+
+            <div class="contact-item">
+                <div class="icon-neu">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h3>Email</h3>
+                <p>Răspundem prompt</p>
+                <a href="mailto:contact@example.ro">contact@example.ro</a>
+            </div>
+
+            <div class="contact-item">
+                <div class="icon-neu">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>Locație</h3>
+                <p>Vizitează-ne</p>
+                <a href="#">Str. Exemplu 123<br>București</a>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="form-title">Trimite un Mesaj</h2>
+            <form action="../process-contact.php" method="POST">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nume Complet</label>
+                        <input type="text" name="name" required placeholder="Ion Popescu">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required placeholder="ion@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="tel" name="phone" placeholder="+40 123 456 789">
+                    </div>
+                    <div class="form-group">
+                        <label>Companie</label>
+                        <input type="text" name="company" placeholder="Numele companiei">
+                    </div>
+                    <div class="form-group full">
+                        <label>Subiect</label>
+                        <input type="text" name="subject" required placeholder="Despre ce vrei să discutăm?">
+                    </div>
+                    <div class="form-group full">
+                        <label>Mesaj</label>
+                        <textarea name="message" rows="6" required placeholder="Scrie mesajul tău aici..."></textarea>
+                    </div>
+                    <div class="form-group full">
+                        <button type="submit" class="btn-neu">
+                            <i class="fas fa-paper-plane"></i> Trimite Mesaj
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

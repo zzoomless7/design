@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Modern Gradient</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-purple-600 via-pink-500 to-orange-400 min-h-screen flex items-center justify-center p-4">
+    <div class="container mx-auto max-w-6xl">
+        <div class="grid md:grid-cols-2 gap-8 bg-white/95 backdrop-blur-lg rounded-3xl shadow-2xl overflow-hidden">
+            <!-- Left Section -->
+            <div class="bg-gradient-to-br from-purple-600 to-pink-600 p-12 text-white flex flex-col justify-center">
+                <div class="float-animation">
+                    <i class="fas fa-envelope text-6xl mb-6 opacity-90"></i>
+                </div>
+                <h1 class="text-4xl font-bold mb-4">Hai să vorbim!</h1>
+                <p class="text-lg mb-8 opacity-90">Suntem aici pentru a răspunde la toate întrebările tale și pentru a-ți oferi suportul de care ai nevoie.</p>
+                
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white/20 p-4 rounded-full">
+                            <i class="fas fa-phone text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Telefon</p>
+                            <p class="opacity-90">+40 123 456 789</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white/20 p-4 rounded-full">
+                            <i class="fas fa-envelope text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Email</p>
+                            <p class="opacity-90">contact@example.ro</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-white/20 p-4 rounded-full">
+                            <i class="fas fa-map-marker-alt text-2xl"></i>
+                        </div>
+                        <div>
+                            <p class="font-semibold">Adresă</p>
+                            <p class="opacity-90">Str. Exemplu 123, București</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Section - Form -->
+            <div class="p-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Trimite-ne un mesaj</h2>
+                <form action="../process-contact.php" method="POST" class="space-y-6">
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Nume</label>
+                        <input type="text" name="name" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Email</label>
+                        <input type="email" name="email" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Telefon</label>
+                        <input type="tel" name="phone" class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-semibold mb-2">Mesaj</label>
+                        <textarea name="message" rows="4" required class="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-purple-500 focus:outline-none transition"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 text-white py-4 rounded-lg font-semibold hover:shadow-xl transform hover:-translate-y-1 transition duration-300">
+                        Trimite Mesaj <i class="fas fa-paper-plane ml-2"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Neon Cyberpunk</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0e27;
+            color: #00ff41;
+            min-height: 100vh;
+            padding: 50px 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                repeating-linear-gradient(0deg, rgba(0, 255, 65, 0.03) 0px, transparent 1px, transparent 2px, rgba(0, 255, 65, 0.03) 3px),
+                repeating-linear-gradient(90deg, rgba(0, 255, 65, 0.03) 0px, transparent 1px, transparent 2px, rgba(0, 255, 65, 0.03) 3px);
+            pointer-events: none;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        .neon-title {
+            text-align: center;
+            font-size: 5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 
+                0 0 10px #00ff41,
+                0 0 20px #00ff41,
+                0 0 30px #00ff41,
+                0 0 40px #00ff41,
+                0 0 70px #00ff41,
+                0 0 80px #00ff41,
+                0 0 100px #00ff41;
+            animation: flicker 3s infinite;
+        }
+        @keyframes flicker {
+            0%, 18%, 22%, 25%, 53%, 57%, 100% {
+                text-shadow: 
+                    0 0 10px #00ff41,
+                    0 0 20px #00ff41,
+                    0 0 30px #00ff41,
+                    0 0 40px #00ff41,
+                    0 0 70px #00ff41,
+                    0 0 80px #00ff41,
+                    0 0 100px #00ff41;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.5rem;
+            color: #ff00ff;
+            margin-bottom: 60px;
+            text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+        }
+        .cyber-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+        .cyber-card {
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid #00ff41;
+            border-radius: 15px;
+            padding: 30px;
+            position: relative;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 65, 0.3),
+                inset 0 0 20px rgba(0, 255, 65, 0.1);
+            transition: all 0.3s ease;
+        }
+        .cyber-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 
+                0 0 40px rgba(0, 255, 65, 0.6),
+                inset 0 0 30px rgba(0, 255, 65, 0.2);
+        }
+        .cyber-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #00ff41, #ff00ff, #00ffff, #ff00ff, #00ff41);
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .cyber-card:hover::before {
+            opacity: 1;
+            animation: borderRotate 2s linear infinite;
+        }
+        @keyframes borderRotate {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        .cyber-icon {
+            font-size: 3rem;
+            color: #ff00ff;
+            text-shadow: 0 0 20px #ff00ff;
+            margin-bottom: 20px;
+        }
+        .cyber-card h3 {
+            color: #00ffff;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        .cyber-card a {
+            color: #00ff41;
+            text-decoration: none;
+            font-weight: bold;
+            text-shadow: 0 0 5px #00ff41;
+        }
+        .form-cyber {
+            background: rgba(0, 255, 65, 0.05);
+            border: 2px solid #00ff41;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 65, 0.3),
+                inset 0 0 30px rgba(0, 255, 65, 0.1);
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            color: #00ffff;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+            text-shadow: 0 0 5px #00ffff;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            color: #00ff41;
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #ff00ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+            background: rgba(0, 0, 0, 0.9);
+        }
+        input::placeholder, textarea::placeholder {
+            color: rgba(0, 255, 65, 0.5);
+        }
+        .btn-cyber {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(45deg, #00ff41, #00ffff);
+            border: 2px solid #00ff41;
+            border-radius: 10px;
+            color: #0a0e27;
+            font-family: 'Courier New', monospace;
+            font-size: 1.3rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.5);
+        }
+        .btn-cyber:hover {
+            background: linear-gradient(45deg, #ff00ff, #00ff41);
+            transform: translateY(-3px);
+            box-shadow: 0 0 50px rgba(255, 0, 255, 0.8);
+        }
+        @media (max-width: 768px) {
+            .neon-title {
+                font-size: 3rem;
+            }
+            .form-cyber {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="neon-title">CONTACT</h1>
+        <p class="subtitle">[ CONECTARE LA SISTEM ]</p>
+
+        <div class="cyber-grid">
+            <div class="cyber-card">
+                <i class="fas fa-terminal cyber-icon"></i>
+                <h3>&gt; CALL_FUNCTION</h3>
+                <p style="margin-bottom: 15px; opacity: 0.8;">System.dial()</p>
+                <a href="tel:+40123456789">+40.123.456.789</a>
+            </div>
+
+            <div class="cyber-card">
+                <i class="fas fa-envelope-open-text cyber-icon"></i>
+                <h3>&gt; SEND_MESSAGE</h3>
+                <p style="margin-bottom: 15px; opacity: 0.8;">Email.protocol()</p>
+                <a href="mailto:contact@example.ro">contact@example.ro</a>
+            </div>
+
+            <div class="cyber-card">
+                <i class="fas fa-map-pin cyber-icon"></i>
+                <h3>&gt; LOCATE_POSITION</h3>
+                <p style="margin-bottom: 15px; opacity: 0.8;">GPS.coordinates()</p>
+                <p style="color: #00ff41;">Str. Exemplu 123<br>București, România</p>
+            </div>
+        </div>
+
+        <div class="form-cyber">
+            <h2 style="color: #00ff41; text-align: center; font-size: 2.5rem; margin-bottom: 40px; text-shadow: 0 0 20px #00ff41;">
+                &lt;FORMULAR_CONTACT /&gt;
+            </h2>
+            <form action="../process-contact.php" method="POST">
+                <div class="form-group">
+                    <label>&gt; input_name:</label>
+                    <input type="text" name="name" required placeholder="Enter your name...">
+                </div>
+                <div class="form-group">
+                    <label>&gt; input_email:</label>
+                    <input type="email" name="email" required placeholder="user@domain.com">
+                </div>
+                <div class="form-group">
+                    <label>&gt; input_phone:</label>
+                    <input type="tel" name="phone" placeholder="+40 xxx xxx xxx">
+                </div>
+                <div class="form-group">
+                    <label>&gt; input_message:</label>
+                    <textarea name="message" rows="6" required placeholder="Type your message here..."></textarea>
+                </div>
+                <button type="submit" class="btn-cyber">
+                    <i class="fas fa-bolt"></i> EXECUTE_SEND()
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Cursor trail effect
+        document.addEventListener('mousemove', (e) => {
+            const trail = document.createElement('div');
+            trail.style.position = 'fixed';
+            trail.style.width = '5px';
+            trail.style.height = '5px';
+            trail.style.background = '#00ff41';
+            trail.style.borderRadius = '50%';
+            trail.style.pointerEvents = 'none';
+            trail.style.left = e.clientX + 'px';
+            trail.style.top = e.clientY + 'px';
+            trail.style.boxShadow = '0 0 10px #00ff41';
+            trail.style.zIndex = '1000';
+            document.body.appendChild(trail);
+            
+            setTimeout(() => {
+                trail.style.transition = 'all 0.5s ease';
+                trail.style.opacity = '0';
+                trail.style.transform = 'scale(2)';
+                setTimeout(() => trail.remove(), 500);
+            }, 50);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - 3D Perspective</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+            perspective: 1500px;
+        }
+        .container-3d {
+            width: 100%;
+            max-width: 1400px;
+            transform-style: preserve-3d;
+            animation: float3d 6s ease-in-out infinite;
+        }
+        @keyframes float3d {
+            0%, 100% {
+                transform: translateY(0) rotateX(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotateX(2deg);
+            }
+        }
+        .scene {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            transform-style: preserve-3d;
+        }
+        .card-3d {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 50px;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+        }
+        .card-3d:hover {
+            transform: translateZ(50px) rotateY(-5deg);
+            box-shadow: 0 50px 100px rgba(0, 0, 0, 0.4);
+        }
+        .card-3d.left:hover {
+            transform: translateZ(50px) rotateY(5deg);
+        }
+        .title-3d {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 20px;
+            transform: translateZ(30px);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .subtitle {
+            font-size: 1.3rem;
+            color: #666;
+            margin-bottom: 40px;
+            transform: translateZ(20px);
+        }
+        .contact-item-3d {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 25px;
+            transform: translateZ(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        .contact-item-3d:hover {
+            transform: translateZ(40px) scale(1.05);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.5);
+        }
+        .icon-3d {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .form-group-3d {
+            margin-bottom: 25px;
+            transform-style: preserve-3d;
+        }
+        label {
+            display: block;
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 10px;
+            transform: translateZ(5px);
+        }
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            transform: translateZ(5px);
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            transform: translateZ(15px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.2);
+        }
+        .btn-3d {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transform: translateZ(10px);
+            transition: all 0.3s ease;
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+        .btn-3d:hover {
+            transform: translateZ(30px) scale(1.05);
+            box-shadow: 0 25px 60px rgba(102, 126, 234, 0.6);
+        }
+        @media (max-width: 968px) {
+            .scene {
+                grid-template-columns: 1fr;
+            }
+            .title-3d {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container-3d">
+        <div class="scene">
+            <div class="card-3d left">
+                <h1 class="title-3d">Contact 3D</h1>
+                <p class="subtitle">O experiență unică de contact</p>
+                
+                <div class="contact-item-3d">
+                    <i class="fas fa-phone-alt icon-3d"></i>
+                    <h3>Telefon</h3>
+                    <p style="opacity: 0.9; margin: 10px 0;">Suntem mereu disponibili</p>
+                    <a href="tel:+40123456789" style="color: white; text-decoration: none; font-size: 1.3rem; font-weight: bold;">+40 123 456 789</a>
+                </div>
+
+                <div class="contact-item-3d">
+                    <i class="fas fa-at icon-3d"></i>
+                    <h3>Email</h3>
+                    <p style="opacity: 0.9; margin: 10px 0;">Răspundem imediat</p>
+                    <a href="mailto:contact@example.ro" style="color: white; text-decoration: none; font-size: 1.3rem; font-weight: bold;">contact@example.ro</a>
+                </div>
+
+                <div class="contact-item-3d">
+                    <i class="fas fa-location-dot icon-3d"></i>
+                    <h3>Locație</h3>
+                    <p style="opacity: 0.9; margin: 10px 0;">Vino să ne cunoaștem</p>
+                    <p style="font-size: 1.3rem; font-weight: bold;">Str. Exemplu 123, București</p>
+                </div>
+            </div>
+
+            <div class="card-3d right">
+                <h2 style="font-size: 2.5rem; color: #667eea; margin-bottom: 30px; transform: translateZ(20px);">
+                    Trimite-ne un mesaj
+                </h2>
+                <form action="../process-contact.php" method="POST">
+                    <div class="form-group-3d">
+                        <label>Nume Complet</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group-3d">
+                        <label>Adresa de Email</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group-3d">
+                        <label>Număr de Telefon</label>
+                        <input type="tel" name="phone">
+                    </div>
+                    <div class="form-group-3d">
+                        <label>Subiect</label>
+                        <input type="text" name="subject" required>
+                    </div>
+                    <div class="form-group-3d">
+                        <label>Mesajul Tău</label>
+                        <textarea name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-3d">
+                        <i class="fas fa-paper-plane"></i> Trimite în 3D
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add mouse move parallax effect
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.card-3d');
+            const x = (e.clientX / window.innerWidth) - 0.5;
+            const y = (e.clientY / window.innerHeight) - 0.5;
+            
+            cards.forEach(card => {
+                const depth = card.classList.contains('left') ? 20 : -20;
+                card.style.transform = `
+                    translateZ(0px)
+                    rotateY(${x * depth}deg)
+                    rotateX(${-y * depth}deg)
+                `;
+            });
+        });
+    </script>
+</body>
+</html>

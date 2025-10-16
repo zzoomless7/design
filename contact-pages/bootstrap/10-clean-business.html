@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Clean Business</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0066cc;
+            --secondary: #00cc88;
+            --dark: #1a1a2e;
+        }
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f8f9fa;
+        }
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            padding: 100px 0;
+            color: white;
+        }
+        .stats-box {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            margin-top: -80px;
+            position: relative;
+            z-index: 10;
+        }
+        .stats-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .contact-method {
+            background: white;
+            border-radius: 15px;
+            padding: 35px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        .contact-method:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+        .form-section {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            padding: 15px 40px;
+            font-weight: 600;
+            border-radius: 10px;
+        }
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand fw-bold fs-3" href="#">
+                <i class="fas fa-cube" style="color: var(--primary);"></i> BusinessPro
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="hero text-center">
+        <div class="container">
+            <h1 class="display-3 fw-bold mb-4">Contactați Experții</h1>
+            <p class="lead fs-4 mb-0">Soluții profesionale pentru afacerea ta</p>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="stats-box">
+                    <div class="stats-number">500+</div>
+                    <p class="text-muted mb-0 fw-semibold">Clienți Mulțumiți</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-box">
+                    <div class="stats-number">24/7</div>
+                    <p class="text-muted mb-0 fw-semibold">Suport Disponibil</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="stats-box">
+                    <div class="stats-number">98%</div>
+                    <p class="text-muted mb-0 fw-semibold">Rată Satisfacție</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Methods -->
+    <section class="py-5 mt-5">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold mb-3">Alege Metoda de Contact</h2>
+                <p class="text-muted">Suntem aici pentru a vă ajuta în orice mod</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="contact-method">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-headset fa-2x text-white"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Suport Telefonic</h4>
+                        <p class="text-muted mb-3">Luni - Vineri<br>9:00 - 18:00</p>
+                        <a href="tel:+40123456789" class="fw-bold fs-5" style="color: var(--primary); text-decoration: none;">+40 123 456 789</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-method">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-paper-plane fa-2x text-white"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Email Business</h4>
+                        <p class="text-muted mb-3">Răspuns în<br>max 24 ore</p>
+                        <a href="mailto:contact@example.ro" class="fw-bold fs-5" style="color: var(--primary); text-decoration: none;">contact@example.ro</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="contact-method">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-building fa-2x text-white"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Biroul Nostru</h4>
+                        <p class="text-muted mb-3">Programare<br>obligatorie</p>
+                        <p class="fw-bold fs-5 mb-0" style="color: var(--primary);">Str. Exemplu 123<br>București</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form -->
+    <section class="py-5 mb-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="form-section">
+                        <h2 class="fw-bold mb-4 text-center">Solicită o Consultație Gratuită</h2>
+                        <form action="../process-contact.php" method="POST">
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Nume Complet</label>
+                                    <input type="text" name="name" class="form-control form-control-lg" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Email Corporativ</label>
+                                    <input type="email" name="email" class="form-control form-control-lg" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Telefon</label>
+                                    <input type="tel" name="phone" class="form-control form-control-lg">
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-semibold">Companie</label>
+                                    <input type="text" name="company" class="form-control form-control-lg">
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Serviciu de Interes</label>
+                                    <select name="service" class="form-select form-select-lg">
+                                        <option>Consultanță Business</option>
+                                        <option>Dezvoltare Software</option>
+                                        <option>Marketing Digital</option>
+                                        <option>Analiza Date</option>
+                                        <option>Altele</option>
+                                    </select>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-semibold">Detalii Proiect</label>
+                                    <textarea name="message" class="form-control" rows="5" required></textarea>
+                                </div>
+                                <div class="col-12 text-center mt-4">
+                                    <button type="submit" class="btn btn-primary btn-lg px-5">
+                                        <i class="fas fa-check-circle me-2"></i>Trimite Solicitarea
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

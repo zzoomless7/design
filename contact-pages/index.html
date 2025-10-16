@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>20 Exemple Pagini de Contact - Profesionale și Moderne</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+        }
+        .header {
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            padding: 30px 20px;
+            text-align: center;
+            color: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        .intro {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        .intro h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            color: #667eea;
+        }
+        .intro ul {
+            list-style: none;
+            padding: 0;
+        }
+        .intro li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+        .intro li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .category {
+            margin-bottom: 60px;
+        }
+        .category-header {
+            background: white;
+            padding: 20px 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .category-header h2 {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        .category-header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        .examples-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        .example-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .example-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+        }
+        .example-preview {
+            height: 250px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        .example-preview::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 10%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .example-info {
+            padding: 25px;
+        }
+        .example-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #2d3748;
+        }
+        .example-info p {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .tag {
+            background: #e0e7ff;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        .btn-view {
+            display: inline-block;
+            width: 100%;
+            padding: 12px 25px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        .btn-view:hover {
+            transform: scale(1.05);
+        }
+        .footer {
+            background: rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            .examples-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎨 20 Exemple Pagini de Contact</h1>
+        <p>Modele Moderne și Profesionale pentru Orice Proiect</p>
+    </div>
+
+    <div class="container">
+        <div class="intro">
+            <h2>Bun Venit!</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 20px;">
+                Această colecție conține <strong>20 de pagini de contact profesionale și moderne</strong>, 
+                create cu cele mai bune tehnologii și practici din industrie.
+            </p>
+            <ul>
+                <li><strong>Tehnologii folosite:</strong> HTML5, CSS3, JavaScript, PHP, Tailwind CSS, Bootstrap</li>
+                <li><strong>Design responsive:</strong> Toate paginile sunt optimizate pentru desktop, tablet și mobile</li>
+                <li><strong>Backend funcțional:</strong> Include procesare PHP pentru formularele de contact</li>
+                <li><strong>Stiluri diverse:</strong> De la minimal la cyberpunk, pentru orice tip de proiect</li>
+                <li><strong>Cod curat:</strong> Ușor de personalizat și integrat în proiectele tale</li>
+            </ul>
+        </div>
+
+        <!-- Tailwind Section -->
+        <div class="category">
+            <div class="category-header">
+                <h2><i class="fas fa-wind"></i> Tailwind CSS - 5 Exemple</h2>
+                <p>Pagini moderne construite cu framework-ul Tailwind CSS</p>
+            </div>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #9333ea, #ec4899);">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>01. Modern Gradient</h3>
+                        <p>Design vibrant cu gradient multicolor și animații float. Perfect pentru business-uri creative.</p>
+                        <div class="tags">
+                            <span class="tag">Tailwind</span>
+                            <span class="tag">Gradient</span>
+                            <span class="tag">Animații</span>
+                        </div>
+                        <a href="tailwind/01-modern-gradient.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(45deg, #1e3a8a, #ec4899);">
+                        <i class="fas fa-glass-whiskey"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>02. Glassmorphism</h3>
+                        <p>Efect de sticlă modernist cu background animat și blur. Aspect premium și sofisticat.</p>
+                        <div class="tags">
+                            <span class="tag">Tailwind</span>
+                            <span class="tag">Glassmorphism</span>
+                            <span class="tag">Premium</span>
+                        </div>
+                        <a href="tailwind/02-glassmorphism.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #1a202c, #0ea5e9);">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>03. Dark Modern</h3>
+                        <p>Dark mode elegant cu accente cyan. Ideal pentru tech startups și agențiidigitale.</p>
+                        <div class="tags">
+                            <span class="tag">Tailwind</span>
+                            <span class="tag">Dark</span>
+                            <span class="tag">Tech</span>
+                        </div>
+                        <a href="tailwind/03-dark-modern.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #f8f9fa, #e5e5e5);">
+                        <i class="fas fa-minus"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>04. Minimal Elegant</h3>
+                        <p>Design minimalist japonez cu linii curate. Perfect pentru branduri de lux și arhitecți.</p>
+                        <div class="tags">
+                            <span class="tag">Tailwind</span>
+                            <span class="tag">Minimal</span>
+                            <span class="tag">Elegant</span>
+                        </div>
+                        <a href="tailwind/04-minimal-elegant.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #fbbf24, #ec4899, #a855f7);">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>05. Vibrant Colorful</h3>
+                        <p>Explozie de culori cu emoji-uri și energie pozitivă. Pentru branduri fun și creative.</p>
+                        <div class="tags">
+                            <span class="tag">Tailwind</span>
+                            <span class="tag">Colorful</span>
+                            <span class="tag">Fun</span>
+                        </div>
+                        <a href="tailwind/05-vibrant-colorful.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bootstrap Section -->
+        <div class="category">
+            <div class="category-header">
+                <h2><i class="fab fa-bootstrap"></i> Bootstrap - 5 Exemple</h2>
+                <p>Design-uri profesionale folosind Bootstrap 5</p>
+            </div>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #2c3e50, #3498db);">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>06. Corporate Professional</h3>
+                        <p>Design corporatist cu statistici și secțiuni bine structurate. Pentru B2B și consultanță.</p>
+                        <div class="tags">
+                            <span class="tag">Bootstrap</span>
+                            <span class="tag">Corporate</span>
+                            <span class="tag">B2B</span>
+                        </div>
+                        <a href="bootstrap/06-corporate-professional.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);">
+                        <i class="fas fa-magic"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>07. Creative Dynamic</h3>
+                        <p>Design creativ cu background animat și carduri 3D. Pentru agențiide design și marketing.</p>
+                        <div class="tags">
+                            <span class="tag">Bootstrap</span>
+                            <span class="tag">Creative</span>
+                            <span class="tag">3D</span>
+                        </div>
+                        <a href="bootstrap/07-creative-dynamic.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #1a1a1a, #2d2d2d);">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>08. Elegant Luxury</h3>
+                        <p>Design de lux cu accente gold pe fundal dark. Pentru branduri premium și hotelier.</p>
+                        <div class="tags">
+                            <span class="tag">Bootstrap</span>
+                            <span class="tag">Luxury</span>
+                            <span class="tag">Premium</span>
+                        </div>
+                        <a href="bootstrap/08-elegant-luxury.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #ff6b6b, #feca57, #48dbfb);">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>09. Vibrant Energy</h3>
+                        <p>Design plin de energie cu culori vibrante și emoji-uri. Pentru startup-uri și evenimente.</p>
+                        <div class="tags">
+                            <span class="tag">Bootstrap</span>
+                            <span class="tag">Energy</span>
+                            <span class="tag">Startup</span>
+                        </div>
+                        <a href="bootstrap/09-vibrant-energy.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #0066cc, #00cc88);">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>10. Clean Business</h3>
+                        <p>Design business curat cu navbar și footer. Pentru companii establecute și servicii B2B.</p>
+                        <div class="tags">
+                            <span class="tag">Bootstrap</span>
+                            <span class="tag">Business</span>
+                            <span class="tag">Clean</span>
+                        </div>
+                        <a href="bootstrap/10-clean-business.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Custom CSS Section -->
+        <div class="category">
+            <div class="category-header">
+                <h2><i class="fas fa-code"></i> Custom CSS - 5 Exemple</h2>
+                <p>Design-uri unice cu CSS personalizat și animații</p>
+            </div>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-preview" style="background: #0f0f23;">
+                        <i class="fas fa-atom"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>11. Animated Particles</h3>
+                        <p>Background cu particule animate și efecte space-themed. Pentru tech și inovație.</p>
+                        <div class="tags">
+                            <span class="tag">Custom CSS</span>
+                            <span class="tag">Particles</span>
+                            <span class="tag">Tech</span>
+                        </div>
+                        <a href="custom/11-animated-particles.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #667eea, #764ba2);">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>12. 3D Perspective</h3>
+                        <p>Efect 3D interactiv cu mouse parallax. Design inovator și memorabil.</p>
+                        <div class="tags">
+                            <span class="tag">Custom CSS</span>
+                            <span class="tag">3D</span>
+                            <span class="tag">Interactive</span>
+                        </div>
+                        <a href="custom/12-3d-perspective.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #1e3c72, #2a5298);">
+                        <i class="fas fa-columns"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>13. Split Screen</h3>
+                        <p>Layout split screen cu info la stânga și form la dreapta. Design balansat și profesionist.</p>
+                        <div class="tags">
+                            <span class="tag">Custom CSS</span>
+                            <span class="tag">Split</span>
+                            <span class="tag">Modern</span>
+                        </div>
+                        <a href="custom/13-split-screen.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);">
+                        <i class="fas fa-expand"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>14. Full Width Hero</h3>
+                        <p>Hero section full-width cu carduri elegante. Perfect pentru landing pages.</p>
+                        <div class="tags">
+                            <span class="tag">Custom CSS</span>
+                            <span class="tag">Hero</span>
+                            <span class="tag">Landing</span>
+                        </div>
+                        <a href="custom/14-full-width-hero.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #4299e1, #667eea);">
+                        <i class="fas fa-th"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>15. Card Based Grid</h3>
+                        <p>Grid de carduri multiple cu form integrat. Design organizat și accesibil.</p>
+                        <div class="tags">
+                            <span class="tag">Custom CSS</span>
+                            <span class="tag">Grid</span>
+                            <span class="tag">Cards</span>
+                        </div>
+                        <a href="custom/15-card-based-grid.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mixed Styles Section -->
+        <div class="category">
+            <div class="category-header">
+                <h2><i class="fas fa-layer-group"></i> Mixed Styles - 5 Exemple</h2>
+                <p>Design-uri experimentale și stiluri unice</p>
+            </div>
+            <div class="examples-grid">
+                <div class="example-card">
+                    <div class="example-preview" style="background: #0a0e27;">
+                        <i class="fas fa-terminal"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>16. Neon Cyberpunk</h3>
+                        <p>Stil cyberpunk cu efecte neon și cursor trail. Pentru gaming și tech brands.</p>
+                        <div class="tags">
+                            <span class="tag">Custom</span>
+                            <span class="tag">Neon</span>
+                            <span class="tag">Cyberpunk</span>
+                        </div>
+                        <a href="mixed/16-neon-cyberpunk.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: #fff;">
+                        <i class="fas fa-square" style="color: #000;"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>17. Brutalist</h3>
+                        <p>Design brutalist cu forme geometrice și culori bold. Statement puternic și memorabil.</p>
+                        <div class="tags">
+                            <span class="tag">Custom</span>
+                            <span class="tag">Brutalist</span>
+                            <span class="tag">Bold</span>
+                        </div>
+                        <a href="mixed/17-brutalist.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: #e0e5ec;">
+                        <i class="fas fa-circle" style="color: #667eea;"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>18. Neumorphic</h3>
+                        <p>Design neumorfic soft cu umbre subtile. Aspect modern și plăcut vizual.</p>
+                        <div class="tags">
+                            <span class="tag">Custom</span>
+                            <span class="tag">Neumorphism</span>
+                            <span class="tag">Soft</span>
+                        </div>
+                        <a href="mixed/18-neumorphic.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #6200ea, #b000ff);">
+                        <i class="fas fa-layer-group"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>19. Material Design</h3>
+                        <p>Google Material Design cu ripple effects și elevation. Clean și intuitiv.</p>
+                        <div class="tags">
+                            <span class="tag">Material</span>
+                            <span class="tag">Google</span>
+                            <span class="tag">Modern</span>
+                        </div>
+                        <a href="mixed/19-material-design.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+
+                <div class="example-card">
+                    <div class="example-preview" style="background: linear-gradient(135deg, #3498db, #2980b9);">
+                        <i class="fas fa-square-full"></i>
+                    </div>
+                    <div class="example-info">
+                        <h3>20. Flat Modern</h3>
+                        <p>Flat design modern cu navbar și footer complet. Design versatil și universal.</p>
+                        <div class="tags">
+                            <span class="tag">Flat</span>
+                            <span class="tag">Universal</span>
+                            <span class="tag">Complete</span>
+                        </div>
+                        <a href="mixed/20-flat-modern.html" class="btn-view" target="_blank">
+                            <i class="fas fa-eye"></i> Vezi Demo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructions -->
+        <div class="intro" style="margin-top: 60px;">
+            <h2>📋 Cum să Folosești Aceste Template-uri</h2>
+            <ol style="padding-left: 20px; line-height: 2;">
+                <li><strong>Alege un design:</strong> Navighează prin cele 20 de exemple și găsește designul potrivit proiectului tău</li>
+                <li><strong>Copiază fișierele:</strong> Toate fișierele HTML sunt standalone și pot fi copiate direct</li>
+                <li><strong>Personalizează:</strong> Schimbă culorile, textele și imaginile pentru a se potrivi brandului tău</li>
+                <li><strong>Configurează PHP:</strong> Deschide <code>process-contact.php</code> și schimbă adresa de email</li>
+                <li><strong>Testează formularul:</strong> Asigură-te că serverul tău suportă PHP mail() sau folosește un serviciu SMTP</li>
+            </ol>
+            <div style="margin-top: 30px; padding: 20px; background: #f0f4ff; border-radius: 10px;">
+                <h3 style="color: #667eea; margin-bottom: 15px;">💡 Tips:</h3>
+                <ul style="list-style-position: inside;">
+                    <li>Toate paginile sunt responsive și optimizate pentru mobile</li>
+                    <li>Poți combina elemente din diferite design-uri</li>
+                    <li>Folosește un serviciu ca EmailJS sau Formspree pentru formulare fără backend PHP</li>
+                    <li>Adaugă validare JavaScript pentru o experiență mai bună</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <h3>🎨 20 Pagini de Contact Profesionale</h3>
+        <p style="margin: 20px 0;">Creat cu ❤️ pentru proiecte moderne</p>
+        <p style="opacity: 0.8;">HTML • CSS • JavaScript • PHP • Tailwind • Bootstrap</p>
+    </div>
+</body>
+</html>
