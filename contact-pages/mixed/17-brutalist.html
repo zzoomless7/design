@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Brutalist</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #fff;
+            color: #000;
+            line-height: 1.4;
+        }
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 80px 40px;
+        }
+        .brutal-header {
+            border: 8px solid #000;
+            padding: 60px;
+            background: #ff0;
+            margin-bottom: 40px;
+            transform: rotate(-1deg);
+            box-shadow: 20px 20px 0 #000;
+        }
+        .brutal-header h1 {
+            font-size: 6rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            line-height: 0.9;
+            letter-spacing: -3px;
+        }
+        .brutal-header p {
+            font-size: 1.8rem;
+            margin-top: 20px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+        .contact-blocks {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 60px;
+        }
+        .brutal-block {
+            border: 6px solid #000;
+            padding: 40px;
+            background: #fff;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+        .brutal-block:nth-child(1) {
+            background: #f0f;
+            transform: rotate(2deg);
+        }
+        .brutal-block:nth-child(2) {
+            background: #0ff;
+            transform: rotate(-1deg);
+        }
+        .brutal-block:nth-child(3) {
+            background: #0f0;
+            transform: rotate(1deg);
+        }
+        .brutal-block:hover {
+            transform: rotate(0deg) !important;
+            box-shadow: 15px 15px 0 #000;
+        }
+        .brutal-block h3 {
+            font-size: 2rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            font-weight: 900;
+        }
+        .brutal-block p {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        .brutal-block a {
+            color: #000;
+            text-decoration: underline;
+            font-weight: 900;
+            font-size: 1.2rem;
+        }
+        .form-section {
+            border: 10px solid #000;
+            padding: 60px;
+            background: #fff;
+            box-shadow: 25px 25px 0 #000;
+        }
+        .form-title {
+            font-size: 4rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 50px;
+            text-align: center;
+            line-height: 1;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+        .form-group {
+            margin-bottom: 30px;
+        }
+        .form-group.full {
+            grid-column: 1 / -1;
+        }
+        label {
+            display: block;
+            font-size: 1.2rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 18px;
+            border: 5px solid #000;
+            background: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            background: #ff0;
+            transform: translate(-3px, -3px);
+            box-shadow: 5px 5px 0 #000;
+        }
+        .btn-brutal {
+            width: 100%;
+            padding: 25px;
+            background: #f00;
+            border: 6px solid #000;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 8px 8px 0 #000;
+        }
+        .btn-brutal:hover {
+            background: #000;
+            color: #ff0;
+            transform: translate(-4px, -4px);
+            box-shadow: 12px 12px 0 #f00;
+        }
+        .warning-banner {
+            background: #f00;
+            color: #fff;
+            padding: 30px;
+            border: 6px solid #000;
+            margin-bottom: 40px;
+            font-size: 1.3rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        @media (max-width: 968px) {
+            .contact-blocks {
+                grid-template-columns: 1fr;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .brutal-header h1 {
+                font-size: 3rem;
+            }
+            .form-section {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="brutal-header">
+            <h1>CONTACT<br>ACUM!</h1>
+            <p>Nu Există Timp De Pierdut</p>
+        </div>
+
+        <div class="warning-banner">
+            ⚠️ ATENȚIE! Răspundem în 24 de ore sau mai repede! ⚠️
+        </div>
+
+        <div class="contact-blocks">
+            <div class="brutal-block">
+                <h3>📞 Telefon</h3>
+                <p>SUNĂ ACUM</p>
+                <p>L-V: 9-18</p>
+                <a href="tel:+40123456789">+40 123 456 789</a>
+            </div>
+
+            <div class="brutal-block">
+                <h3>✉️ Email</h3>
+                <p>SCRIE-NE</p>
+                <p>Răspuns: 24h</p>
+                <a href="mailto:contact@example.ro">contact@example.ro</a>
+            </div>
+
+            <div class="brutal-block">
+                <h3>📍 Adresă</h3>
+                <p>VINO LA NOI</p>
+                <p>Cu programare</p>
+                <a href="#">Str. Exemplu 123, București</a>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="form-title">Completează Formularul</h2>
+            <form action="../process-contact.php" method="POST">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Nume:</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon:</label>
+                        <input type="tel" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label>Companie:</label>
+                        <input type="text" name="company">
+                    </div>
+                    <div class="form-group full">
+                        <label>Subiect:</label>
+                        <input type="text" name="subject" required>
+                    </div>
+                    <div class="form-group full">
+                        <label>Mesaj:</label>
+                        <textarea name="message" rows="6" required></textarea>
+                    </div>
+                    <div class="form-group full">
+                        <button type="submit" class="btn-brutal">
+                            TRIMITE!
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

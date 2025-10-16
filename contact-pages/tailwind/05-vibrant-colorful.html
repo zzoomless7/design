@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Vibrant Colorful</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @keyframes rainbow {
+            0% { filter: hue-rotate(0deg); }
+            100% { filter: hue-rotate(360deg); }
+        }
+        .rainbow-animation {
+            animation: rainbow 5s linear infinite;
+        }
+        @keyframes bounce-slow {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        .bounce-slow {
+            animation: bounce-slow 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-yellow-300 via-pink-300 to-purple-400 min-h-screen py-12 px-4">
+    <div class="container mx-auto max-w-6xl">
+        <!-- Header -->
+        <div class="text-center mb-12">
+            <div class="inline-block bounce-slow mb-6">
+                <div class="bg-white rounded-full p-8 shadow-2xl rainbow-animation">
+                    <i class="fas fa-rocket text-6xl text-purple-600"></i>
+                </div>
+            </div>
+            <h1 class="text-6xl font-black text-white mb-4" style="text-shadow: 3px 3px 0 rgba(0,0,0,0.2);">
+                Hai să ne Conectăm!
+            </h1>
+            <p class="text-2xl text-white font-bold">🎨 Creativitate • 💡 Inovație • 🚀 Rezultate</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Left Side - Info Cards -->
+            <div class="space-y-6">
+                <div class="bg-gradient-to-br from-red-400 to-pink-500 rounded-3xl p-8 shadow-2xl transform hover:scale-105 transition duration-300">
+                    <div class="bg-white w-16 h-16 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fas fa-phone-volume text-3xl text-red-500"></i>
+                    </div>
+                    <h3 class="text-white text-2xl font-bold mb-2">📞 Sună Acum!</h3>
+                    <p class="text-white/90 text-lg mb-3">Suntem disponibili non-stop</p>
+                    <a href="tel:+40123456789" class="text-white text-xl font-bold underline">+40 123 456 789</a>
+                </div>
+
+                <div class="bg-gradient-to-br from-blue-400 to-cyan-500 rounded-3xl p-8 shadow-2xl transform hover:scale-105 transition duration-300">
+                    <div class="bg-white w-16 h-16 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fas fa-at text-3xl text-blue-500"></i>
+                    </div>
+                    <h3 class="text-white text-2xl font-bold mb-2">✉️ Email Rapid</h3>
+                    <p class="text-white/90 text-lg mb-3">Răspuns în maxim 2 ore</p>
+                    <a href="mailto:contact@example.ro" class="text-white text-xl font-bold underline">contact@example.ro</a>
+                </div>
+
+                <div class="bg-gradient-to-br from-green-400 to-emerald-500 rounded-3xl p-8 shadow-2xl transform hover:scale-105 transition duration-300">
+                    <div class="bg-white w-16 h-16 rounded-2xl flex items-center justify-center mb-4">
+                        <i class="fas fa-map-marked-alt text-3xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-white text-2xl font-bold mb-2">📍 Vino pe la Noi</h3>
+                    <p class="text-white/90 text-lg mb-3">Cafea gratis pentru vizitatori!</p>
+                    <p class="text-white text-xl font-bold">Str. Exemplu 123, București</p>
+                </div>
+            </div>
+
+            <!-- Right Side - Form -->
+            <div class="bg-white rounded-3xl p-8 shadow-2xl">
+                <h2 class="text-4xl font-black text-gray-800 mb-6 text-center">Scrie-ne! ✨</h2>
+                <form action="../process-contact.php" method="POST" class="space-y-5">
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2 text-lg">👤 Cum te cheamă?</label>
+                        <input type="text" name="name" required class="w-full px-5 py-4 border-4 border-purple-200 rounded-2xl focus:border-purple-500 focus:outline-none transition text-lg">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2 text-lg">📧 Email-ul tău</label>
+                        <input type="email" name="email" required class="w-full px-5 py-4 border-4 border-blue-200 rounded-2xl focus:border-blue-500 focus:outline-none transition text-lg">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2 text-lg">📱 Telefon</label>
+                        <input type="tel" name="phone" class="w-full px-5 py-4 border-4 border-green-200 rounded-2xl focus:border-green-500 focus:outline-none transition text-lg">
+                    </div>
+                    <div>
+                        <label class="block text-gray-700 font-bold mb-2 text-lg">💬 Ce vrei să ne spui?</label>
+                        <textarea name="message" rows="5" required class="w-full px-5 py-4 border-4 border-pink-200 rounded-2xl focus:border-pink-500 focus:outline-none transition text-lg"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white py-5 rounded-2xl font-black text-xl hover:shadow-2xl transform hover:scale-105 transition duration-300">
+                        🚀 TRIMITE MESAJUL! 🚀
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Split Screen</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .split-container {
+            display: flex;
+            height: 100vh;
+        }
+        .split-left {
+            flex: 1;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 80px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+        .split-left::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1), transparent);
+            border-radius: 50%;
+            top: -200px;
+            right: -200px;
+            animation: pulse 4s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        .split-right {
+            flex: 1;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 60px;
+            overflow-y: auto;
+        }
+        .content {
+            position: relative;
+            z-index: 10;
+            max-width: 600px;
+        }
+        .title {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
+        .description {
+            font-size: 1.3rem;
+            margin-bottom: 50px;
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        .info-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+        .info-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateX(10px);
+        }
+        .info-card i {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        .info-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+        .info-card p {
+            opacity: 0.9;
+            margin-bottom: 10px;
+        }
+        .info-card a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        .form-wrapper {
+            width: 100%;
+            max-width: 600px;
+        }
+        .form-title {
+            font-size: 2.5rem;
+            color: #1e3c72;
+            margin-bottom: 40px;
+            font-weight: bold;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(30, 60, 114, 0.3);
+        }
+        @media (max-width: 968px) {
+            .split-container {
+                flex-direction: column;
+                height: auto;
+            }
+            body {
+                overflow: auto;
+            }
+            .split-left, .split-right {
+                padding: 50px 30px;
+            }
+            .title {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="split-container">
+        <div class="split-left">
+            <div class="content">
+                <h1 class="title">Să Discutăm despre Proiectul Tău</h1>
+                <p class="description">
+                    Suntem pasionați de a transforma idei în realitate. 
+                    Fiecare proiect este o oportunitate de a crea ceva extraordinar.
+                </p>
+
+                <div class="info-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Apelează-ne Direct</h3>
+                    <p>Luni - Vineri, 9:00 - 18:00</p>
+                    <a href="tel:+40123456789">+40 123 456 789</a>
+                </div>
+
+                <div class="info-card">
+                    <i class="fas fa-envelope-open"></i>
+                    <h3>Scrie-ne un Email</h3>
+                    <p>Răspundem în maxim 24 de ore</p>
+                    <a href="mailto:contact@example.ro">contact@example.ro</a>
+                </div>
+
+                <div class="info-card">
+                    <i class="fas fa-map-pin"></i>
+                    <h3>Vino la Sediu</h3>
+                    <p>Cu programare în prealabil</p>
+                    <a href="#">Str. Exemplu 123, București</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="split-right">
+            <div class="form-wrapper">
+                <h2 class="form-title">Începe Conversația</h2>
+                <form action="../process-contact.php" method="POST">
+                    <div class="form-group">
+                        <label>Nume Complet *</label>
+                        <input type="text" name="name" required placeholder="Ion Popescu">
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" name="email" required placeholder="ion@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="tel" name="phone" placeholder="+40 123 456 789">
+                    </div>
+                    <div class="form-group">
+                        <label>Subiect *</label>
+                        <input type="text" name="subject" required placeholder="Despre ce vrei să discutăm?">
+                    </div>
+                    <div class="form-group">
+                        <label>Mesaj *</label>
+                        <textarea name="message" rows="6" required placeholder="Descrie-ne ideea ta..."></textarea>
+                    </div>
+                    <button type="submit" class="btn-submit">
+                        <i class="fas fa-paper-plane"></i> Trimite Mesajul
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

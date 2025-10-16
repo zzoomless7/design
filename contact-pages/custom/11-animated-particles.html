@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Animated Particles</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #0f0f23;
+            color: white;
+            overflow-x: hidden;
+        }
+        #particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, rgba(99, 179, 255, 0.8), transparent);
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-1000px) translateX(100px);
+                opacity: 0;
+            }
+        }
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 50px 20px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 80px;
+            animation: slideDown 1s ease;
+        }
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .header h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #63b3ff, #a78bfa, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .content-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            animation: fadeIn 1.5s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .contact-info {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
+        }
+        .info-item {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(99, 179, 255, 0.1);
+            border-radius: 20px;
+            border-left: 5px solid #63b3ff;
+            transition: all 0.3s ease;
+        }
+        .info-item:hover {
+            transform: translateX(10px);
+            background: rgba(99, 179, 255, 0.2);
+        }
+        .info-item i {
+            font-size: 2.5rem;
+            color: #63b3ff;
+            margin-bottom: 15px;
+        }
+        .form-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #63b3ff;
+            font-weight: 600;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(99, 179, 255, 0.3);
+            border-radius: 10px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #63b3ff;
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(99, 179, 255, 0.3);
+        }
+        button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(45deg, #63b3ff, #a78bfa);
+            border: none;
+            border-radius: 10px;
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(99, 179, 255, 0.5);
+        }
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="particles"></div>
+    
+    <div class="container">
+        <div class="header">
+            <h1>Contactează-ne</h1>
+            <p style="font-size: 1.3rem; color: #a78bfa;">Să începem o conversație extraordinară</p>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="contact-info">
+                <div class="info-item">
+                    <i class="fas fa-phone"></i>
+                    <h3>Telefon</h3>
+                    <p style="opacity: 0.8; margin-bottom: 10px;">Disponibili 24/7</p>
+                    <a href="tel:+40123456789" style="color: #63b3ff; text-decoration: none; font-size: 1.2rem; font-weight: bold;">+40 123 456 789</a>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-envelope"></i>
+                    <h3>Email</h3>
+                    <p style="opacity: 0.8; margin-bottom: 10px;">Răspuns rapid garantat</p>
+                    <a href="mailto:contact@example.ro" style="color: #63b3ff; text-decoration: none; font-size: 1.2rem; font-weight: bold;">contact@example.ro</a>
+                </div>
+                <div class="info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>Adresă</h3>
+                    <p style="opacity: 0.8; margin-bottom: 10px;">Vino pe la noi</p>
+                    <p style="color: #63b3ff; font-size: 1.2rem; font-weight: bold;">Str. Exemplu 123, București</p>
+                </div>
+            </div>
+
+            <div class="form-container">
+                <h2 style="margin-bottom: 30px; font-size: 2rem;">Trimite un Mesaj</h2>
+                <form action="../process-contact.php" method="POST">
+                    <div class="form-group">
+                        <label>Nume</label>
+                        <input type="text" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Telefon</label>
+                        <input type="tel" name="phone">
+                    </div>
+                    <div class="form-group">
+                        <label>Mesaj</label>
+                        <textarea name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit">
+                        <i class="fas fa-paper-plane"></i> Trimite Mesaj
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Create animated particles
+        const particlesContainer = document.getElementById('particles');
+        const particleCount = 50;
+
+        for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            const size = Math.random() * 5 + 2;
+            particle.style.width = size + 'px';
+            particle.style.height = size + 'px';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+            particle.style.animationDelay = Math.random() * 5 + 's';
+            
+            particlesContainer.appendChild(particle);
+        }
+    </script>
+</body>
+</html>
