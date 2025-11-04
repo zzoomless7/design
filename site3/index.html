@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa Moderna Familia Popescu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <!-- Header -->
+    <header id="header" class="fixed w-full top-0 z-50 transition-all duration-300 bg-white shadow-lg">
+        <div class="container-fluid px-6">
+            <!-- Logo Section -->
+            <div class="text-center py-5 border-b border-gray-100">
+                <a href="#" class="text-3xl font-bold text-gray-800 hover:text-yellow-600 transition-colors">
+                    <i class="fas fa-home-heart mr-3 text-yellow-600"></i>
+                    Casa <span class="text-yellow-600">Modernă</span>
+                </a>
+                <p class="text-sm text-gray-500 mt-2">Familia Popescu</p>
+            </div>
+            
+            <!-- Navigation Menu -->
+            <nav class="py-4">
+                <ul class="flex justify-center space-x-10">
+                    <li><a href="#home" class="nav-link text-gray-700 hover:text-yellow-600 font-semibold transition-all duration-300 px-4 py-2">Acasă</a></li>
+                    <li><a href="#despre" class="nav-link text-gray-700 hover:text-yellow-600 font-semibold transition-all duration-300 px-4 py-2">Despre</a></li>
+                    <li><a href="#galerie" class="nav-link text-gray-700 hover:text-yellow-600 font-semibold transition-all duration-300 px-4 py-2">Galerie</a></li>
+                    <li><a href="#articole" class="nav-link text-gray-700 hover:text-yellow-600 font-semibold transition-all duration-300 px-4 py-2">Articole</a></li>
+                    <li><a href="#contact" class="nav-link text-gray-700 hover:text-yellow-600 font-semibold transition-all duration-300 px-4 py-2">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-36">
+        <!-- Home Section -->
+        <section id="home" class="min-h-screen bg-gradient-to-br from-yellow-50 to-gray-100 flex items-center">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-6xl mx-auto">
+                    <h1 class="text-7xl md:text-9xl font-bold text-gray-800 mb-8 leading-tight">
+                        <span class="block">Casa</span>
+                        <span class="text-yellow-600 block animate-pulse">Perfectă</span>
+                    </h1>
+                    <p class="text-2xl md:text-3xl text-gray-600 mb-12 leading-relaxed max-w-4xl mx-auto">
+                        Unde fiecare cameră spune o poveste și fiecare colț invită la relaxare. 
+                        O casă modernă construită cu dragoste pentru familia Popescu.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                        <button class="btn-primary text-lg px-8 py-4">
+                            <i class="fas fa-play mr-3"></i>Tour Virtual
+                        </button>
+                        <button class="btn-secondary text-lg px-8 py-4">
+                            <i class="fas fa-download mr-3"></i>Broșură PDF
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Despre Section -->
+        <section id="despre" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-6xl font-bold text-center text-gray-800 mb-20">Povestea Casei</h2>
+                <div class="grid lg:grid-cols-2 gap-16 items-center mb-20">
+                    <div class="space-y-8">
+                        <h3 class="text-4xl font-semibold text-yellow-600">Arhitectură Contemporană</h3>
+                        <p class="text-lg text-gray-600 leading-relaxed">
+                            Această casă modernă de 380m² a fost proiectată special pentru familia Popescu, 
+                            combinând funcționalitatea cu designul contemporan. Fiecare spațiu a fost 
+                            gândit pentru a maximiza confortul și să creeze o atmosferă primitoare.
+                        </p>
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-yellow-50 p-6 rounded-xl text-center">
+                                <div class="text-4xl font-bold text-yellow-600 mb-2">380m²</div>
+                                <div class="text-gray-600">Suprafață Totală</div>
+                            </div>
+                            <div class="bg-gray-50 p-6 rounded-xl text-center">
+                                <div class="text-4xl font-bold text-gray-700 mb-2">5</div>
+                                <div class="text-gray-600">Camere</div>
+                            </div>
+                            <div class="bg-yellow-50 p-6 rounded-xl text-center">
+                                <div class="text-4xl font-bold text-yellow-600 mb-2">3</div>
+                                <div class="text-gray-600">Băi</div>
+                            </div>
+                            <div class="bg-gray-50 p-6 rounded-xl text-center">
+                                <div class="text-4xl font-bold text-gray-700 mb-2">2023</div>
+                                <div class="text-gray-600">An Finalizare</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="bg-gradient-to-br from-yellow-300 to-gray-500 h-96 rounded-2xl shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500"></div>
+                        <div class="absolute inset-4 bg-white rounded-xl shadow-inner flex items-center justify-center">
+                            <i class="fas fa-home text-6xl text-yellow-600"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Features -->
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center space-y-6 group">
+                        <div class="w-20 h-20 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                            <i class="fas fa-lightbulb text-yellow-600 text-2xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-semibold text-gray-800">Smart Home</h4>
+                        <p class="text-gray-600">Sistem complet de automatizare pentru iluminat, încălzire și securitate</p>
+                    </div>
+                    <div class="text-center space-y-6 group">
+                        <div class="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                            <i class="fas fa-leaf text-gray-600 text-2xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-semibold text-gray-800">Eco-Friendly</h4>
+                        <p class="text-gray-600">Materiale sustenabile și sisteme de energie regenerabilă</p>
+                    </div>
+                    <div class="text-center space-y-6 group">
+                        <div class="w-20 h-20 bg-yellow-100 rounded-2xl flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+                            <i class="fas fa-shield-alt text-yellow-600 text-2xl"></i>
+                        </div>
+                        <h4 class="text-2xl font-semibold text-gray-800">Securitate</h4>
+                        <p class="text-gray-600">Sistem avansat de securitate cu monitorizare 24/7</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Galerie Section -->
+        <section id="galerie" class="py-24 bg-gray-50">
+            <div class="container mx-auto px-6">
+                <h2 class="text-6xl font-bold text-center text-gray-800 mb-20">Galerie Foto</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="lg:col-span-2 lg:row-span-2">
+                        <div class="gallery-item bg-gradient-to-br from-yellow-300 to-yellow-500 h-full min-h-64 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer"></div>
+                    </div>
+                    <div class="gallery-item bg-gradient-to-br from-gray-300 to-gray-500 h-64 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer"></div>
+                    <div class="gallery-item bg-gradient-to-br from-yellow-400 to-gray-600 h-64 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer"></div>
+                    <div class="gallery-item bg-gradient-to-br from-gray-400 to-yellow-500 h-64 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer"></div>
+                    <div class="gallery-item bg-gradient-to-br from-yellow-500 to-gray-700 h-64 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer"></div>
+                    <div class="lg:col-span-2">
+                        <div class="gallery-item bg-gradient-to-br from-gray-500 to-yellow-600 h-64 rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105 cursor-pointer"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articole Section -->
+        <section id="articole" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <h2 class="text-6xl font-bold text-center text-gray-800 mb-20">Blog & Articole</h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+                    <article class="blog-card bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-4">
+                        <div class="bg-gradient-to-br from-yellow-400 to-yellow-600 h-48"></div>
+                        <div class="p-8">
+                            <div class="text-sm text-yellow-600 font-semibold mb-3">DESIGN INTERIOR</div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4">Cum să amenajezi living-ul modern</h3>
+                            <p class="text-gray-600 mb-6 leading-relaxed">Descoperă secretele unui living modern și funcțional care să reflecte personalitatea familiei tale.</p>
+                            <a href="#" class="text-yellow-600 hover:text-yellow-700 font-semibold flex items-center">
+                                Citește articolul <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </article>
+                    
+                    <article class="blog-card bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-4">
+                        <div class="bg-gradient-to-br from-gray-400 to-gray-600 h-48"></div>
+                        <div class="p-8">
+                            <div class="text-sm text-gray-600 font-semibold mb-3">TEHNOLOGIE</div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4">Smart Home - Viitorul în casa ta</h3>
+                            <p class="text-gray-600 mb-6 leading-relaxed">Explorează avantajele unei case inteligente și cum tehnologia îți poate îmbunătăți viața de zi cu zi.</p>
+                            <a href="#" class="text-yellow-600 hover:text-yellow-700 font-semibold flex items-center">
+                                Citește articolul <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </article>
+                    
+                    <article class="blog-card bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-4">
+                        <div class="bg-gradient-to-br from-yellow-500 to-gray-700 h-48"></div>
+                        <div class="p-8">
+                            <div class="text-sm text-yellow-600 font-semibold mb-3">ARHITECTURĂ</div>
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4">Tendințele arhitecturale 2024</h3>
+                            <p class="text-gray-600 mb-6 leading-relaxed">Ce ne rezervă anul 2024 în materie de arhitectură rezidențială și design contemporan.</p>
+                            <a href="#" class="text-yellow-600 hover:text-yellow-700 font-semibold flex items-center">
+                                Citește articolul <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 bg-gray-800">
+            <div class="container mx-auto px-6">
+                <h2 class="text-6xl font-bold text-center text-white mb-20">Să vorbim despre casa ta</h2>
+                <div class="grid lg:grid-cols-2 gap-16">
+                    <div class="space-y-8">
+                        <h3 class="text-3xl font-semibold text-yellow-400">Contactează-ne</h3>
+                        <p class="text-xl text-gray-300 leading-relaxed">
+                            Suntem aici să îți răspundem la toate întrebările despre proiectul nostru 
+                            și să te inspirăm pentru casa ta de vis.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-center space-x-4">
+                                <div class="w-14 h-14 bg-yellow-600 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-envelope text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <div class="text-yellow-400 font-semibold">Email</div>
+                                    <div class="text-gray-300">contact@casamoderna.ro</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4">
+                                <div class="w-14 h-14 bg-gray-600 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-phone text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <div class="text-gray-400 font-semibold">Telefon</div>
+                                    <div class="text-gray-300">+40 123 456 789</div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center space-x-4">
+                                <div class="w-14 h-14 bg-yellow-600 rounded-xl flex items-center justify-center">
+                                    <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                                </div>
+                                <div>
+                                    <div class="text-yellow-400 font-semibold">Locație</div>
+                                    <div class="text-gray-300">Ploiești, Prahova</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <input type="text" placeholder="Prenume" class="contact-input">
+                            <input type="text" placeholder="Nume" class="contact-input">
+                        </div>
+                        <input type="email" placeholder="Adresa de email" class="contact-input">
+                        <input type="tel" placeholder="Număr de telefon" class="contact-input">
+                        <textarea placeholder="Mesajul tău..." rows="6" class="contact-input"></textarea>
+                        <button type="submit" class="btn-primary w-full py-4 text-lg">
+                            <i class="fas fa-paper-plane mr-3"></i>Trimite Mesajul
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row justify-between items-center">
+                <div class="text-center lg:text-left mb-8 lg:mb-0">
+                    <div class="text-2xl font-bold text-white mb-2">
+                        Casa <span class="text-yellow-400">Modernă</span>
+                    </div>
+                    <p class="text-gray-400">&copy; 2024 Familia Popescu. Toate drepturile rezervate.</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-yellow-400 hover:bg-yellow-400 hover:text-gray-800 transition-all duration-300">
+                        <i class="fab fa-facebook-f text-xl"></i>
+                    </a>
+                    <a href="#" class="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-yellow-400 hover:bg-yellow-400 hover:text-gray-800 transition-all duration-300">
+                        <i class="fab fa-instagram text-xl"></i>
+                    </a>
+                    <a href="#" class="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-yellow-400 hover:bg-yellow-400 hover:text-gray-800 transition-all duration-300">
+                        <i class="fab fa-pinterest text-xl"></i>
+                    </a>
+                    <a href="#" class="w-14 h-14 bg-gray-800 rounded-full flex items-center justify-center text-gray-400 hover:text-yellow-400 hover:bg-yellow-400 hover:text-gray-800 transition-all duration-300">
+                        <i class="fab fa-youtube text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

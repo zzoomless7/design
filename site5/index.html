@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa de Țară | Refugiu Natural</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+</head>
+<body class="bg-amber-50">
+    <!-- Header -->
+    <header id="header" class="fixed w-full top-0 z-50 transition-all duration-400 bg-white/85 backdrop-blur-md shadow-lg">
+        <div class="container mx-auto px-6">
+            <!-- Logo Section -->
+            <div class="text-center py-6 border-b border-amber-100">
+                <a href="#" class="inline-flex items-center space-x-4 text-3xl font-bold text-gray-800 hover:text-amber-600 transition-colors">
+                    <div class="relative">
+                        <i class="fas fa-tree text-4xl text-amber-600"></i>
+                        <i class="fas fa-home absolute -bottom-1 -right-1 text-lg text-gray-700"></i>
+                    </div>
+                    <div class="text-left">
+                        <div class="text-2xl">Casa de <span class="text-amber-600">Țară</span></div>
+                        <div class="text-sm text-gray-500 font-normal">Refugiu Natural</div>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Navigation -->
+            <nav class="py-4">
+                <ul class="flex justify-center space-x-10">
+                    <li><a href="#home" class="nav-link text-gray-700 hover:text-amber-600 font-medium transition-all duration-300 px-3 py-2">🏡 Acasă</a></li>
+                    <li><a href="#despre" class="nav-link text-gray-700 hover:text-amber-600 font-medium transition-all duration-300 px-3 py-2">🌿 Despre</a></li>
+                    <li><a href="#galerie" class="nav-link text-gray-700 hover:text-amber-600 font-medium transition-all duration-300 px-3 py-2">📸 Galerie</a></li>
+                    <li><a href="#articole" class="nav-link text-gray-700 hover:text-amber-600 font-medium transition-all duration-300 px-3 py-2">📝 Articole</a></li>
+                    <li><a href="#contact" class="nav-link text-gray-700 hover:text-amber-600 font-medium transition-all duration-300 px-3 py-2">📞 Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-40">
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex items-center bg-gradient-to-br from-amber-50 via-yellow-50 to-gray-100 relative overflow-hidden">
+            <!-- Decorative elements -->
+            <div class="absolute top-20 left-10 w-32 h-32 bg-amber-200/30 rounded-full blur-xl"></div>
+            <div class="absolute bottom-20 right-10 w-40 h-40 bg-gray-300/20 rounded-full blur-xl"></div>
+            <div class="absolute top-1/2 left-1/4 w-20 h-20 bg-yellow-300/40 rounded-full blur-lg"></div>
+            
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="max-w-6xl mx-auto text-center">
+                    <div class="space-y-8">
+                        <div class="inline-flex items-center space-x-3 bg-white/80 px-6 py-3 rounded-full shadow-lg backdrop-blur-sm">
+                            <i class="fas fa-leaf text-amber-600"></i>
+                            <span class="text-gray-700 font-medium">Trăiește natural</span>
+                        </div>
+                        
+                        <h1 class="text-7xl md:text-8xl font-bold text-gray-800 leading-tight">
+                            <span class="block">Refugiul</span>
+                            <span class="block text-amber-600">Perfect</span>
+                        </h1>
+                        
+                        <p class="text-2xl md:text-3xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                            O casă de țară de 280m² înconjurată de natură, unde tradiționalul 
+                            întâlnește modernul într-o armonie perfectă.
+                        </p>
+                        
+                        <div class="flex flex-col sm:flex-row gap-6 justify-center pt-8">
+                            <button class="country-btn-primary">
+                                <i class="fas fa-mountain mr-3"></i>Descoperă Natura
+                            </button>
+                            <button class="country-btn-outline">
+                                <i class="fas fa-route mr-3"></i>Planifică Vizita
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="despre" class="py-32 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-20">
+                        <div class="inline-flex items-center space-x-3 bg-amber-50 px-6 py-3 rounded-full mb-8">
+                            <i class="fas fa-heart text-amber-600"></i>
+                            <span class="text-gray-700 font-medium">Povestea noastră</span>
+                        </div>
+                        <h2 class="text-6xl font-bold text-gray-800 mb-8">Armonie cu Natura</h2>
+                        <p class="text-xl text-gray-600 max-w-4xl mx-auto leading-relaxed">
+                            Situată pe 2 hectare de teren în inima Carpaților, această casă de țară 
+                            oferă liniștea și frumusețea naturii la doar o oră de București.
+                        </p>
+                    </div>
+                    
+                    <div class="grid lg:grid-cols-2 gap-20 items-center mb-20">
+                        <div class="space-y-8">
+                            <div class="space-y-6">
+                                <h3 class="text-4xl font-bold text-amber-600">Arhitectură Autentică</h3>
+                                <p class="text-lg text-gray-600 leading-relaxed">
+                                    Combinând elementele tradiționale românești cu facilitățile moderne, 
+                                    casa păstrează autenticitatea rurală oferind în același timp confortul 
+                                    unei locuințe contemporane.
+                                </p>
+                            </div>
+                            
+                            <div class="grid grid-cols-2 gap-6">
+                                <div class="country-stat">
+                                    <div class="flex items-center justify-center w-16 h-16 bg-amber-100 rounded-xl mb-4 mx-auto">
+                                        <i class="fas fa-home text-amber-600 text-2xl"></i>
+                                    </div>
+                                    <div class="text-4xl font-bold text-amber-600 mb-2">280m²</div>
+                                    <div class="text-gray-600">Casa Principală</div>
+                                </div>
+                                <div class="country-stat">
+                                    <div class="flex items-center justify-center w-16 h-16 bg-gray-100 rounded-xl mb-4 mx-auto">
+                                        <i class="fas fa-tree text-gray-600 text-2xl"></i>
+                                    </div>
+                                    <div class="text-4xl font-bold text-gray-700 mb-2">2ha</div>
+                                    <div class="text-gray-600">Teren Natural</div>
+                                </div>
+                                <div class="country-stat">
+                                    <div class="flex items-center justify-center w-16 h-16 bg-amber-100 rounded-xl mb-4 mx-auto">
+                                        <i class="fas fa-bed text-amber-600 text-2xl"></i>
+                                    </div>
+                                    <div class="text-4xl font-bold text-amber-600 mb-2">4</div>
+                                    <div class="text-gray-600">Dormitoare</div>
+                                </div>
+                                <div class="country-stat">
+                                    <div class="flex items-center justify-center w-16 h-16 bg-gray-100 rounded-xl mb-4 mx-auto">
+                                        <i class="fas fa-calendar text-gray-600 text-2xl"></i>
+                                    </div>
+                                    <div class="text-4xl font-bold text-gray-700 mb-2">2021</div>
+                                    <div class="text-gray-600">Renovare</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="relative">
+                            <div class="country-image-showcase">
+                                <div class="bg-gradient-to-br from-amber-200 to-amber-400 h-96 rounded-3xl shadow-2xl transform hover:scale-105 transition-transform duration-700 relative overflow-hidden">
+                                    <div class="absolute inset-0 bg-gradient-to-tr from-transparent to-gray-500/10"></div>
+                                    <div class="absolute bottom-6 left-6 right-6">
+                                        <div class="bg-white/90 backdrop-blur-sm rounded-2xl p-4">
+                                            <div class="flex items-center space-x-3">
+                                                <i class="fas fa-map-marker-alt text-amber-600"></i>
+                                                <span class="text-gray-700 font-medium">Predeal, Brașov</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Features Grid -->
+                    <div class="grid md:grid-cols-3 gap-12">
+                        <div class="country-feature text-center space-y-6">
+                            <div class="w-20 h-20 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto">
+                                <i class="fas fa-fire text-amber-600 text-2xl"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold text-gray-800">Șemineu Traditional</h4>
+                            <p class="text-gray-600 leading-relaxed">Șemineu din piatră naturală pentru seri perfecte de iarnă</p>
+                        </div>
+                        
+                        <div class="country-feature text-center space-y-6">
+                            <div class="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto">
+                                <i class="fas fa-seedling text-gray-600 text-2xl"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold text-gray-800">Grădină Bio</h4>
+                            <p class="text-gray-600 leading-relaxed">Grădină de legume și fructe pentru un trai sănătos</p>
+                        </div>
+                        
+                        <div class="country-feature text-center space-y-6">
+                            <div class="w-20 h-20 bg-amber-100 rounded-2xl flex items-center justify-center mx-auto">
+                                <i class="fas fa-wifi text-amber-600 text-2xl"></i>
+                            </div>
+                            <h4 class="text-2xl font-bold text-gray-800">Conectivitate</h4>
+                            <p class="text-gray-600 leading-relaxed">Internet de mare viteză pentru work from home</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Gallery Section -->
+        <section id="galerie" class="py-32 bg-amber-50">
+            <div class="container mx-auto px-6">
+                <div class="max-w-7xl mx-auto">
+                    <div class="text-center mb-20">
+                        <div class="inline-flex items-center space-x-3 bg-white px-6 py-3 rounded-full mb-8 shadow-sm">
+                            <i class="fas fa-camera text-amber-600"></i>
+                            <span class="text-gray-700 font-medium">Momente captivante</span>
+                        </div>
+                        <h2 class="text-6xl font-bold text-gray-800 mb-8">Galeria Naturii</h2>
+                    </div>
+                    
+                    <div class="country-gallery">
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            <div class="col-span-2 row-span-2">
+                                <div class="country-gallery-item bg-gradient-to-br from-amber-300 to-amber-500 h-full min-h-80 rounded-2xl shadow-lg"></div>
+                            </div>
+                            <div class="country-gallery-item bg-gradient-to-br from-gray-300 to-gray-500 h-40 rounded-2xl shadow-lg"></div>
+                            <div class="country-gallery-item bg-gradient-to-br from-yellow-300 to-amber-600 h-40 rounded-2xl shadow-lg"></div>
+                            <div class="country-gallery-item bg-gradient-to-br from-amber-400 to-gray-600 h-40 rounded-2xl shadow-lg"></div>
+                            <div class="country-gallery-item bg-gradient-to-br from-gray-400 to-yellow-500 h-40 rounded-2xl shadow-lg"></div>
+                            <div class="col-span-2">
+                                <div class="country-gallery-item bg-gradient-to-br from-yellow-400 to-gray-500 h-40 rounded-2xl shadow-lg"></div>
+                            </div>
+                            <div class="country-gallery-item bg-gradient-to-br from-amber-500 to-gray-600 h-40 rounded-2xl shadow-lg"></div>
+                            <div class="country-gallery-item bg-gradient-to-br from-gray-500 to-amber-400 h-40 rounded-2xl shadow-lg"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articles Section -->
+        <section id="articole" class="py-32 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-20">
+                        <div class="inline-flex items-center space-x-3 bg-amber-50 px-6 py-3 rounded-full mb-8">
+                            <i class="fas fa-feather text-amber-600"></i>
+                            <span class="text-gray-700 font-medium">Povești din natură</span>
+                        </div>
+                        <h2 class="text-6xl font-bold text-gray-800 mb-8">Jurnalul Casei</h2>
+                    </div>
+                    
+                    <div class="grid lg:grid-cols-3 gap-12">
+                        <article class="country-article group">
+                            <div class="country-article-image bg-gradient-to-br from-amber-300 to-amber-500 h-56 rounded-2xl mb-6"></div>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <span class="px-3 py-1 bg-amber-100 text-amber-700 text-xs font-semibold rounded-full uppercase tracking-wide">Lifestyle Rural</span>
+                                    <span class="text-gray-500 text-sm">10 Dec 2024</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-800 group-hover:text-amber-600 transition-colors">
+                                    Viața la Țară: Un Mod de Viață Sănătos
+                                </h3>
+                                <p class="text-gray-600 leading-relaxed">
+                                    Descoperă beneficiile unui stil de viață rural și cum să îți organizezi 
+                                    timpul între oraș și natură.
+                                </p>
+                                <a href="#" class="inline-flex items-center text-amber-600 hover:text-amber-700 font-medium">
+                                    Citește mai mult <i class="fas fa-leaf ml-2"></i>
+                                </a>
+                            </div>
+                        </article>
+                        
+                        <article class="country-article group">
+                            <div class="country-article-image bg-gradient-to-br from-gray-300 to-gray-500 h-56 rounded-2xl mb-6"></div>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs font-semibold rounded-full uppercase tracking-wide">Grădinărit</span>
+                                    <span class="text-gray-500 text-sm">8 Dec 2024</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-800 group-hover:text-amber-600 transition-colors">
+                                    Grădina de Legume: De la Sămânță la Masă
+                                </h3>
+                                <p class="text-gray-600 leading-relaxed">
+                                    Ghidul complet pentru amenajarea unei grădini de legume productive 
+                                    și sustenabile.
+                                </p>
+                                <a href="#" class="inline-flex items-center text-amber-600 hover:text-amber-700 font-medium">
+                                    Citește mai mult <i class="fas fa-seedling ml-2"></i>
+                                </a>
+                            </div>
+                        </article>
+                        
+                        <article class="country-article group">
+                            <div class="country-article-image bg-gradient-to-br from-yellow-400 to-amber-600 h-56 rounded-2xl mb-6"></div>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-3">
+                                    <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-xs font-semibold rounded-full uppercase tracking-wide">Renovare</span>
+                                    <span class="text-gray-500 text-sm">5 Dec 2024</span>
+                                </div>
+                                <h3 class="text-2xl font-bold text-gray-800 group-hover:text-amber-600 transition-colors">
+                                    Renovarea Casei: Provocări și Satisfacții
+                                </h3>
+                                <p class="text-gray-600 leading-relaxed">
+                                    Povestea renovării acestei case tradiționale și transformarea ei 
+                                    într-un cămin modern.
+                                </p>
+                                <a href="#" class="inline-flex items-center text-amber-600 hover:text-amber-700 font-medium">
+                                    Citește mai mult <i class="fas fa-hammer ml-2"></i>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-32 bg-gray-800">
+            <div class="container mx-auto px-6">
+                <div class="max-w-6xl mx-auto">
+                    <div class="text-center mb-20">
+                        <div class="inline-flex items-center space-x-3 bg-amber-600 px-6 py-3 rounded-full mb-8">
+                            <i class="fas fa-envelope text-white"></i>
+                            <span class="text-white font-medium">Să luăm legătura</span>
+                        </div>
+                        <h2 class="text-6xl font-bold text-white mb-8">Vino în Vizită</h2>
+                        <p class="text-xl text-gray-300 max-w-4xl mx-auto leading-relaxed">
+                            Îți stau deschise porțile pentru a descoperi frumusețea acestui refugiu natural. 
+                            Contactează-ne pentru a planifica o vizită.
+                        </p>
+                    </div>
+                    
+                    <div class="grid lg:grid-cols-2 gap-20">
+                        <div class="space-y-12">
+                            <div class="space-y-8">
+                                <div class="country-contact-item">
+                                    <div class="w-16 h-16 bg-amber-600 rounded-2xl flex items-center justify-center">
+                                        <i class="fas fa-envelope text-white text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-bold text-amber-400 mb-2">Email</h4>
+                                        <p class="text-gray-300">contact@casadetara.ro</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="country-contact-item">
+                                    <div class="w-16 h-16 bg-gray-600 rounded-2xl flex items-center justify-center">
+                                        <i class="fas fa-phone text-white text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-bold text-gray-400 mb-2">Telefon</h4>
+                                        <p class="text-gray-300">+40 123 456 789</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="country-contact-item">
+                                    <div class="w-16 h-16 bg-amber-600 rounded-2xl flex items-center justify-center">
+                                        <i class="fas fa-map-marker-alt text-white text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="text-xl font-bold text-amber-400 mb-2">Locație</h4>
+                                        <p class="text-gray-300">Predeal, Brașov</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="country-schedule bg-gray-700/50 p-8 rounded-2xl">
+                                <h4 class="text-xl font-bold text-white mb-6 flex items-center">
+                                    <i class="fas fa-clock text-amber-400 mr-3"></i>
+                                    Program Vizite
+                                </h4>
+                                <div class="space-y-3 text-gray-300">
+                                    <div class="flex justify-between">
+                                        <span>Sâmbătă - Duminică</span>
+                                        <span>10:00 - 18:00</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Alte zile</span>
+                                        <span>Cu programare</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <form class="country-form space-y-8">
+                            <div class="grid md:grid-cols-2 gap-6">
+                                <input type="text" placeholder="Prenume *" class="country-input" required>
+                                <input type="text" placeholder="Nume *" class="country-input" required>
+                            </div>
+                            <input type="email" placeholder="Email *" class="country-input" required>
+                            <input type="tel" placeholder="Telefon" class="country-input">
+                            <input type="date" class="country-input" placeholder="Data dorită pentru vizită">
+                            <textarea placeholder="Mesaj..." rows="5" class="country-input"></textarea>
+                            <button type="submit" class="country-btn-primary w-full py-4">
+                                <i class="fas fa-paper-plane mr-3"></i>Trimite Cererea
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-16">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="flex flex-col lg:flex-row justify-between items-center">
+                    <div class="text-center lg:text-left mb-12 lg:mb-0">
+                        <div class="flex items-center justify-center lg:justify-start space-x-3 mb-4">
+                            <div class="relative">
+                                <i class="fas fa-tree text-3xl text-amber-400"></i>
+                                <i class="fas fa-home absolute -bottom-1 -right-1 text-sm text-gray-400"></i>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-white">Casa de <span class="text-amber-400">Țară</span></div>
+                                <div class="text-sm text-gray-400">Refugiu Natural</div>
+                            </div>
+                        </div>
+                        <p class="text-gray-400 mb-2">Unde natura întâlnește confortul</p>
+                        <p class="text-gray-500 text-sm">&copy; 2024 Casa de Țară. Toate drepturile rezervate.</p>
+                    </div>
+                    
+                    <div class="flex space-x-6">
+                        <a href="#" class="country-social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="country-social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="country-social-icon">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                        <a href="#" class="country-social-icon">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/js/script.js"></script>
+</body>
+</html>

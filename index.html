@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5 Exemple Site-uri Reședințe Private | Design Modern & Profesional</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 50%, #6b7280 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tech-badge {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(107, 114, 128, 0.1));
+            backdrop-filter: blur(10px);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .site-preview {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white py-20">
+        <div class="container mx-auto px-6 text-center">
+            <div class="float-animation inline-block mb-6">
+                <i class="fas fa-home text-6xl opacity-90"></i>
+            </div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                5 Exemple Site-uri
+                <br>
+                <span class="text-yellow-200">Reședințe Private</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-yellow-100 max-w-4xl mx-auto leading-relaxed mb-8">
+                Colecție de site-uri web moderne și profesionale pentru reședințe private, 
+                construite cu <strong>Tailwind CSS</strong> și <strong>Bootstrap</strong>
+            </p>
+            
+            <!-- Tech Badges -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <span class="tech-badge px-4 py-2 rounded-full text-sm font-semibold">
+                    <i class="fab fa-html5 mr-2"></i>HTML5
+                </span>
+                <span class="tech-badge px-4 py-2 rounded-full text-sm font-semibold">
+                    <i class="fab fa-css3-alt mr-2"></i>Tailwind CSS
+                </span>
+                <span class="tech-badge px-4 py-2 rounded-full text-sm font-semibold">
+                    <i class="fab fa-bootstrap mr-2"></i>Bootstrap 5
+                </span>
+                <span class="tech-badge px-4 py-2 rounded-full text-sm font-semibold">
+                    <i class="fab fa-js-square mr-2"></i>JavaScript ES6+
+                </span>
+            </div>
+            
+            <a href="#sites" class="inline-flex items-center bg-white text-gray-800 px-8 py-4 rounded-full font-semibold hover:bg-yellow-50 transition-all duration-300 hover:scale-105">
+                <i class="fas fa-arrow-down mr-3"></i>
+                Explorează Site-urile
+            </a>
+        </div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">
+                Caracteristici Comune
+            </h2>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center p-8 rounded-2xl bg-yellow-50 hover:bg-yellow-100 transition-colors">
+                    <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-mobile-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Design Responsive</h3>
+                    <p class="text-gray-600">Optimizat pentru toate dispozitivele, de la mobile la desktop</p>
+                </div>
+                
+                <div class="text-center p-8 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-colors">
+                    <div class="w-16 h-16 bg-gray-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-magic text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Animații Moderne</h3>
+                    <p class="text-gray-600">Efecte și animații smooth pentru o experiență premium</p>
+                </div>
+                
+                <div class="text-center p-8 rounded-2xl bg-yellow-50 hover:bg-yellow-100 transition-colors">
+                    <div class="w-16 h-16 bg-yellow-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-palette text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Paletă Galben-Gri</h3>
+                    <p class="text-gray-600">Design consistent cu culori moderne și profesionale</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sites Showcase -->
+    <section id="sites" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <h2 class="text-4xl font-bold text-center text-gray-800 mb-16">
+                Galeria Site-urilor
+            </h2>
+            
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Site 1: Villa Elena -->
+                <div class="card-hover bg-white rounded-3xl overflow-hidden shadow-xl">
+                    <div class="site-preview h-64 bg-gradient-to-br from-yellow-400 to-yellow-600 relative">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <i class="fas fa-crown text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold">Villa Elena</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                            <i class="fas fa-home mr-3 text-yellow-600"></i>
+                            Villa Elena - Reședință de Lux
+                        </h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Vila de lux de 450m² cu design elegant și sofisticat. Materiale premium, 
+                            5 camere, 3 băi și animații fade-in cu efecte 3D.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-sm rounded-full">450m²</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">5 Camere</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-sm rounded-full">Premium</span>
+                        </div>
+                        <a href="site1/" class="inline-flex items-center bg-yellow-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-yellow-600 transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>
+                            Vezi Site-ul
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Site 2: Penthouse Aurora -->
+                <div class="card-hover bg-white rounded-3xl overflow-hidden shadow-xl">
+                    <div class="site-preview h-64 bg-gradient-to-br from-gray-200 to-gray-400 relative">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <i class="fas fa-building text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold">Penthouse Aurora</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                            <i class="fas fa-star mr-3 text-gray-600"></i>
+                            Penthouse Aurora - Eleganță Minimalistă
+                        </h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Penthouse minimalist de 320m² cu design curat și aerat. Etajul 25 
+                            cu vedere panoramică și animații subtile.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">320m²</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-sm rounded-full">Etaj 25</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">Minimal</span>
+                        </div>
+                        <a href="site2/" class="inline-flex items-center bg-gray-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>
+                            Vezi Site-ul
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Site 3: Casa Modernă -->
+                <div class="card-hover bg-white rounded-3xl overflow-hidden shadow-xl">
+                    <div class="site-preview h-64 bg-gradient-to-br from-yellow-300 to-gray-500 relative">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <i class="fas fa-home-heart text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold">Casa Modernă</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                            <i class="fas fa-users mr-3 text-yellow-600"></i>
+                            Casa Modernă Familia Popescu
+                        </h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Casă de familie modernă de 380m² cu funcționalități smart. Design 
+                            family-friendly și animații playful cu efecte bounce.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-sm rounded-full">380m²</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">Smart Home</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-sm rounded-full">Family</span>
+                        </div>
+                        <a href="site3/" class="inline-flex items-center bg-yellow-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-yellow-600 transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>
+                            Vezi Site-ul
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Site 4: LuxResidence -->
+                <div class="card-hover bg-white rounded-3xl overflow-hidden shadow-xl">
+                    <div class="site-preview h-64 bg-gradient-to-br from-yellow-400 to-gray-600 relative">
+                        <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                            <div class="text-center text-white">
+                                <i class="fas fa-gem text-4xl mb-4"></i>
+                                <h3 class="text-2xl font-bold">LuxResidence</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                            <i class="fas fa-crown mr-3 text-yellow-600"></i>
+                            LuxResidence - Apartament Premium
+                        </h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Apartament ultra-luxury de 220m² cu servicii premium. Concierge 24/7, 
+                            facilități spa și animații cu particule aurii.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-sm rounded-full">220m²</span>
+                            <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">Concierge</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-700 text-sm rounded-full">Ultra-Lux</span>
+                        </div>
+                        <a href="site4/" class="inline-flex items-center bg-yellow-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-yellow-600 transition-colors">
+                            <i class="fas fa-external-link-alt mr-2"></i>
+                            Vezi Site-ul
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Site 5: Casa de Țară -->
+                <div class="card-hover bg-white rounded-3xl overflow-hidden shadow-xl lg:col-span-2">
+                    <div class="grid md:grid-cols-2 gap-0">
+                        <div class="site-preview h-64 md:h-auto bg-gradient-to-br from-amber-300 to-amber-600 relative">
+                            <div class="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                                <div class="text-center text-white">
+                                    <i class="fas fa-tree text-4xl mb-4"></i>
+                                    <h3 class="text-2xl font-bold">Casa de Țară</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-8">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-4">
+                                <i class="fas fa-leaf mr-3 text-amber-600"></i>
+                                Casa de Țară - Refugiu Natural
+                            </h3>
+                            <p class="text-gray-600 mb-6 leading-relaxed">
+                                Casă rurală de 280m² pe 2 hectare în Predeal, Brașov. Design rustic-modern 
+                                cu șemineu tradițional, grădină bio și animații naturale cu particule.
+                            </p>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                <span class="px-3 py-1 bg-amber-100 text-amber-700 text-sm rounded-full">280m²</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">2 Hectare</span>
+                                <span class="px-3 py-1 bg-amber-100 text-amber-700 text-sm rounded-full">Natural</span>
+                                <span class="px-3 py-1 bg-gray-100 text-gray-700 text-sm rounded-full">Brașov</span>
+                            </div>
+                            <a href="site5/" class="inline-flex items-center bg-amber-500 text-white px-6 py-3 rounded-xl font-semibold hover:bg-amber-600 transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>
+                                Vezi Site-ul
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 gradient-bg text-white">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-4xl font-bold mb-6">
+                Gata să Începi?
+            </h2>
+            <p class="text-xl text-yellow-100 mb-8 max-w-2xl mx-auto">
+                Folosește aceste exemple ca punct de plecare pentru proiectul tău de site web pentru reședințe private.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="https://github.com/" class="inline-flex items-center bg-white text-gray-800 px-8 py-4 rounded-full font-semibold hover:bg-yellow-50 transition-all duration-300 hover:scale-105">
+                    <i class="fab fa-github mr-3"></i>
+                    Vezi pe GitHub
+                </a>
+                <a href="#" class="inline-flex items-center border-2 border-white text-white px-8 py-4 rounded-full font-semibold hover:bg-white hover:text-gray-800 transition-all duration-300">
+                    <i class="fas fa-download mr-3"></i>
+                    Descarcă ZIP
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="flex justify-center space-x-6 mb-6">
+                    <a href="#" class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:text-yellow-400 hover:bg-gray-600 transition-all duration-300">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:text-yellow-400 hover:bg-gray-600 transition-all duration-300">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    <a href="#" class="w-12 h-12 bg-gray-700 rounded-full flex items-center justify-center text-gray-400 hover:text-yellow-400 hover:bg-gray-600 transition-all duration-300">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                </div>
+                <p class="text-gray-400">
+                    &copy; 2024 5 Exemple Site-uri Reședințe Private. 
+                    <span class="text-yellow-400">Dezvoltat cu ❤️</span> pentru comunitatea de dezvoltatori.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animation to cards
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>

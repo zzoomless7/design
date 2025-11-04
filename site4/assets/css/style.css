@@ -1,0 +1,339 @@
+/* Luxury Apartment - Site 4 */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+    font-family: 'Inter', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+}
+
+/* Luxury Button Styles */
+.btn-luxury {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-luxury::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.btn-luxury:hover::before {
+    left: 100%;
+}
+
+.btn-luxury:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(245, 158, 11, 0.4);
+    background: linear-gradient(135deg, #d97706 0%, #b45309 100%);
+}
+
+.btn-outline-luxury {
+    background: transparent;
+    color: #f59e0b;
+    border: 2px solid #f59e0b;
+    border-radius: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: all 0.4s ease;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-transform: uppercase;
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-outline-luxury::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    transition: width 0.4s ease;
+    z-index: -1;
+}
+
+.btn-outline-luxury:hover::before {
+    width: 100%;
+}
+
+.btn-outline-luxury:hover {
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
+}
+
+/* Navigation */
+.nav-link {
+    position: relative;
+    padding: 8px 0;
+    transition: all 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #f59e0b, #d97706);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 100%;
+}
+
+/* Header Effects */
+#header.scrolled {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(245, 158, 11, 0.1);
+}
+
+/* Luxury Stats */
+.luxury-stat {
+    text-align: center;
+    padding: 20px;
+    border-radius: 16px;
+    background: rgba(245, 158, 11, 0.05);
+    transition: all 0.3s ease;
+}
+
+.luxury-stat:hover {
+    background: rgba(245, 158, 11, 0.1);
+    transform: translateY(-5px);
+}
+
+/* Luxury Features */
+.luxury-feature {
+    text-align: center;
+    padding: 30px 20px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+}
+
+.luxury-feature:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+}
+
+/* Gallery Items */
+.luxury-gallery-item {
+    transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.luxury-gallery-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(45deg, rgba(245, 158, 11, 0.8), rgba(156, 163, 175, 0.8));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+}
+
+.luxury-gallery-item::after {
+    content: '🔍';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
+}
+
+.luxury-gallery-item:hover::before,
+.luxury-gallery-item:hover::after {
+    opacity: 1;
+}
+
+.luxury-gallery-item:hover {
+    transform: scale(1.05);
+}
+
+/* Articles */
+.luxury-article {
+    transition: all 0.4s ease;
+}
+
+.luxury-article:hover {
+    transform: translateY(-8px);
+}
+
+.luxury-article-image {
+    transition: all 0.4s ease;
+}
+
+.luxury-article:hover .luxury-article-image {
+    transform: scale(1.05);
+}
+
+/* Form Styles */
+.luxury-input {
+    width: 100%;
+    padding: 20px 24px;
+    border: 1px solid rgba(156, 163, 175, 0.3);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #e5e7eb;
+    font-weight: 400;
+    transition: all 0.3s ease;
+    outline: none;
+    backdrop-filter: blur(10px);
+}
+
+.luxury-input:focus {
+    border-color: #f59e0b;
+    background: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+    transform: translateY(-2px);
+}
+
+.luxury-input::placeholder {
+    color: rgba(156, 163, 175, 0.7);
+    font-weight: 300;
+}
+
+/* Social Icons */
+.luxury-social-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, rgba(107, 114, 128, 0.1), rgba(75, 85, 99, 0.1));
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    transition: all 0.4s ease;
+    border: 1px solid rgba(156, 163, 175, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.luxury-social-icon:hover {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 10px 25px rgba(245, 158, 11, 0.3);
+    border-color: transparent;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f9fafb;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #d97706, #b45309);
+}
+
+/* Animations */
+@keyframes luxuryFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes goldShimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+.luxury-shimmer {
+    position: relative;
+    overflow: hidden;
+}
+
+.luxury-shimmer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(245, 158, 11, 0.3), transparent);
+    animation: goldShimmer 2s infinite;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Text selection */
+::selection {
+    background: rgba(245, 158, 11, 0.2);
+    color: #1f2937;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .luxury-feature {
+        padding: 20px 15px;
+    }
+    
+    .luxury-input {
+        padding: 16px 20px;
+    }
+    
+    .btn-luxury, .btn-outline-luxury {
+        font-size: 14px;
+        padding: 12px 24px;
+    }
+}
