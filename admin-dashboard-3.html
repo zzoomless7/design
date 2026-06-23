@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .sidebar-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .nav-item {
+            color: white;
+            padding: 15px 20px;
+            border-radius: 15px;
+            transition: all 0.3s ease;
+            margin: 5px 0;
+            cursor: pointer;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(251, 191, 36, 0.3);
+            color: #FBBF24;
+            transform: translateX(10px);
+        }
+
+        .user-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .user-card:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-glass {
+            background: rgba(251, 191, 36, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 12px;
+        }
+
+        .btn-glass:hover {
+            background: rgba(251, 191, 36, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(251, 191, 36, 0.4);
+        }
+
+        .btn-danger {
+            background: rgba(239, 68, 68, 0.8);
+        }
+
+        .btn-danger:hover {
+            background: rgba(239, 68, 68, 1);
+            box-shadow: 0 10px 25px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-success {
+            background: rgba(34, 197, 94, 0.8);
+        }
+
+        .btn-success:hover {
+            background: rgba(34, 197, 94, 1);
+            box-shadow: 0 10px 25px rgba(34, 197, 94, 0.4);
+        }
+
+        .search-glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 15px;
+            padding: 12px 20px;
+        }
+
+        .search-glass::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-glass:focus {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(251, 191, 36, 0.8);
+            outline: none;
+        }
+
+        .role-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .role-admin {
+            background: rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.5);
+        }
+
+        .role-user {
+            background: rgba(59, 130, 246, 0.3);
+            color: #3b82f6;
+            border: 1px solid rgba(59, 130, 246, 0.5);
+        }
+
+        .role-moderator {
+            background: rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.5);
+        }
+
+        .status-online {
+            width: 12px;
+            height: 12px;
+            background: #22c55e;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .status-offline {
+            width: 12px;
+            height: 12px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .status-away {
+            width: 12px;
+            height: 12px;
+            background: #f59e0b;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .activity-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .chart-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <div class="sidebar-glass w-64 fixed h-full z-50">
+            <div class="p-6">
+                <div class="flex items-center space-x-3 mb-8">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 flex items-center justify-center">
+                        <i class="fas fa-users-cog text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">UserFlow</span>
+                </div>
+                
+                <nav class="space-y-2">
+                    <div class="nav-item active">
+                        <i class="fas fa-tachometer-alt mr-3"></i>Dashboard
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-users mr-3"></i>Utilizatori
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-user-shield mr-3"></i>Roluri & Permisiuni
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-chart-pie mr-3"></i>Analize
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-history mr-3"></i>Istoric Activitate
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-bell mr-3"></i>Notificări
+                    </div>
+                    <div class="nav-item">
+                        <i class="fas fa-cog mr-3"></i>Setări
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="ml-64 flex-1 p-8">
+            <!-- Header -->
+            <div class="glass-morphism rounded-2xl p-6 mb-8">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-3xl font-bold text-white">Gestionare Utilizatori</h1>
+                        <p class="text-white opacity-70">Administrează utilizatorii și monitorizează activitatea</p>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button class="btn-glass">
+                            <i class="fas fa-user-plus mr-2"></i>Adaugă Utilizator
+                        </button>
+                        <button class="btn-glass">
+                            <i class="fas fa-download mr-2"></i>Export CSV
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-white opacity-70 text-sm">Total Utilizatori</p>
+                            <p class="text-3xl font-bold text-white">2,847</p>
+                            <p class="text-green-400 text-sm mt-1">+156 această lună</p>
+                        </div>
+                        <div class="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-users text-white"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-white opacity-70 text-sm">Utilizatori Activi</p>
+                            <p class="text-3xl font-bold text-white">1,234</p>
+                            <p class="text-green-400 text-sm mt-1">43% din total</p>
+                        </div>
+                        <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user-check text-white"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-white opacity-70 text-sm">Înregistrări Noi</p>
+                            <p class="text-3xl font-bold text-white">89</p>
+                            <p class="text-green-400 text-sm mt-1">+23% față de săptămâna trecută</p>
+                        </div>
+                        <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user-plus text-white"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card rounded-2xl p-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-white opacity-70 text-sm">Conturi Suspendate</p>
+                            <p class="text-3xl font-bold text-white">12</p>
+                            <p class="text-red-400 text-sm mt-1">Necesită atenție</p>
+                        </div>
+                        <div class="w-12 h-12 bg-gradient-to-r from-red-400 to-red-600 rounded-full flex items-center justify-center">
+                            <i class="fas fa-user-slash text-white"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Grid -->
+            <div class="grid lg:grid-cols-3 gap-8">
+                <!-- Users List -->
+                <div class="lg:col-span-2">
+                    <div class="glass-morphism rounded-2xl p-6">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-xl font-bold text-white">Utilizatori Recenți</h3>
+                            <input type="text" placeholder="Caută utilizatori..." class="search-glass w-64">
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="user-card p-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="relative">
+                                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612e1c2?w=50&h=50&fit=crop&crop=face" 
+                                                 class="w-12 h-12 rounded-full" alt="User">
+                                            <div class="status-online absolute -bottom-1 -right-1"></div>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-white font-semibold">Maria Popescu</h4>
+                                            <p class="text-white opacity-70 text-sm">maria.popescu@email.com</p>
+                                            <div class="flex items-center space-x-2 mt-1">
+                                                <span class="role-badge role-admin">Admin</span>
+                                                <span class="text-white opacity-60 text-xs">Ultima activitate: acum 5 min</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="btn-glass px-3 py-2 text-sm">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-danger px-3 py-2 text-sm">
+                                            <i class="fas fa-ban"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="user-card p-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="relative">
+                                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=50&h=50&fit=crop&crop=face" 
+                                                 class="w-12 h-12 rounded-full" alt="User">
+                                            <div class="status-away absolute -bottom-1 -right-1"></div>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-white font-semibold">Alexandru Ionescu</h4>
+                                            <p class="text-white opacity-70 text-sm">alex.ionescu@email.com</p>
+                                            <div class="flex items-center space-x-2 mt-1">
+                                                <span class="role-badge role-moderator">Moderator</span>
+                                                <span class="text-white opacity-60 text-xs">Ultima activitate: acum 2 ore</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="btn-glass px-3 py-2 text-sm">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-danger px-3 py-2 text-sm">
+                                            <i class="fas fa-ban"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="user-card p-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="relative">
+                                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=50&h=50&fit=crop&crop=face" 
+                                                 class="w-12 h-12 rounded-full" alt="User">
+                                            <div class="status-online absolute -bottom-1 -right-1"></div>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-white font-semibold">Ana Georgescu</h4>
+                                            <p class="text-white opacity-70 text-sm">ana.georgescu@email.com</p>
+                                            <div class="flex items-center space-x-2 mt-1">
+                                                <span class="role-badge role-user">Utilizator</span>
+                                                <span class="text-white opacity-60 text-xs">Ultima activitate: acum 10 min</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="btn-glass px-3 py-2 text-sm">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-danger px-3 py-2 text-sm">
+                                            <i class="fas fa-ban"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="user-card p-6">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="relative">
+                                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=50&h=50&fit=crop&crop=face" 
+                                                 class="w-12 h-12 rounded-full" alt="User">
+                                            <div class="status-offline absolute -bottom-1 -right-1"></div>
+                                        </div>
+                                        <div>
+                                            <h4 class="text-white font-semibold">Mihai Marinescu</h4>
+                                            <p class="text-white opacity-70 text-sm">mihai.marinescu@email.com</p>
+                                            <div class="flex items-center space-x-2 mt-1">
+                                                <span class="role-badge role-user">Utilizator</span>
+                                                <span class="text-white opacity-60 text-xs">Ultima activitate: ieri</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <button class="btn-glass px-3 py-2 text-sm">
+                                            <i class="fas fa-edit"></i>
+                                        </button>
+                                        <button class="btn-danger px-3 py-2 text-sm">
+                                            <i class="fas fa-ban"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-6">
+                    <!-- User Analytics Chart -->
+                    <div class="chart-container">
+                        <h3 class="text-lg font-bold text-white mb-4">Utilizatori pe Luni</h3>
+                        <canvas id="usersChart" height="200"></canvas>
+                    </div>
+
+                    <!-- Recent Activity -->
+                    <div class="glass-card rounded-2xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Activitate Recentă</h3>
+                        <div class="space-y-3">
+                            <div class="activity-item">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-user-plus text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white text-sm">Utilizator nou înregistrat</p>
+                                        <p class="text-white opacity-60 text-xs">Cristina Radu - acum 15 min</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-sign-in-alt text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white text-sm">Autentificare</p>
+                                        <p class="text-white opacity-60 text-xs">Maria Popescu - acum 30 min</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-yellow-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-edit text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white text-sm">Profil actualizat</p>
+                                        <p class="text-white opacity-60 text-xs">Alex Ionescu - acum 1 oră</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="activity-item">
+                                <div class="flex items-start space-x-3">
+                                    <div class="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-ban text-white text-sm"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-white text-sm">Cont suspendat</p>
+                                        <p class="text-white opacity-60 text-xs">Test User - acum 2 ore</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="glass-card rounded-2xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Statistici Rapide</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-white opacity-80">Admini</span>
+                                <span class="text-white font-bold">5</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-white opacity-80">Moderatori</span>
+                                <span class="text-white font-bold">12</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-white opacity-80">Utilizatori</span>
+                                <span class="text-white font-bold">2,830</span>
+                            </div>
+                            <hr class="border-white border-opacity-20">
+                            <div class="flex justify-between items-center">
+                                <span class="text-white opacity-80">Online acum</span>
+                                <span class="text-green-400 font-bold">342</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions -->
+                    <div class="glass-card rounded-2xl p-6">
+                        <h3 class="text-lg font-bold text-white mb-4">Acțiuni Rapide</h3>
+                        <div class="space-y-3">
+                            <button class="w-full btn-glass text-left">
+                                <i class="fas fa-user-plus mr-2"></i>Adaugă Utilizator
+                            </button>
+                            <button class="w-full btn-glass text-left">
+                                <i class="fas fa-users-cog mr-2"></i>Gestionează Roluri
+                            </button>
+                            <button class="w-full btn-success text-left">
+                                <i class="fas fa-envelope mr-2"></i>Trimite Notificare
+                            </button>
+                            <button class="w-full btn-danger text-left">
+                                <i class="fas fa-shield-alt mr-2"></i>Revizie Securitate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Users Chart
+        const usersCtx = document.getElementById('usersChart').getContext('2d');
+        new Chart(usersCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ian', 'Feb', 'Mar', 'Apr', 'Mai', 'Iun', 'Iul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                datasets: [
+                    {
+                        label: 'Utilizatori Noi',
+                        data: [45, 52, 48, 61, 55, 67, 73, 69, 76, 82, 88, 95],
+                        borderColor: 'rgba(251, 191, 36, 1)',
+                        backgroundColor: 'rgba(251, 191, 36, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    },
+                    {
+                        label: 'Utilizatori Activi',
+                        data: [120, 135, 142, 158, 163, 171, 185, 192, 198, 205, 212, 234],
+                        borderColor: 'rgba(34, 197, 94, 1)',
+                        backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                        tension: 0.4,
+                        fill: true
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'white'
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        ticks: {
+                            color: 'white'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: 'white'
+                        },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

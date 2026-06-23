@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Management Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .top-nav {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .project-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .task-card {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .task-card:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateX(5px);
+        }
+
+        .btn-glass {
+            background: rgba(251, 191, 36, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            padding: 10px 20px;
+            border-radius: 12px;
+        }
+
+        .btn-glass:hover {
+            background: rgba(251, 191, 36, 1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(251, 191, 36, 0.4);
+        }
+
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #FBBF24, #F59E0B);
+            height: 8px;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .priority-high {
+            background: rgba(239, 68, 68, 0.3);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.5);
+        }
+
+        .priority-medium {
+            background: rgba(251, 191, 36, 0.3);
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.5);
+        }
+
+        .priority-low {
+            background: rgba(34, 197, 94, 0.3);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.5);
+        }
+
+        .team-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            margin-left: -8px;
+            transition: all 0.3s ease;
+        }
+
+        .team-avatar:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+
+        .calendar-glass {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+        }
+
+        .calendar-day {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .calendar-day:hover, .calendar-day.active {
+            background: rgba(251, 191, 36, 0.5);
+            color: white;
+        }
+
+        .notification-dot {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 12px;
+            height: 12px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-nav fixed w-full top-0 z-50 py-4">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-amber-400 to-amber-600 flex items-center justify-center">
+                        <i class="fas fa-project-diagram text-white"></i>
+                    </div>
+                    <span class="text-xl font-bold text-white">ProjectFlow</span>
+                </div>
+
+                <div class="flex items-center space-x-6">
+                    <div class="relative">
+                        <i class="fas fa-bell text-white text-xl cursor-pointer"></i>
+                        <div class="notification-dot"></div>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face" 
+                             alt="User" class="w-10 h-10 rounded-full border-2 border-white border-opacity-50">
+                        <span class="text-white font-medium">Andrei Pop</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="pt-24 p-6">
+        <!-- Header Section -->
+        <div class="glass-morphism rounded-2xl p-6 mb-8">
+            <div class="flex justify-between items-center">
+                <div>
+                    <h1 class="text-3xl font-bold text-white">Dashboard Proiecte</h1>
+                    <p class="text-white opacity-70">Gestionează și urmărește progresul proiectelor tale</p>
+                </div>
+                <div class="flex space-x-3">
+                    <button class="btn-glass">
+                        <i class="fas fa-plus mr-2"></i>Proiect Nou
+                    </button>
+                    <button class="btn-glass">
+                        <i class="fas fa-users mr-2"></i>Invită Membri
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="glass-card rounded-2xl p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white opacity-70 text-sm">Proiecte Active</p>
+                        <p class="text-3xl font-bold text-white">12</p>
+                        <p class="text-green-400 text-sm mt-1">+3 din ultima lună</p>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-r from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-folder-open text-white"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white opacity-70 text-sm">Task-uri Completate</p>
+                        <p class="text-3xl font-bold text-white">234</p>
+                        <p class="text-green-400 text-sm mt-1">+18 această săptămână</p>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-check-circle text-white"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white opacity-70 text-sm">Membri Echipă</p>
+                        <p class="text-3xl font-bold text-white">18</p>
+                        <p class="text-amber-400 text-sm mt-1">2 membri noi</p>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-r from-purple-400 to-purple-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-users text-white"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-white opacity-70 text-sm">Deadline-uri</p>
+                        <p class="text-3xl font-bold text-white">5</p>
+                        <p class="text-red-400 text-sm mt-1">în următoarele 7 zile</p>
+                    </div>
+                    <div class="w-12 h-12 bg-gradient-to-r from-red-400 to-red-600 rounded-full flex items-center justify-center">
+                        <i class="fas fa-clock text-white"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="grid lg:grid-cols-3 gap-8">
+            <!-- Projects Column -->
+            <div class="lg:col-span-2">
+                <div class="glass-morphism rounded-2xl p-6 mb-8">
+                    <h3 class="text-xl font-bold text-white mb-6">Proiecte Active</h3>
+                    <div class="space-y-4">
+                        <div class="project-card p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h4 class="text-lg font-bold text-white">Redesign Website</h4>
+                                    <p class="text-white opacity-70 text-sm">Frontend & UX/UI improvements</p>
+                                </div>
+                                <span class="px-3 py-1 rounded-full text-xs font-medium priority-high">High Priority</span>
+                            </div>
+                            <div class="progress-bar mb-4">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex -space-x-2">
+                                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612e1c2?w=35&h=35&fit=crop&crop=face" 
+                                         class="team-avatar" alt="Team member">
+                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=35&h=35&fit=crop&crop=face" 
+                                         class="team-avatar" alt="Team member">
+                                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=35&h=35&fit=crop&crop=face" 
+                                         class="team-avatar" alt="Team member">
+                                </div>
+                                <span class="text-white opacity-70 text-sm">Due: 28 Dec 2024</span>
+                            </div>
+                        </div>
+
+                        <div class="project-card p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h4 class="text-lg font-bold text-white">Mobile App Development</h4>
+                                    <p class="text-white opacity-70 text-sm">React Native implementation</p>
+                                </div>
+                                <span class="px-3 py-1 rounded-full text-xs font-medium priority-medium">Medium Priority</span>
+                            </div>
+                            <div class="progress-bar mb-4">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex -space-x-2">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=35&h=35&fit=crop&crop=face" 
+                                         class="team-avatar" alt="Team member">
+                                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=35&h=35&fit=crop&crop=face" 
+                                         class="team-avatar" alt="Team member">
+                                </div>
+                                <span class="text-white opacity-70 text-sm">Due: 15 Jan 2025</span>
+                            </div>
+                        </div>
+
+                        <div class="project-card p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h4 class="text-lg font-bold text-white">API Integration</h4>
+                                    <p class="text-white opacity-70 text-sm">Third-party services connection</p>
+                                </div>
+                                <span class="px-3 py-1 rounded-full text-xs font-medium priority-low">Low Priority</span>
+                            </div>
+                            <div class="progress-bar mb-4">
+                                <div class="progress-fill" style="width: 90%"></div>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <div class="flex -space-x-2">
+                                    <img src="https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?w=35&h=35&fit=crop&crop=face" 
+                                         class="team-avatar" alt="Team member">
+                                </div>
+                                <span class="text-white opacity-70 text-sm">Due: 30 Dec 2024</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Tasks -->
+                <div class="glass-morphism rounded-2xl p-6">
+                    <h3 class="text-xl font-bold text-white mb-6">Task-uri Recente</h3>
+                    <div class="space-y-3">
+                        <div class="task-card p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-4 h-4 border-2 border-green-400 rounded-full bg-green-400"></div>
+                                    <span class="text-white">Implementare sistem de autentificare</span>
+                                </div>
+                                <span class="text-white opacity-70 text-sm">Completat</span>
+                            </div>
+                        </div>
+
+                        <div class="task-card p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-4 h-4 border-2 border-amber-400 rounded-full"></div>
+                                    <span class="text-white">Design mockup pentru dashboard</span>
+                                </div>
+                                <span class="text-white opacity-70 text-sm">În progres</span>
+                            </div>
+                        </div>
+
+                        <div class="task-card p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-4 h-4 border-2 border-gray-400 rounded-full"></div>
+                                    <span class="text-white">Testare funcționalitate plăți</span>
+                                </div>
+                                <span class="text-white opacity-70 text-sm">Planificat</span>
+                            </div>
+                        </div>
+
+                        <div class="task-card p-4">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-4 h-4 border-2 border-green-400 rounded-full bg-green-400"></div>
+                                    <span class="text-white">Optimizare performanță</span>
+                                </div>
+                                <span class="text-white opacity-70 text-sm">Completat</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Calendar -->
+                <div class="calendar-glass p-6">
+                    <h3 class="text-lg font-bold text-white mb-4">Calendar</h3>
+                    <div class="grid grid-cols-7 gap-1 mb-4">
+                        <div class="text-center text-white opacity-70 text-sm py-2">L</div>
+                        <div class="text-center text-white opacity-70 text-sm py-2">M</div>
+                        <div class="text-center text-white opacity-70 text-sm py-2">M</div>
+                        <div class="text-center text-white opacity-70 text-sm py-2">J</div>
+                        <div class="text-center text-white opacity-70 text-sm py-2">V</div>
+                        <div class="text-center text-white opacity-70 text-sm py-2">S</div>
+                        <div class="text-center text-white opacity-70 text-sm py-2">D</div>
+                    </div>
+                    <div class="grid grid-cols-7 gap-1">
+                        <div class="calendar-day text-white opacity-50">25</div>
+                        <div class="calendar-day text-white opacity-50">26</div>
+                        <div class="calendar-day text-white opacity-50">27</div>
+                        <div class="calendar-day text-white opacity-50">28</div>
+                        <div class="calendar-day text-white opacity-50">29</div>
+                        <div class="calendar-day text-white opacity-50">30</div>
+                        <div class="calendar-day text-white">1</div>
+                        <div class="calendar-day text-white">2</div>
+                        <div class="calendar-day text-white">3</div>
+                        <div class="calendar-day text-white">4</div>
+                        <div class="calendar-day text-white">5</div>
+                        <div class="calendar-day text-white">6</div>
+                        <div class="calendar-day text-white">7</div>
+                        <div class="calendar-day text-white">8</div>
+                        <div class="calendar-day text-white">9</div>
+                        <div class="calendar-day text-white">10</div>
+                        <div class="calendar-day text-white">11</div>
+                        <div class="calendar-day text-white">12</div>
+                        <div class="calendar-day text-white">13</div>
+                        <div class="calendar-day text-white">14</div>
+                        <div class="calendar-day text-white">15</div>
+                        <div class="calendar-day text-white">16</div>
+                        <div class="calendar-day text-white">17</div>
+                        <div class="calendar-day text-white">18</div>
+                        <div class="calendar-day text-white">19</div>
+                        <div class="calendar-day text-white">20</div>
+                        <div class="calendar-day text-white">21</div>
+                        <div class="calendar-day text-white">22</div>
+                        <div class="calendar-day text-white active">23</div>
+                        <div class="calendar-day text-white">24</div>
+                        <div class="calendar-day text-white">25</div>
+                        <div class="calendar-day text-white">26</div>
+                        <div class="calendar-day text-white">27</div>
+                        <div class="calendar-day text-white">28</div>
+                        <div class="calendar-day text-white">29</div>
+                        <div class="calendar-day text-white">30</div>
+                        <div class="calendar-day text-white">31</div>
+                    </div>
+                </div>
+
+                <!-- Team Activity -->
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="text-lg font-bold text-white mb-4">Activitate Echipă</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <img src="https://images.unsplash.com/photo-1494790108755-2616b612e1c2?w=32&h=32&fit=crop&crop=face" 
+                                 class="w-8 h-8 rounded-full" alt="User">
+                            <div>
+                                <p class="text-white text-sm"><strong>Maria</strong> a completat task-ul "Design UI"</p>
+                                <p class="text-white opacity-60 text-xs">acum 2 ore</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=32&h=32&fit=crop&crop=face" 
+                                 class="w-8 h-8 rounded-full" alt="User">
+                            <div>
+                                <p class="text-white text-sm"><strong>Alex</strong> a adăugat comentariu în "API Integration"</p>
+                                <p class="text-white opacity-60 text-xs">acum 4 ore</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start space-x-3">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=32&h=32&fit=crop&crop=face" 
+                                 class="w-8 h-8 rounded-full" alt="User">
+                            <div>
+                                <p class="text-white text-sm"><strong>Ana</strong> a creat proiectul nou "Mobile App"</p>
+                                <p class="text-white opacity-60 text-xs">ieri</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="glass-card rounded-2xl p-6">
+                    <h3 class="text-lg font-bold text-white mb-4">Acțiuni Rapide</h3>
+                    <div class="space-y-3">
+                        <button class="w-full btn-glass text-left">
+                            <i class="fas fa-plus mr-2"></i>Adaugă Task
+                        </button>
+                        <button class="w-full btn-glass text-left">
+                            <i class="fas fa-calendar mr-2"></i>Programează Meeting
+                        </button>
+                        <button class="w-full btn-glass text-left">
+                            <i class="fas fa-file-alt mr-2"></i>Generează Raport
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
