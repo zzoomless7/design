@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Example 1</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'custom-yellow': '#F59E0B',
+                        'custom-yellow-light': '#FCD34D',
+                        'custom-gray': '#6B7280',
+                        'custom-gray-dark': '#374151',
+                        'custom-gray-light': '#F3F4F6'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in {
+            animation: fadeIn 0.8s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .slide-in {
+            animation: slideIn 0.6s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(-100%); }
+            to { transform: translateX(0); }
+        }
+    </style>
+</head>
+<body class="bg-custom-gray-light min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50 border-b-4 border-custom-yellow">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo Centrat -->
+                <div class="flex-1"></div>
+                <div class="flex-shrink-0">
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 bg-gradient-to-r from-custom-yellow to-custom-yellow-light rounded-full flex items-center justify-center">
+                            <i class="fas fa-crown text-white text-xl"></i>
+                        </div>
+                        <span class="ml-3 text-2xl font-bold text-custom-gray-dark">AdminPro</span>
+                    </div>
+                </div>
+                
+                <!-- Meniu Orizontal -->
+                <nav class="flex-1 flex justify-end">
+                    <ul class="flex space-x-8">
+                        <li><a href="#home" class="nav-link text-custom-gray hover:text-custom-yellow transition-colors duration-300 font-medium">Home</a></li>
+                        <li><a href="#despre" class="nav-link text-custom-gray hover:text-custom-yellow transition-colors duration-300 font-medium">Despre</a></li>
+                        <li><a href="#articole" class="nav-link text-custom-gray hover:text-custom-yellow transition-colors duration-300 font-medium">Articole</a></li>
+                        <li><a href="#galerie" class="nav-link text-custom-gray hover:text-custom-yellow transition-colors duration-300 font-medium">Galerie</a></li>
+                        <li><a href="#contact" class="nav-link text-custom-gray hover:text-custom-yellow transition-colors duration-300 font-medium">Contact</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Home Section -->
+        <section id="home" class="mb-16 fade-in">
+            <div class="text-center mb-12">
+                <h1 class="text-4xl font-bold text-custom-gray-dark mb-4">Bine ați venit în AdminPro</h1>
+                <p class="text-xl text-custom-gray max-w-2xl mx-auto">Soluția completă pentru administrarea eficiată a afacerii dumneavoastră</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-6 hover-lift">
+                    <div class="w-16 h-16 bg-custom-yellow rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-custom-gray-dark text-center mb-2">Analiză Avansată</h3>
+                    <p class="text-custom-gray text-center">Urmăriți performanțele cu rapoarte detaliate și dashboard-uri interactive</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg p-6 hover-lift">
+                    <div class="w-16 h-16 bg-custom-yellow rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-custom-gray-dark text-center mb-2">Securitate Maximă</h3>
+                    <p class="text-custom-gray text-center">Protecție avansată cu autentificare multi-factor și criptare end-to-end</p>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg p-6 hover-lift">
+                    <div class="w-16 h-16 bg-custom-yellow rounded-full flex items-center justify-center mb-4 mx-auto">
+                        <i class="fas fa-cog text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-custom-gray-dark text-center mb-2">Personalizare Totală</h3>
+                    <p class="text-custom-gray text-center">Adaptați interfața și funcționalitățile după nevoile specifice</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Despre Section -->
+        <section id="despre" class="mb-16 fade-in">
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h2 class="text-3xl font-bold text-custom-gray-dark mb-6 text-center">Despre Noi</h2>
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-custom-gray mb-4 leading-relaxed">
+                            AdminPro este o platformă inovatoare de management dezvoltată pentru a răspunde nevoilor moderne ale afacerilor. 
+                            Cu o experiență de peste 10 ani în domeniu, echipa noastră a creat soluții care simplifică procesele complexe.
+                        </p>
+                        <p class="text-custom-gray mb-4 leading-relaxed">
+                            Misiunea noastră este să oferim instrumente puternice și intuitive care să permită companiilor să se concentreze 
+                            pe ceea ce contează cu adevărat: creșterea și inovația.
+                        </p>
+                        <div class="flex space-x-4">
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-custom-yellow">500+</div>
+                                <div class="text-custom-gray text-sm">Clienți mulțumiți</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-custom-yellow">99.9%</div>
+                                <div class="text-custom-gray text-sm">Uptime garantat</div>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-2xl font-bold text-custom-yellow">24/7</div>
+                                <div class="text-custom-gray text-sm">Suport tehnic</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <div class="w-full h-64 bg-gradient-to-r from-custom-yellow to-custom-yellow-light rounded-lg flex items-center justify-center">
+                            <i class="fas fa-users text-white text-6xl"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articole Section -->
+        <section id="articole" class="mb-16 fade-in">
+            <h2 class="text-3xl font-bold text-custom-gray-dark mb-8 text-center">Articole Recente</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <article class="bg-white rounded-lg shadow-lg overflow-hidden hover-lift">
+                    <div class="h-48 bg-gradient-to-r from-custom-yellow to-custom-yellow-light"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-custom-gray-dark mb-2">Tendințele în Managementul Digital</h3>
+                        <p class="text-custom-gray mb-4">Descoperă cele mai noi tendințe în digitalizarea proceselor de business...</p>
+                        <a href="#" class="text-custom-yellow hover:text-custom-yellow-light font-medium">Citește mai mult →</a>
+                    </div>
+                </article>
+                
+                <article class="bg-white rounded-lg shadow-lg overflow-hidden hover-lift">
+                    <div class="h-48 bg-gradient-to-r from-custom-gray to-custom-gray-dark"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-custom-gray-dark mb-2">Optimizarea Performanțelor</h3>
+                        <p class="text-custom-gray mb-4">Cum să optimizezi performanțele sistemului pentru rezultate maxime...</p>
+                        <a href="#" class="text-custom-yellow hover:text-custom-yellow-light font-medium">Citește mai mult →</a>
+                    </div>
+                </article>
+                
+                <article class="bg-white rounded-lg shadow-lg overflow-hidden hover-lift">
+                    <div class="h-48 bg-gradient-to-r from-custom-yellow-light to-custom-yellow"></div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-custom-gray-dark mb-2">Securitatea Datelor</h3>
+                        <p class="text-custom-gray mb-4">Strategii eficiente pentru protejarea informațiilor sensibile...</p>
+                        <a href="#" class="text-custom-yellow hover:text-custom-yellow-light font-medium">Citește mai mult →</a>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Galerie Section -->
+        <section id="galerie" class="mb-16 fade-in">
+            <h2 class="text-3xl font-bold text-custom-gray-dark mb-8 text-center">Galerie</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="aspect-square bg-gradient-to-br from-custom-yellow to-custom-yellow-light rounded-lg hover-lift cursor-pointer"></div>
+                <div class="aspect-square bg-gradient-to-br from-custom-gray to-custom-gray-dark rounded-lg hover-lift cursor-pointer"></div>
+                <div class="aspect-square bg-gradient-to-br from-custom-yellow-light to-custom-yellow rounded-lg hover-lift cursor-pointer"></div>
+                <div class="aspect-square bg-gradient-to-br from-custom-gray-dark to-custom-gray rounded-lg hover-lift cursor-pointer"></div>
+                <div class="aspect-square bg-gradient-to-br from-custom-yellow to-custom-gray rounded-lg hover-lift cursor-pointer"></div>
+                <div class="aspect-square bg-gradient-to-br from-custom-gray-light to-custom-yellow-light rounded-lg hover-lift cursor-pointer"></div>
+                <div class="aspect-square bg-gradient-to-br from-custom-yellow-light to-custom-gray-dark rounded-lg hover-lift cursor-pointer"></div>
+                <div class="aspect-square bg-gradient-to-br from-custom-gray to-custom-yellow rounded-lg hover-lift cursor-pointer"></div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="mb-16 fade-in">
+            <h2 class="text-3xl font-bold text-custom-gray-dark mb-8 text-center">Contact</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-semibold text-custom-gray-dark mb-6">Trimite-ne un mesaj</h3>
+                    <form class="space-y-4">
+                        <input type="text" placeholder="Numele complet" class="w-full p-3 border border-gray-300 rounded-lg focus:border-custom-yellow focus:outline-none transition-colors">
+                        <input type="email" placeholder="Email" class="w-full p-3 border border-gray-300 rounded-lg focus:border-custom-yellow focus:outline-none transition-colors">
+                        <textarea placeholder="Mesajul tău" rows="5" class="w-full p-3 border border-gray-300 rounded-lg focus:border-custom-yellow focus:outline-none transition-colors resize-none"></textarea>
+                        <button type="submit" class="w-full bg-custom-yellow hover:bg-custom-yellow-light text-white font-semibold py-3 rounded-lg transition-colors duration-300">Trimite Mesajul</button>
+                    </form>
+                </div>
+                
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-semibold text-custom-gray-dark mb-6">Informații de contact</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center">
+                            <i class="fas fa-map-marker-alt text-custom-yellow text-xl w-6"></i>
+                            <span class="ml-3 text-custom-gray">Strada Exemplu nr. 123, București</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-phone text-custom-yellow text-xl w-6"></i>
+                            <span class="ml-3 text-custom-gray">+40 123 456 789</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-envelope text-custom-yellow text-xl w-6"></i>
+                            <span class="ml-3 text-custom-gray">contact@adminpro.ro</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-clock text-custom-yellow text-xl w-6"></i>
+                            <span class="ml-3 text-custom-gray">Luni - Vineri: 9:00 - 18:00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-custom-gray-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-custom-yellow rounded-full flex items-center justify-center">
+                            <i class="fas fa-crown text-white"></i>
+                        </div>
+                        <span class="ml-3 text-xl font-bold">AdminPro</span>
+                    </div>
+                    <p class="text-gray-400">Soluția completă pentru administrarea eficiată a afacerii dumneavoastră.</p>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Link-uri utile</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-400 hover:text-custom-yellow transition-colors">Politica de confidențialitate</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-custom-yellow transition-colors">Termeni și condiții</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-custom-yellow transition-colors">Suport tehnic</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-custom-yellow transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Urmărește-ne</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-custom-yellow rounded-full flex items-center justify-center hover:bg-custom-yellow-light transition-colors">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-custom-yellow rounded-full flex items-center justify-center hover:bg-custom-yellow-light transition-colors">
+                            <i class="fab fa-twitter text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-custom-yellow rounded-full flex items-center justify-center hover:bg-custom-yellow-light transition-colors">
+                            <i class="fab fa-linkedin-in text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-custom-yellow rounded-full flex items-center justify-center hover:bg-custom-yellow-light transition-colors">
+                            <i class="fab fa-instagram text-white"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="border-gray-600 my-8">
+            
+            <div class="text-center text-gray-400">
+                <p>&copy; 2024 AdminPro. Toate drepturile rezervate.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active navigation highlighting
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (scrollY >= sectionTop) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('text-custom-yellow');
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.classList.add('text-custom-yellow');
+                }
+            });
+        });
+
+        // Add fade-in animation to elements when they come into view
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

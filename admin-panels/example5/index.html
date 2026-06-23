@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Example 5 (Minimal)</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-yellow: #FDB813;
+            --primary-yellow-light: #FECA57;
+            --primary-gray: #6C757D;
+            --primary-gray-dark: #495057;
+            --primary-gray-light: #F8F9FA;
+            --accent-gold: #D4AF37;
+            --white: #FFFFFF;
+            --black: #000000;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: var(--primary-gray-dark);
+            background-color: var(--white);
+        }
+
+        .navbar-minimal {
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid rgba(253, 184, 19, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar-brand {
+            font-weight: 600;
+            color: var(--primary-gray-dark) !important;
+            font-size: 1.5rem;
+        }
+
+        .nav-link-minimal {
+            color: var(--primary-gray) !important;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem !important;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            margin: 0 0.25rem;
+        }
+
+        .nav-link-minimal:hover,
+        .nav-link-minimal.active {
+            color: var(--primary-yellow) !important;
+            background-color: rgba(253, 184, 19, 0.1);
+        }
+
+        .logo-minimal {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary-yellow), var(--accent-gold));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            box-shadow: 0 4px 12px rgba(253, 184, 19, 0.3);
+        }
+
+        .hero-minimal {
+            background: linear-gradient(135deg, #F8F9FA 0%, #FFFFFF 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-minimal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(253, 184, 19, 0.05), transparent);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--primary-gray-dark);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--primary-gray);
+            font-weight: 400;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .btn-minimal {
+            background-color: var(--primary-yellow);
+            border: none;
+            color: var(--white);
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(253, 184, 19, 0.3);
+        }
+
+        .btn-minimal:hover {
+            background-color: var(--accent-gold);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(253, 184, 19, 0.4);
+            color: var(--white);
+        }
+
+        .btn-minimal-outline {
+            background-color: transparent;
+            border: 2px solid var(--primary-yellow);
+            color: var(--primary-yellow);
+            font-weight: 600;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-minimal-outline:hover {
+            background-color: var(--primary-yellow);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .card-minimal {
+            background: var(--white);
+            border: none;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .card-minimal:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-yellow), var(--accent-gold));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 12px rgba(253, 184, 19, 0.3);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-gray-dark);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--primary-gray);
+            text-align: center;
+            margin-bottom: 3rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .stats-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(253, 184, 19, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-yellow);
+            display: block;
+        }
+
+        .stats-label {
+            font-size: 0.9rem;
+            color: var(--primary-gray);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .article-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .article-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--primary-yellow), var(--accent-gold));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.2));
+        }
+
+        .gallery-item {
+            background: var(--white);
+            border-radius: 16px;
+            aspect-ratio: 1;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-minimal {
+            background: var(--white);
+            border: 2px solid var(--primary-gray-light);
+            border-radius: 12px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .form-minimal:focus {
+            outline: none;
+            border-color: var(--primary-yellow);
+            box-shadow: 0 0 0 3px rgba(253, 184, 19, 0.1);
+        }
+
+        .contact-card {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-info-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary-yellow), var(--accent-gold));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            box-shadow: 0 4px 12px rgba(253, 184, 19, 0.3);
+        }
+
+        .footer-minimal {
+            background: linear-gradient(135deg, var(--primary-gray-dark), #343A40);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+
+        .social-icon {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-yellow), var(--accent-gold));
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(253, 184, 19, 0.3);
+        }
+
+        .social-icon:hover {
+            color: var(--white);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(253, 184, 19, 0.4);
+        }
+
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .animate-on-scroll.animate-in {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .floating-shape {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .shape-1 {
+            top: 20%;
+            right: 10%;
+            width: 100px;
+            height: 100px;
+            background: var(--primary-yellow);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            top: 60%;
+            right: 20%;
+            width: 60px;
+            height: 60px;
+            background: var(--accent-gold);
+            border-radius: 12px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .section-divider {
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-yellow), var(--accent-gold));
+            margin: 0 auto 2rem;
+            border-radius: 2px;
+        }
+
+        .img-fluid {
+            border-radius: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .card-minimal,
+            .contact-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Loading animation */
+        .loading-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-yellow), var(--accent-gold));
+            z-index: 9999;
+            transition: width 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Bar -->
+    <div class="loading-bar"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-minimal fixed-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="#home">
+                <div class="logo-minimal">
+                    <i class="fas fa-cube text-white"></i>
+                </div>
+                <span>MinimalAdmin</span>
+            </a>
+            
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link-minimal active" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-minimal" href="#despre">Despre</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-minimal" href="#articole">Articole</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-minimal" href="#galerie">Galerie</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link-minimal" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-minimal">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <h1 class="hero-title animate-on-scroll">
+                        Simplitatea
+                        <span style="color: var(--primary-yellow);">Perfectă</span>
+                    </h1>
+                    <p class="hero-subtitle animate-on-scroll">
+                        MinimalAdmin oferă o experiență de administrare curată, elegantă și eficiientă. 
+                        Designul nostru minimalist pune accentul pe funcționalitate și ușurință în utilizare.
+                    </p>
+                    <div class="animate-on-scroll">
+                        <button class="btn-minimal me-3">Începe Acum</button>
+                        <button class="btn-minimal-outline">Află Mai Mult</button>
+                    </div>
+                </div>
+                <div class="col-lg-6 text-center">
+                    <div class="animate-on-scroll">
+                        <i class="fas fa-laptop-code" style="font-size: 12rem; color: var(--primary-yellow); opacity: 0.8;"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5">
+        <div class="container">
+            <div class="section-divider"></div>
+            <h2 class="section-title animate-on-scroll">De Ce MinimalAdmin?</h2>
+            <p class="section-subtitle animate-on-scroll">
+                Fiecare element este gândit pentru a vă oferi cea mai bună experiență de administrare
+            </p>
+            
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="card-minimal animate-on-scroll">
+                        <div class="feature-icon">
+                            <i class="fas fa-feather text-white fs-4"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Design Minimalist</h4>
+                        <p class="text-muted mb-0">
+                            Interfață curată și intuitivă care elimină distracțiile și se concentrează pe esențial
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card-minimal animate-on-scroll" style="animation-delay: 0.2s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-lightning-bolt text-white fs-4"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Performanță Optimă</h4>
+                        <p class="text-muted mb-0">
+                            Cod optimizat și arhitectură eficientă pentru încărcare rapidă și răspuns instantaneu
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="card-minimal animate-on-scroll" style="animation-delay: 0.4s;">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt text-white fs-4"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Responsive Perfect</h4>
+                        <p class="text-muted mb-0">
+                            Design adaptat perfect pentru toate dispozitivele, de la desktop la mobil
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="despre" class="py-5 bg-light">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 animate-on-scroll">
+                    <div class="section-divider mx-0"></div>
+                    <h2 class="section-title text-start">Despre MinimalAdmin</h2>
+                    <p class="fs-5 text-muted mb-4">
+                        MinimalAdmin este rezultatul unei cercetări aprofundate în domeniul experienței utilizatorului 
+                        și al designului centrat pe funcționalitate.
+                    </p>
+                    <p class="text-muted mb-4">
+                        Echipa noastră de designeri și dezvoltatori a creat o platformă care elimină complexitatea 
+                        inutilă și se concentrează pe ceea ce contează cu adevărat: eficiența și simplitatea.
+                    </p>
+                    
+                    <div class="row text-center mb-4">
+                        <div class="col-4">
+                            <div class="stats-card">
+                                <span class="stats-number">2K+</span>
+                                <div class="stats-label">Clienți Activi</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stats-card">
+                                <span class="stats-number">99.9%</span>
+                                <div class="stats-label">Uptime</div>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="stats-card">
+                                <span class="stats-number">24/7</span>
+                                <div class="stats-label">Suport</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="animate-on-scroll">
+                        <div class="card-minimal text-center">
+                            <i class="fas fa-chart-line" style="font-size: 6rem; color: var(--primary-yellow); margin-bottom: 1rem;"></i>
+                            <h4 class="fw-bold mb-2">Dashboard Intuitiv</h4>
+                            <p class="text-muted mb-0">Toate informațiile importante într-o singură privire</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Articles Section -->
+    <section id="articole" class="py-5">
+        <div class="container">
+            <div class="section-divider"></div>
+            <h2 class="section-title animate-on-scroll">Articole și Resurse</h2>
+            <p class="section-subtitle animate-on-scroll">
+                Ghiduri și insights pentru a obține maximum de la platforma noastră
+            </p>
+            
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="article-card animate-on-scroll">
+                        <div class="article-image"></div>
+                        <div class="p-4">
+                            <h5 class="fw-bold mb-3">Principiile Designului Minimalist</h5>
+                            <p class="text-muted mb-3">
+                                Descoperă cum să creezi interfețe care pun utilizatorul pe primul loc prin eliminarea elementelor...
+                            </p>
+                            <button class="btn-minimal-outline btn-sm">Citește Articolul</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="article-card animate-on-scroll" style="animation-delay: 0.2s;">
+                        <div class="article-image" style="background: linear-gradient(135deg, var(--primary-gray), var(--primary-gray-dark));"></div>
+                        <div class="p-4">
+                            <h5 class="fw-bold mb-3">Optimizarea Performanței Web</h5>
+                            <p class="text-muted mb-3">
+                                Tehnici avansate pentru îmbunătățirea vitezei de încărcare și a experienței utilizatorului...
+                            </p>
+                            <button class="btn-minimal-outline btn-sm">Citește Articolul</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="article-card animate-on-scroll" style="animation-delay: 0.4s;">
+                        <div class="article-image" style="background: linear-gradient(135deg, var(--accent-gold), var(--primary-yellow));"></div>
+                        <div class="p-4">
+                            <h5 class="fw-bold mb-3">Tendințe în Admin Dashboard</h5>
+                            <p class="text-muted mb-3">
+                                Explorează cele mai noi tendințe în designul și funcționalitatea platformelor administrative...
+                            </p>
+                            <button class="btn-minimal-outline btn-sm">Citește Articolul</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="galerie" class="py-5 bg-light">
+        <div class="container">
+            <div class="section-divider"></div>
+            <h2 class="section-title animate-on-scroll">Galerie de Proiecte</h2>
+            <p class="section-subtitle animate-on-scroll">
+                Exemple de implementări și configurări realizate cu MinimalAdmin
+            </p>
+            
+            <div class="row g-4">
+                <div class="col-lg-3 col-md-6">
+                    <div class="gallery-item animate-on-scroll" style="background: linear-gradient(135deg, var(--primary-yellow), var(--accent-gold));"></div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="gallery-item animate-on-scroll" style="background: linear-gradient(135deg, var(--primary-gray-light), var(--primary-gray)); animation-delay: 0.1s;"></div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="gallery-item animate-on-scroll" style="background: linear-gradient(135deg, var(--accent-gold), var(--primary-yellow-light)); animation-delay: 0.2s;"></div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="gallery-item animate-on-scroll" style="background: linear-gradient(135deg, var(--primary-gray), var(--primary-gray-dark)); animation-delay: 0.3s;"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="gallery-item animate-on-scroll" style="background: linear-gradient(135deg, var(--primary-yellow), var(--primary-gray-light)); animation-delay: 0.4s;"></div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="gallery-item animate-on-scroll" style="background: linear-gradient(135deg, var(--accent-gold), var(--primary-gray)); animation-delay: 0.5s;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-5">
+        <div class="container">
+            <div class="section-divider"></div>
+            <h2 class="section-title animate-on-scroll">Să Vorbim</h2>
+            <p class="section-subtitle animate-on-scroll">
+                Hai să discutăm despre proiectul tău și cum te putem ajuta să-l realizezi
+            </p>
+            
+            <div class="row justify-content-center">
+                <div class="col-lg-10">
+                    <div class="contact-card animate-on-scroll">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <h4 class="fw-bold mb-4">Trimite-ne un Mesaj</h4>
+                                <form>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-minimal" placeholder="Numele tău complet">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="email" class="form-minimal" placeholder="Adresa de email">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="tel" class="form-minimal" placeholder="Numărul de telefon">
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-minimal" rows="5" placeholder="Mesajul tău..."></textarea>
+                                    </div>
+                                    <button type="submit" class="btn-minimal">Trimite Mesajul</button>
+                                </form>
+                            </div>
+                            <div class="col-lg-6">
+                                <h4 class="fw-bold mb-4">Informații de Contact</h4>
+                                
+                                <div class="contact-info-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-map-marker-alt text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Adresa Noastră</h6>
+                                        <p class="text-muted mb-0">Strada Progresului nr. 12, București</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-info-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-phone text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Telefon</h6>
+                                        <p class="text-muted mb-0">+40 21 123 4567</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-info-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-envelope text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Email</h6>
+                                        <p class="text-muted mb-0">hello@minimaladmin.ro</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="contact-info-item">
+                                    <div class="contact-icon">
+                                        <i class="fas fa-clock text-white"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="fw-bold mb-1">Program de Lucru</h6>
+                                        <p class="text-muted mb-0">Luni - Vineri: 9:00 - 18:00</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer-minimal">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="logo-minimal me-3">
+                            <i class="fas fa-cube text-white"></i>
+                        </div>
+                        <h4 class="text-white mb-0">MinimalAdmin</h4>
+                    </div>
+                    <p class="text-light opacity-75 mb-4">
+                        Platforma de administrare care pune simplitatea și eficiența pe primul loc. 
+                        Design curat pentru rezultate clare.
+                    </p>
+                    <div>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="text-white fw-bold mb-3">Link-uri Utile</h5>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <a href="#" class="text-light opacity-75 text-decoration-none">Documentație</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-light opacity-75 text-decoration-none">Ghid de Utilizare</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-light opacity-75 text-decoration-none">Suport Tehnic</a>
+                        </li>
+                        <li class="mb-2">
+                            <a href="#" class="text-light opacity-75 text-decoration-none">Politica de Confidențialitate</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 mb-4">
+                    <h5 class="text-white fw-bold mb-3">Newsletter</h5>
+                    <p class="text-light opacity-75 mb-3">
+                        Abonează-te pentru a primi cele mai noi actualizări și sfaturi.
+                    </p>
+                    <div class="input-group">
+                        <input type="email" class="form-control" placeholder="Adresa ta de email">
+                        <button class="btn-minimal" type="button">Abonează-te</button>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4 opacity-25">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="text-light opacity-75 mb-0">
+                        &copy; 2024 MinimalAdmin. Toate drepturile rezervate.
+                    </p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p class="text-light opacity-75 mb-0">
+                        Creat cu <i class="fas fa-heart text-danger"></i> în România
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Loading bar
+        window.addEventListener('load', function() {
+            const loadingBar = document.querySelector('.loading-bar');
+            loadingBar.style.width = '100%';
+            setTimeout(() => {
+                loadingBar.style.opacity = '0';
+            }, 500);
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Active navigation highlighting
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link-minimal');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (scrollY >= sectionTop) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Counter animation for stats
+        function animateCounters() {
+            const counters = document.querySelectorAll('.stats-number');
+            counters.forEach(counter => {
+                const target = counter.textContent;
+                const isNumber = !isNaN(target.replace(/[^0-9]/g, ''));
+                
+                if (isNumber) {
+                    const number = parseInt(target.replace(/[^0-9]/g, ''));
+                    const suffix = target.replace(/[0-9]/g, '');
+                    let current = 0;
+                    const increment = number / 100;
+                    
+                    const timer = setInterval(() => {
+                        current += increment;
+                        if (current >= number) {
+                            counter.textContent = target;
+                            clearInterval(timer);
+                        } else {
+                            counter.textContent = Math.floor(current) + suffix;
+                        }
+                    }, 20);
+                }
+            });
+        }
+
+        // Trigger counter animation when about section is visible
+        const aboutSection = document.querySelector('#despre');
+        const aboutObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    aboutObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        if (aboutSection) {
+            aboutObserver.observe(aboutSection);
+        }
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar-minimal');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        // Form validation and submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simple form validation
+            const inputs = this.querySelectorAll('input, textarea');
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.style.borderColor = '#dc3545';
+                    isValid = false;
+                } else {
+                    input.style.borderColor = '';
+                }
+            });
+            
+            if (isValid) {
+                alert('Mesajul a fost trimis cu succes!');
+                this.reset();
+            }
+        });
+
+        // Add hover effects to gallery items
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05) rotate(2deg)';
+            });
+            
+            item.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1) rotate(0deg)';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Vila Aurum - Programează o Vizită</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gold': '#D4AF37',
+                        'gold-light': '#F7DC6F',
+                        'gold-dark': '#B7950B',
+                        'charcoal': '#2C3E50',
+                        'charcoal-light': '#34495E',
+                        'warm-white': '#FAF9F7',
+                        'cream': '#F8F6F0'
+                    },
+                    fontFamily: {
+                        'serif': ['Playfair Display', 'serif'],
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .luxury-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .luxury-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.3);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in-up.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4AF37, #F7DC6F, #B7950B);
+        }
+
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-luxury {
+            background: linear-gradient(135deg, #D4AF37, #B7950B);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-luxury::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-luxury:hover::before {
+            left: 100%;
+        }
+
+        .btn-luxury:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #F8F6F0 0%, #FAF9F7 100%);
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .form-luxury {
+            background: white;
+            border: 2px solid rgba(212, 175, 55, 0.2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .form-luxury:focus {
+            outline: none;
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .contact-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            height: 100%;
+        }
+
+        .contact-card:hover {
+            border-color: #D4AF37;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .contact-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #D4AF37, #F7DC6F);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.3);
+        }
+
+        .map-container {
+            background: linear-gradient(135deg, #D4AF37, #F7DC6F);
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .map-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="60" cy="80" r="1" fill="rgba(255,255,255,0.1)"/></svg>') repeat;
+            opacity: 0.3;
+        }
+
+        .social-luxury {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #D4AF37, #B7950B);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            margin: 0 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .social-luxury:hover {
+            color: white;
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 8px 25px rgba(212, 175, 55, 0.5);
+        }
+
+        .floating-element {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .appointment-card {
+            background: rgba(212, 175, 55, 0.1);
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .appointment-card:hover {
+            background: rgba(212, 175, 55, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .time-slot {
+            background: white;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .time-slot:hover,
+        .time-slot.selected {
+            background: #D4AF37;
+            color: white;
+            border-color: #B7950B;
+        }
+
+        .success-message {
+            background: linear-gradient(135deg, #10B981, #059669);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+
+        .error-message {
+            background: linear-gradient(135deg, #EF4444, #DC2626);
+            color: white;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+    </style>
+</head>
+<body class="font-sans bg-warm-white">
+    <!-- Navigation -->
+    <nav class="nav-glass fixed w-full top-0 z-50 py-4">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center">
+                        <i class="fas fa-crown text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-serif font-bold text-charcoal">Vila Aurum</span>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="../index.html" class="text-charcoal hover:text-gold transition-colors">Acasă</a>
+                    <a href="despre.html" class="text-charcoal hover:text-gold transition-colors">Despre</a>
+                    <a href="facilitati.html" class="text-charcoal hover:text-gold transition-colors">Facilități</a>
+                    <a href="galerie.html" class="text-charcoal hover:text-gold transition-colors">Galerie</a>
+                    <a href="contact.html" class="text-gold font-semibold">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-charcoal">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section pt-24 relative">
+        <div class="floating-element top-20 right-20 w-16 h-16 bg-gold opacity-20 rounded-full"></div>
+        <div class="floating-element bottom-20 left-20 w-12 h-12 bg-gold-light opacity-20 rounded-full" style="animation-delay: 1s;"></div>
+        
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center fade-in-up">
+                <h1 class="text-5xl md:text-6xl font-serif font-black text-charcoal mb-6">
+                    Contactați-ne
+                </h1>
+                <p class="text-xl text-charcoal-light leading-relaxed">
+                    Suntem aici pentru a vă oferi toate informațiile despre Vila Aurum și pentru a programa 
+                    o vizită personalizată în această rezidență de excepție.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Methods -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+                <div class="contact-card fade-in-up">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-charcoal mb-3">Telefon</h3>
+                    <p class="text-charcoal-light mb-4">Sunați-ne pentru informații imediate</p>
+                    <a href="tel:+40123456789" class="text-gold font-semibold hover:text-gold-dark transition-colors">
+                        +40 123 456 789
+                    </a>
+                </div>
+
+                <div class="contact-card fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-charcoal mb-3">Email</h3>
+                    <p class="text-charcoal-light mb-4">Scrieți-ne pentru detalii complete</p>
+                    <a href="mailto:contact@vilaaurum.ro" class="text-gold font-semibold hover:text-gold-dark transition-colors">
+                        contact@vilaaurum.ro
+                    </a>
+                </div>
+
+                <div class="contact-card fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-charcoal mb-3">Locație</h3>
+                    <p class="text-charcoal-light mb-4">Vizitați-ne la adresa</p>
+                    <p class="text-gold font-semibold">
+                        Strada Elegantă nr. 1<br>
+                        București, România
+                    </p>
+                </div>
+
+                <div class="contact-card fade-in-up" style="animation-delay: 0.6s;">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-charcoal mb-3">Program</h3>
+                    <p class="text-charcoal-light mb-4">Disponibili pentru vizite</p>
+                    <p class="text-gold font-semibold">
+                        Luni - Vineri: 10:00 - 18:00<br>
+                        Weekend: Program flexibil
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form & Appointment -->
+    <section class="py-20 bg-cream">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div class="fade-in-up">
+                    <div class="luxury-card p-8 rounded-2xl">
+                        <h2 class="text-3xl font-serif font-bold text-charcoal mb-6">Trimite-ne un Mesaj</h2>
+                        
+                        <div id="success-message" class="success-message mb-6">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            Mesajul dvs. a fost trimis cu succes! Vă vom contacta în cel mai scurt timp.
+                        </div>
+                        
+                        <div id="error-message" class="error-message mb-6">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            A apărut o eroare. Vă rugăm să încercați din nou sau să ne contactați telefonic.
+                        </div>
+
+                        <form id="contact-form" class="space-y-6">
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-charcoal font-medium mb-2">Nume *</label>
+                                    <input type="text" name="firstName" required class="form-luxury" placeholder="Numele dvs.">
+                                </div>
+                                <div>
+                                    <label class="block text-charcoal font-medium mb-2">Prenume *</label>
+                                    <input type="text" name="lastName" required class="form-luxury" placeholder="Prenumele dvs.">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-charcoal font-medium mb-2">Email *</label>
+                                <input type="email" name="email" required class="form-luxury" placeholder="adresa@email.com">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-charcoal font-medium mb-2">Telefon *</label>
+                                <input type="tel" name="phone" required class="form-luxury" placeholder="+40 123 456 789">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-charcoal font-medium mb-2">Subiect</label>
+                                <select name="subject" class="form-luxury">
+                                    <option value="">Selectați subiectul</option>
+                                    <option value="vizita">Programare vizită</option>
+                                    <option value="informatii">Solicitare informații</option>
+                                    <option value="disponibilitate">Verificare disponibilitate</option>
+                                    <option value="altele">Altele</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-charcoal font-medium mb-2">Mesaj *</label>
+                                <textarea name="message" required rows="6" class="form-luxury" placeholder="Scrieți-ne mesajul dvs. aici..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn-luxury text-white px-8 py-4 rounded-full font-semibold text-lg w-full">
+                                <i class="fas fa-paper-plane mr-2"></i>
+                                Trimite Mesajul
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Appointment Booking -->
+                <div class="fade-in-up">
+                    <div class="appointment-card rounded-2xl mb-8">
+                        <h2 class="text-3xl font-serif font-bold text-charcoal mb-6">Programează o Vizită</h2>
+                        
+                        <form id="appointment-form" class="space-y-6">
+                            <div>
+                                <label class="block text-charcoal font-medium mb-3">Selectează data preferată:</label>
+                                <input type="date" name="visitDate" required class="form-luxury" min="">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-charcoal font-medium mb-3">Selectează ora:</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="time-slot" data-time="10:00">10:00</div>
+                                    <div class="time-slot" data-time="11:00">11:00</div>
+                                    <div class="time-slot" data-time="14:00">14:00</div>
+                                    <div class="time-slot" data-time="15:00">15:00</div>
+                                    <div class="time-slot" data-time="16:00">16:00</div>
+                                    <div class="time-slot" data-time="17:00">17:00</div>
+                                </div>
+                                <input type="hidden" name="visitTime" id="selected-time">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-charcoal font-medium mb-2">Numărul de persoane</label>
+                                <select name="numberOfPeople" class="form-luxury">
+                                    <option value="1">1 persoană</option>
+                                    <option value="2" selected>2 persoane</option>
+                                    <option value="3">3 persoane</option>
+                                    <option value="4">4 persoane</option>
+                                    <option value="5+">5+ persoane</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-charcoal font-medium mb-2">Observații speciale</label>
+                                <textarea name="specialRequests" rows="3" class="form-luxury" placeholder="Menționați orice cerințe speciale..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn-luxury text-white px-8 py-4 rounded-full font-semibold text-lg w-full">
+                                <i class="fas fa-calendar-check mr-2"></i>
+                                Confirmă Programarea
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Map -->
+                    <div class="map-container relative">
+                        <div class="relative z-10">
+                            <h3 class="text-2xl font-bold mb-4">Locația Vilei</h3>
+                            <p class="mb-4">Strada Elegantă nr. 1, București</p>
+                            <p class="text-sm opacity-90">
+                                Vila Aurum se află într-o zonă exclusivistă din nordul Bucureștiului, 
+                                oferind intimitate și acces facil la principalele artere de circulație.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media & Additional Contact -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 fade-in-up">
+                <h2 class="text-4xl font-serif font-bold text-charcoal mb-4">Urmăriți-ne</h2>
+                <p class="text-xl text-charcoal-light">Descoperiți mai multe despre Vila Aurum pe rețelele sociale</p>
+            </div>
+
+            <div class="flex justify-center space-x-6 mb-12 fade-in-up">
+                <a href="#" class="social-luxury">
+                    <i class="fab fa-facebook-f text-xl"></i>
+                </a>
+                <a href="#" class="social-luxury">
+                    <i class="fab fa-instagram text-xl"></i>
+                </a>
+                <a href="#" class="social-luxury">
+                    <i class="fab fa-youtube text-xl"></i>
+                </a>
+                <a href="#" class="social-luxury">
+                    <i class="fab fa-linkedin-in text-xl"></i>
+                </a>
+            </div>
+
+            <div class="max-w-4xl mx-auto text-center fade-in-up">
+                <div class="luxury-card p-8 rounded-2xl">
+                    <h3 class="text-2xl font-serif font-bold text-charcoal mb-4">Contact de Urgență</h3>
+                    <p class="text-charcoal-light mb-6">
+                        Pentru situații urgente sau programări de ultimă oră, nu ezitați să ne contactați:
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <i class="fas fa-phone-alt text-gold text-2xl mb-2"></i>
+                            <p class="font-semibold text-charcoal">Telefon Urgență</p>
+                            <a href="tel:+40123456788" class="text-gold">+40 123 456 788</a>
+                        </div>
+                        <div>
+                            <i class="fas fa-whatsapp text-gold text-2xl mb-2"></i>
+                            <p class="font-semibold text-charcoal">WhatsApp</p>
+                            <a href="https://wa.me/40123456789" class="text-gold">+40 123 456 789</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center">
+                            <i class="fas fa-crown text-white"></i>
+                        </div>
+                        <span class="text-xl font-serif font-bold">Vila Aurum</span>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed">
+                        O experiență de lux într-un cadru privat și exclusiv.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-gold">Navigare</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../index.html" class="text-gray-300 hover:text-gold transition-colors">Acasă</a></li>
+                        <li><a href="despre.html" class="text-gray-300 hover:text-gold transition-colors">Despre Vila</a></li>
+                        <li><a href="facilitati.html" class="text-gray-300 hover:text-gold transition-colors">Facilități</a></li>
+                        <li><a href="galerie.html" class="text-gray-300 hover:text-gold transition-colors">Galerie</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-gold transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-gold">Contact Rapid</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-phone text-gold"></i>
+                            <span class="text-gray-300">+40 123 456 789</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-envelope text-gold"></i>
+                            <span class="text-gray-300">contact@vilaaurum.ro</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-charcoal-light my-8">
+            <div class="text-center text-gray-300">
+                <p>&copy; 2024 Vila Aurum. Toate drepturile rezervate.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Set minimum date to today
+        const dateInput = document.querySelector('input[name="visitDate"]');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.min = today;
+
+        // Time slot selection
+        const timeSlots = document.querySelectorAll('.time-slot');
+        const selectedTimeInput = document.getElementById('selected-time');
+
+        timeSlots.forEach(slot => {
+            slot.addEventListener('click', function() {
+                timeSlots.forEach(s => s.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedTimeInput.value = this.dataset.time;
+            });
+        });
+
+        // Contact form submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate form submission
+            setTimeout(() => {
+                document.getElementById('success-message').style.display = 'block';
+                this.reset();
+                
+                setTimeout(() => {
+                    document.getElementById('success-message').style.display = 'none';
+                }, 5000);
+            }, 1000);
+        });
+
+        // Appointment form submission
+        document.getElementById('appointment-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!selectedTimeInput.value) {
+                alert('Vă rugăm să selectați o oră pentru programare.');
+                return;
+            }
+            
+            // Simulate appointment booking
+            setTimeout(() => {
+                alert('Programarea dvs. a fost confirmată! Veți primi un email de confirmare în curând.');
+                this.reset();
+                timeSlots.forEach(s => s.classList.remove('selected'));
+                selectedTimeInput.value = '';
+            }, 1000);
+        });
+
+        // Form field animations
+        const formInputs = document.querySelectorAll('.form-luxury');
+        formInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentElement.classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.parentElement.classList.remove('focused');
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.nav-glass');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>

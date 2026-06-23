@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Manager Dashboard - Admin Panel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'emerald': {
+                            400: '#34D399',
+                            500: '#10B981',
+                            600: '#059669',
+                        },
+                        'orange': {
+                            400: '#FB923C',
+                            500: '#F97316',
+                            600: '#EA580C',
+                        },
+                        'slate': {
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1E293B',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 50%, #415a77 100%);
+            min-height: 100vh;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            transition: all 0.3s ease;
+            border-radius: 16px;
+        }
+
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-8px) rotate(1deg);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+
+        .top-navbar {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(25px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        .nav-item-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 8px 16px;
+            margin: 0 4px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-item-glass:hover,
+        .nav-item-glass.active {
+            background: rgba(52, 211, 153, 0.2);
+            border-color: rgba(52, 211, 153, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.1), rgba(251, 146, 60, 0.1));
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            transition: all 0.4s ease;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .product-card:hover::before {
+            left: 100%;
+        }
+
+        .product-card:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 30px 60px rgba(52, 211, 153, 0.3);
+        }
+
+        .sales-metric {
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sales-metric::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(52, 211, 153, 0.2), transparent);
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+        }
+
+        .order-status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .status-pending {
+            background: rgba(251, 146, 60, 0.3);
+            color: #FB923C;
+        }
+
+        .status-completed {
+            background: rgba(52, 211, 153, 0.3);
+            color: #34D399;
+        }
+
+        .status-cancelled {
+            background: rgba(239, 68, 68, 0.3);
+            color: #EF4444;
+        }
+
+        .inventory-progress {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .inventory-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 2s ease;
+        }
+
+        .inventory-low { background: linear-gradient(90deg, #EF4444, #F97316); }
+        .inventory-medium { background: linear-gradient(90deg, #F97316, #EAB308); }
+        .inventory-high { background: linear-gradient(90deg, #10B981, #34D399); }
+
+        .floating-icon {
+            animation: floatRotate 8s ease-in-out infinite;
+        }
+
+        @keyframes floatRotate {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(5deg); }
+            50% { transform: translateY(-10px) rotate(-3deg); }
+            75% { transform: translateY(-20px) rotate(3deg); }
+        }
+
+        .revenue-chart-container {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+        }
+
+        .customer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #34D399, #FB923C);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .quick-action-btn {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            border-radius: 12px;
+            padding: 12px 20px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .quick-action-btn:hover {
+            background: rgba(52, 211, 153, 0.2);
+            color: #34D399;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(52, 211, 153, 0.3);
+        }
+
+        .notification-dot {
+            width: 8px;
+            height: 8px;
+            background: #34D399;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(52, 211, 153, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+        }
+
+        .search-glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        .search-glass::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-glass:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(52, 211, 153, 0.5);
+            box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2);
+        }
+
+        .widget-header {
+            background: linear-gradient(135deg, rgba(52, 211, 153, 0.1), rgba(251, 146, 60, 0.1));
+            margin: -1rem -1rem 1rem -1rem;
+            padding: 1rem;
+            border-radius: 16px 16px 0 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav class="top-navbar p-3">
+        <div class="container-fluid d-flex justify-content-between align-items-center">
+            <!-- Logo and Title -->
+            <div class="d-flex align-items-center">
+                <div class="floating-icon rounded-circle d-flex align-items-center justify-content-center me-3" 
+                     style="width: 50px; height: 50px; background: linear-gradient(135deg, #34D399, #FB923C);">
+                    <i class="fas fa-store text-white fs-4"></i>
+                </div>
+                <div>
+                    <h3 class="text-white mb-0 fw-bold">E-Commerce Manager</h3>
+                    <small class="text-white-50">Store Management Dashboard</small>
+                </div>
+            </div>
+
+            <!-- Center Navigation -->
+            <div class="d-flex align-items-center">
+                <a href="#" class="nav-item-glass text-white text-decoration-none active">
+                    <i class="fas fa-tachometer-alt me-2"></i>Dashboard
+                </a>
+                <a href="#" class="nav-item-glass text-white text-decoration-none">
+                    <i class="fas fa-boxes me-2"></i>Products
+                </a>
+                <a href="#" class="nav-item-glass text-white text-decoration-none">
+                    <i class="fas fa-shopping-cart me-2"></i>Orders
+                </a>
+                <a href="#" class="nav-item-glass text-white text-decoration-none">
+                    <i class="fas fa-users me-2"></i>Customers
+                </a>
+                <a href="#" class="nav-item-glass text-white text-decoration-none">
+                    <i class="fas fa-chart-line me-2"></i>Reports
+                </a>
+            </div>
+
+            <!-- Right Side -->
+            <div class="d-flex align-items-center">
+                <input type="search" class="search-glass me-3" placeholder="Search products, orders..." style="width: 250px;">
+                <div class="position-relative me-3">
+                    <i class="fas fa-bell text-white fs-5"></i>
+                    <div class="notification-dot position-absolute top-0 start-100 translate-middle"></div>
+                </div>
+                <div class="customer-avatar">JD</div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container-fluid p-4">
+        <!-- Quick Stats Row -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-3">
+                <div class="sales-metric p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h4 class="text-white mb-1">$124,892</h4>
+                            <p class="text-white-50 mb-0">Total Sales</p>
+                        </div>
+                        <div class="glass-card p-2 rounded-circle">
+                            <i class="fas fa-dollar-sign text-emerald-400"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <small class="text-emerald-400 me-2">
+                            <i class="fas fa-arrow-up me-1"></i>+24.5%
+                        </small>
+                        <small class="text-white-50">from last month</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="sales-metric p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h4 class="text-white mb-1">1,847</h4>
+                            <p class="text-white-50 mb-0">Total Orders</p>
+                        </div>
+                        <div class="glass-card p-2 rounded-circle">
+                            <i class="fas fa-shopping-bag text-orange-400"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <small class="text-emerald-400 me-2">
+                            <i class="fas fa-arrow-up me-1"></i>+12.3%
+                        </small>
+                        <small class="text-white-50">from last month</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="sales-metric p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h4 class="text-white mb-1">8,924</h4>
+                            <p class="text-white-50 mb-0">Total Customers</p>
+                        </div>
+                        <div class="glass-card p-2 rounded-circle">
+                            <i class="fas fa-users text-emerald-400"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <small class="text-emerald-400 me-2">
+                            <i class="fas fa-arrow-up me-1"></i>+8.7%
+                        </small>
+                        <small class="text-white-50">from last month</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="sales-metric p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h4 class="text-white mb-1">456</h4>
+                            <p class="text-white-50 mb-0">Products</p>
+                        </div>
+                        <div class="glass-card p-2 rounded-circle">
+                            <i class="fas fa-box text-orange-400"></i>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <small class="text-orange-400 me-2">
+                            <i class="fas fa-arrow-down me-1"></i>-2.1%
+                        </small>
+                        <small class="text-white-50">from last month</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts and Analytics Row -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-8">
+                <div class="revenue-chart-container p-4">
+                    <div class="widget-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="text-white mb-0">Sales Analytics</h5>
+                            <div class="btn-group">
+                                <button class="btn btn-sm quick-action-btn">Today</button>
+                                <button class="btn btn-sm quick-action-btn">Week</button>
+                                <button class="btn btn-sm quick-action-btn">Month</button>
+                            </div>
+                        </div>
+                    </div>
+                    <canvas id="salesChart" height="300"></canvas>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="glass-card p-4">
+                    <div class="widget-header">
+                        <h5 class="text-white mb-0">Top Products</h5>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-white">Premium Headphones</span>
+                            <span class="text-emerald-400 fw-bold">$2,890</span>
+                        </div>
+                        <div class="inventory-progress">
+                            <div class="inventory-fill inventory-high" style="width: 85%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-white">Wireless Speaker</span>
+                            <span class="text-emerald-400 fw-bold">$1,240</span>
+                        </div>
+                        <div class="inventory-progress">
+                            <div class="inventory-fill inventory-medium" style="width: 65%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-white">Smart Watch</span>
+                            <span class="text-emerald-400 fw-bold">$980</span>
+                        </div>
+                        <div class="inventory-progress">
+                            <div class="inventory-fill inventory-high" style="width: 78%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="text-white">Laptop Stand</span>
+                            <span class="text-emerald-400 fw-bold">$750</span>
+                        </div>
+                        <div class="inventory-progress">
+                            <div class="inventory-fill inventory-low" style="width: 25%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Orders and Quick Actions -->
+        <div class="row g-4 mb-4">
+            <div class="col-md-8">
+                <div class="glass-card p-4">
+                    <div class="widget-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="text-white mb-0">Recent Orders</h5>
+                            <a href="#" class="quick-action-btn">View All Orders</a>
+                        </div>
+                    </div>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-dark table-borderless">
+                            <thead>
+                                <tr class="border-bottom border-secondary">
+                                    <th class="text-emerald-400">Order ID</th>
+                                    <th class="text-emerald-400">Customer</th>
+                                    <th class="text-emerald-400">Product</th>
+                                    <th class="text-emerald-400">Amount</th>
+                                    <th class="text-emerald-400">Status</th>
+                                    <th class="text-emerald-400">Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-white">#ORD-001</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="customer-avatar me-2" style="width: 30px; height: 30px; font-size: 0.8rem;">JS</div>
+                                            <span class="text-white">John Smith</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-white">Premium Headphones</td>
+                                    <td class="text-white">$299.99</td>
+                                    <td><span class="order-status-badge status-completed">Completed</span></td>
+                                    <td class="text-white-50">Today</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-white">#ORD-002</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="customer-avatar me-2" style="width: 30px; height: 30px; font-size: 0.8rem;">MD</div>
+                                            <span class="text-white">Maria Davis</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-white">Wireless Speaker</td>
+                                    <td class="text-white">$159.99</td>
+                                    <td><span class="order-status-badge status-pending">Pending</span></td>
+                                    <td class="text-white-50">Yesterday</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-white">#ORD-003</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="customer-avatar me-2" style="width: 30px; height: 30px; font-size: 0.8rem;">RJ</div>
+                                            <span class="text-white">Robert Johnson</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-white">Smart Watch</td>
+                                    <td class="text-white">$399.99</td>
+                                    <td><span class="order-status-badge status-completed">Completed</span></td>
+                                    <td class="text-white-50">2 days ago</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-white">#ORD-004</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="customer-avatar me-2" style="width: 30px; height: 30px; font-size: 0.8rem;">SW</div>
+                                            <span class="text-white">Sarah Wilson</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-white">Laptop Stand</td>
+                                    <td class="text-white">$79.99</td>
+                                    <td><span class="order-status-badge status-cancelled">Cancelled</span></td>
+                                    <td class="text-white-50">3 days ago</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="glass-card p-4">
+                    <div class="widget-header">
+                        <h5 class="text-white mb-0">Quick Actions</h5>
+                    </div>
+                    
+                    <div class="d-grid gap-3">
+                        <a href="#" class="quick-action-btn d-flex align-items-center">
+                            <i class="fas fa-plus me-3"></i>
+                            <span>Add New Product</span>
+                        </a>
+                        <a href="#" class="quick-action-btn d-flex align-items-center">
+                            <i class="fas fa-truck me-3"></i>
+                            <span>Process Orders</span>
+                        </a>
+                        <a href="#" class="quick-action-btn d-flex align-items-center">
+                            <i class="fas fa-chart-bar me-3"></i>
+                            <span>Generate Report</span>
+                        </a>
+                        <a href="#" class="quick-action-btn d-flex align-items-center">
+                            <i class="fas fa-cog me-3"></i>
+                            <span>Store Settings</span>
+                        </a>
+                        <a href="#" class="quick-action-btn d-flex align-items-center">
+                            <i class="fas fa-bullhorn me-3"></i>
+                            <span>Create Campaign</span>
+                        </a>
+                    </div>
+
+                    <hr class="border-secondary my-4">
+                    
+                    <div>
+                        <h6 class="text-white mb-3">Inventory Alerts</h6>
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="notification-dot me-2"></div>
+                            <small class="text-white-50">5 products low in stock</small>
+                        </div>
+                        <div class="d-flex align-items-center mb-2">
+                            <div class="notification-dot me-2"></div>
+                            <small class="text-white-50">2 orders need attention</small>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <div class="notification-dot me-2"></div>
+                            <small class="text-white-50">New customer reviews</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Featured Products -->
+        <div class="row g-4">
+            <div class="col-12">
+                <div class="glass-card p-4">
+                    <div class="widget-header">
+                        <h5 class="text-white mb-0">Featured Products</h5>
+                    </div>
+                    
+                    <div class="row g-4">
+                        <div class="col-md-3">
+                            <div class="product-card p-3">
+                                <div class="mb-3">
+                                    <div class="bg-gradient rounded" style="height: 120px; background: linear-gradient(135deg, #34D399, #FB923C);"></div>
+                                </div>
+                                <h6 class="text-white mb-2">Premium Headphones</h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-emerald-400 fw-bold">$299.99</span>
+                                    <small class="text-white-50">89 sold</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="product-card p-3">
+                                <div class="mb-3">
+                                    <div class="bg-gradient rounded" style="height: 120px; background: linear-gradient(135deg, #FB923C, #34D399);"></div>
+                                </div>
+                                <h6 class="text-white mb-2">Wireless Speaker</h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-emerald-400 fw-bold">$159.99</span>
+                                    <small class="text-white-50">124 sold</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="product-card p-3">
+                                <div class="mb-3">
+                                    <div class="bg-gradient rounded" style="height: 120px; background: linear-gradient(135deg, #A855F7, #34D399);"></div>
+                                </div>
+                                <h6 class="text-white mb-2">Smart Watch</h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-emerald-400 fw-bold">$399.99</span>
+                                    <small class="text-white-50">67 sold</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="product-card p-3">
+                                <div class="mb-3">
+                                    <div class="bg-gradient rounded" style="height: 120px; background: linear-gradient(135deg, #EF4444, #FB923C);"></div>
+                                </div>
+                                <h6 class="text-white mb-2">Laptop Stand</h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span class="text-emerald-400 fw-bold">$79.99</span>
+                                    <small class="text-white-50">203 sold</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Sales Chart
+        const salesCtx = document.getElementById('salesChart').getContext('2d');
+        new Chart(salesCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+                datasets: [{
+                    label: 'Sales Revenue',
+                    data: [65000, 78000, 85000, 92000, 105000, 118000, 124892],
+                    borderColor: '#34D399',
+                    backgroundColor: 'rgba(52, 211, 153, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4
+                }, {
+                    label: 'Orders Count',
+                    data: [1200, 1450, 1650, 1580, 1720, 1820, 1847],
+                    borderColor: '#FB923C',
+                    backgroundColor: 'rgba(251, 146, 60, 0.1)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.4,
+                    yAxisID: 'y1'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: { intersect: false },
+                plugins: {
+                    legend: {
+                        labels: { color: 'white' }
+                    }
+                },
+                scales: {
+                    x: { 
+                        ticks: { color: 'white' }, 
+                        grid: { color: 'rgba(255,255,255,0.1)' } 
+                    },
+                    y: { 
+                        type: 'linear',
+                        display: true,
+                        position: 'left',
+                        ticks: { color: 'white' }, 
+                        grid: { color: 'rgba(255,255,255,0.1)' } 
+                    },
+                    y1: {
+                        type: 'linear',
+                        display: true,
+                        position: 'right',
+                        ticks: { color: 'white' },
+                        grid: { drawOnChartArea: false }
+                    }
+                }
+            }
+        });
+
+        // Smooth animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.sales-metric, .glass-card, .product-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.8s ease';
+            observer.observe(el);
+        });
+
+        // Search functionality
+        document.querySelector('.search-glass').addEventListener('input', function(e) {
+            console.log('Searching for:', e.target.value);
+        });
+    </script>
+</body>
+</html>

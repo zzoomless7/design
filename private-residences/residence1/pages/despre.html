@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despre Vila Aurum - Rezidență Privată de Lux</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'gold': '#D4AF37',
+                        'gold-light': '#F7DC6F',
+                        'gold-dark': '#B7950B',
+                        'charcoal': '#2C3E50',
+                        'charcoal-light': '#34495E',
+                        'warm-white': '#FAF9F7',
+                        'cream': '#F8F6F0'
+                    },
+                    fontFamily: {
+                        'serif': ['Playfair Display', 'serif'],
+                        'sans': ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .luxury-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .luxury-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px rgba(212, 175, 55, 0.3);
+            border-color: rgba(212, 175, 55, 0.5);
+        }
+
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(60px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in-up.animate {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gold-gradient {
+            background: linear-gradient(135deg, #D4AF37, #F7DC6F, #B7950B);
+        }
+
+        .nav-glass {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .btn-luxury {
+            background: linear-gradient(135deg, #D4AF37, #B7950B);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-luxury::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn-luxury:hover::before {
+            left: 100%;
+        }
+
+        .btn-luxury:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.4);
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #F8F6F0 0%, #FAF9F7 100%);
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: #D4AF37;
+            border-radius: 50%;
+            border: 3px solid #F7DC6F;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 0.375rem;
+            top: 1.5rem;
+            width: 2px;
+            height: calc(100% + 1rem);
+            background: #F7DC6F;
+        }
+
+        .timeline-item:last-child::after {
+            display: none;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .architect-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .architect-card:hover {
+            border-color: #D4AF37;
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2);
+        }
+
+        .stat-card {
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            background: rgba(212, 175, 55, 0.2);
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="font-sans bg-warm-white">
+    <!-- Navigation -->
+    <nav class="nav-glass fixed w-full top-0 z-50 py-4">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-12 h-12 gold-gradient rounded-full flex items-center justify-center">
+                        <i class="fas fa-crown text-white text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-serif font-bold text-charcoal">Vila Aurum</span>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="../index.html" class="text-charcoal hover:text-gold transition-colors">Acasă</a>
+                    <a href="despre.html" class="text-gold font-semibold">Despre</a>
+                    <a href="facilitati.html" class="text-charcoal hover:text-gold transition-colors">Facilități</a>
+                    <a href="galerie.html" class="text-charcoal hover:text-gold transition-colors">Galerie</a>
+                    <a href="contact.html" class="text-charcoal hover:text-gold transition-colors">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-charcoal">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section pt-24">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center fade-in-up">
+                <h1 class="text-5xl md:text-6xl font-serif font-black text-charcoal mb-6">
+                    Povestea Vilei Aurum
+                </h1>
+                <p class="text-xl text-charcoal-light leading-relaxed">
+                    O bijuterie arhitecturală care combină tradiția cu inovația, eleganța cu funcționalitatea, 
+                    creând o experiență de viață cu adevărat extraordinară.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- History & Vision -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="grid lg:grid-cols-2 gap-16 items-center mb-20">
+                <div class="fade-in-up">
+                    <h2 class="text-4xl font-serif font-bold text-charcoal mb-6">Viziune și Istorie</h2>
+                    <p class="text-charcoal-light mb-6 leading-relaxed">
+                        Vila Aurum a fost concepută ca o oază de lux și rafinament, unde fiecare detaliu 
+                        reflectă excelența și atenția la perfecțiune. Proiectul a început în 2020 cu 
+                        visul de a crea o rezidență care să redefinească standardele locuirii de lux.
+                    </p>
+                    <p class="text-charcoal-light mb-8 leading-relaxed">
+                        Inspirată de arhitectura clasică europeană și îmbogățită cu elemente moderne, 
+                        vila oferă o experiență de viață unică, unde tradițiile se îmbină armonios 
+                        cu tehnologiile de ultimă generație.
+                    </p>
+                </div>
+                <div class="fade-in-up">
+                    <div class="luxury-card p-8 rounded-2xl">
+                        <div class="text-center mb-6">
+                            <i class="fas fa-award text-5xl text-gold mb-4"></i>
+                            <h3 class="text-2xl font-serif font-bold text-charcoal">Premiu de Excelență</h3>
+                        </div>
+                        <p class="text-charcoal-light text-center">
+                            Recunoscută ca "Cea Mai Elegantă Rezidență Privată" la Gala 
+                            Arhitecturii Contemporane 2023.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="max-w-4xl mx-auto">
+                <h3 class="text-3xl font-serif font-bold text-charcoal mb-12 text-center fade-in-up">
+                    Cronologia Dezvoltării
+                </h3>
+                
+                <div class="fade-in-up">
+                    <div class="timeline-item">
+                        <h4 class="text-xl font-semibold text-charcoal mb-2">2020 - Conceptul Inițial</h4>
+                        <p class="text-charcoal-light">Dezvoltarea conceptului arhitectural și selecția terenului premium în zona de nord a Bucureștiului.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4 class="text-xl font-semibold text-charcoal mb-2">2021 - Designul Detaliat</h4>
+                        <p class="text-charcoal-light">Colaborarea cu arhitecți renumiți pentru crearea planurilor definitive și selecția materialelor premium.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4 class="text-xl font-semibold text-charcoal mb-2">2022 - Construcția</h4>
+                        <p class="text-charcoal-light">Începerea lucrărilor de construcție cu cele mai înalte standarde de calitate și atenție la detalii.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4 class="text-xl font-semibold text-charcoal mb-2">2023 - Finalizarea</h4>
+                        <p class="text-charcoal-light">Completarea construcției și amenajarea interiorului cu mobilier și decorațiuni de lux.</p>
+                    </div>
+                    
+                    <div class="timeline-item">
+                        <h4 class="text-xl font-semibold text-charcoal mb-2">2024 - Prezent</h4>
+                        <p class="text-charcoal-light">Vila Aurum devine disponibilă pentru familii care apreciază luxul autentic și confortul necompromisat.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Architecture & Design -->
+    <section class="py-20 bg-cream">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16 fade-in-up">
+                <h2 class="text-4xl font-serif font-bold text-charcoal mb-4">Arhitectură și Design</h2>
+                <p class="text-xl text-charcoal-light max-w-3xl mx-auto">
+                    Fiecare element arhitectural al Vilei Aurum a fost conceput pentru a crea o experiență vizuală și funcțională de excepție
+                </p>
+            </div>
+
+            <div class="feature-grid mb-16">
+                <div class="architect-card fade-in-up">
+                    <i class="fas fa-drafting-compass text-4xl text-gold mb-4"></i>
+                    <h3 class="text-xl font-semibold text-charcoal mb-3">Design Contemporan</h3>
+                    <p class="text-charcoal-light">Arhitectură modernă cu influențe clasice, creând un echilibru perfect între tradițional și contemporan.</p>
+                </div>
+
+                <div class="architect-card fade-in-up" style="animation-delay: 0.2s;">
+                    <i class="fas fa-sun text-4xl text-gold mb-4"></i>
+                    <h3 class="text-xl font-semibold text-charcoal mb-3">Lumină Naturală</h3>
+                    <p class="text-charcoal-light">Ferestre panoramice și lucarne strategice pentru maximizarea luminii naturale în toate spațiile.</p>
+                </div>
+
+                <div class="architect-card fade-in-up" style="animation-delay: 0.4s;">
+                    <i class="fas fa-layer-group text-4xl text-gold mb-4"></i>
+                    <h3 class="text-xl font-semibold text-charcoal mb-3">Materiale Premium</h3>
+                    <p class="text-charcoal-light">Selecție riguroasă de materiale de cea mai înaltă calitate: marmură, lemn masiv, metal nobil.</p>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="stat-card fade-in-up">
+                    <div class="text-3xl font-bold text-gold mb-2">650m²</div>
+                    <div class="text-charcoal-light font-medium">Suprafață Construită</div>
+                </div>
+                <div class="stat-card fade-in-up" style="animation-delay: 0.2s;">
+                    <div class="text-3xl font-bold text-gold mb-2">2000m²</div>
+                    <div class="text-charcoal-light font-medium">Teren Peisagistic</div>
+                </div>
+                <div class="stat-card fade-in-up" style="animation-delay: 0.4s;">
+                    <div class="text-3xl font-bold text-gold mb-2">4.5m</div>
+                    <div class="text-charcoal-light font-medium">Înălțime Plafoane</div>
+                </div>
+                <div class="stat-card fade-in-up" style="animation-delay: 0.6s;">
+                    <div class="text-3xl font-bold text-gold mb-2">360°</div>
+                    <div class="text-charcoal-light font-medium">Vedere Panoramică</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Philosophy -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-4xl font-serif font-bold text-charcoal mb-6">Filosofia Noastră</h2>
+                    <p class="text-xl text-charcoal-light leading-relaxed">
+                        La Vila Aurum, credem că luxul adevărat nu se măsoară doar în materiale scumpe, 
+                        ci în atenția la detalii, în calitatea execuției și în experiența pe care o oferă 
+                        fiecărui locuitor.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center fade-in-up">
+                        <i class="fas fa-heart text-4xl text-gold mb-4"></i>
+                        <h3 class="text-xl font-semibold text-charcoal mb-3">Pasiune</h3>
+                        <p class="text-charcoal-light">Fiecare detaliu este rezultatul pasiunii pentru perfecțiune și al iubirii pentru frumos.</p>
+                    </div>
+
+                    <div class="text-center fade-in-up" style="animation-delay: 0.2s;">
+                        <i class="fas fa-star text-4xl text-gold mb-4"></i>
+                        <h3 class="text-xl font-semibold text-charcoal mb-3">Excelență</h3>
+                        <p class="text-charcoal-light">Standarde ridicate de calitate în toate aspectele, de la design la execuție.</p>
+                    </div>
+
+                    <div class="text-center fade-in-up" style="animation-delay: 0.4s;">
+                        <i class="fas fa-infinity text-4xl text-gold mb-4"></i>
+                        <h3 class="text-xl font-semibold text-charcoal mb-3">Atemporalitate</h3>
+                        <p class="text-charcoal-light">Design care transcende tendințele momentane pentru a rămâne elegant pentru generații.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="py-20 bg-cream">
+        <div class="container mx-auto px-4">
+            <div class="luxury-card p-12 rounded-3xl text-center fade-in-up max-w-4xl mx-auto">
+                <h2 class="text-4xl font-serif font-bold text-charcoal mb-6">Descoperiți Vila Aurum</h2>
+                <p class="text-xl text-charcoal-light mb-8">
+                    Vă invităm să experimentați personal eleganța și rafinamentul acestei rezidențe extraordinare.
+                </p>
+                <div class="space-x-4">
+                    <a href="galerie.html" class="btn-luxury text-white px-8 py-4 rounded-full font-semibold text-lg">
+                        Vezi Galeria
+                    </a>
+                    <a href="contact.html" class="bg-transparent border-2 border-gold text-gold px-8 py-4 rounded-full font-semibold text-lg hover:bg-gold hover:text-white transition-all">
+                        Programează Vizita
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-charcoal text-white py-16">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center">
+                            <i class="fas fa-crown text-white"></i>
+                        </div>
+                        <span class="text-xl font-serif font-bold">Vila Aurum</span>
+                    </div>
+                    <p class="text-gray-300 leading-relaxed">
+                        O experiență de lux într-un cadru privat și exclusiv.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-gold">Navigare</h4>
+                    <ul class="space-y-2">
+                        <li><a href="../index.html" class="text-gray-300 hover:text-gold transition-colors">Acasă</a></li>
+                        <li><a href="despre.html" class="text-gray-300 hover:text-gold transition-colors">Despre Vila</a></li>
+                        <li><a href="facilitati.html" class="text-gray-300 hover:text-gold transition-colors">Facilități</a></li>
+                        <li><a href="galerie.html" class="text-gray-300 hover:text-gold transition-colors">Galerie</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-gold transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4 text-gold">Contact</h4>
+                    <div class="space-y-3">
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-phone text-gold"></i>
+                            <span class="text-gray-300">+40 123 456 789</span>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <i class="fas fa-envelope text-gold"></i>
+                            <span class="text-gray-300">contact@vilaaurum.ro</span>
+                        </div>
+                    </div>
+
+                    <div class="flex space-x-4 mt-6">
+                        <a href="#" class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                            <i class="fab fa-instagram text-white"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 gold-gradient rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                            <i class="fab fa-youtube text-white"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="border-charcoal-light my-8">
+            <div class="text-center text-gray-300">
+                <p>&copy; 2024 Vila Aurum. Toate drepturile rezervate.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in-up').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.nav-glass');
+            if (window.scrollY > 50) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
+</html>
